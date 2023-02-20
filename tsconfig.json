@@ -20,6 +20,8 @@
       "components/*": ["./components/*"],
       "hooks/*": ["./hooks/*"],
       "pages/*": ["./pages/*"],
+      "recoil/*": ["./recoil/*"],
+      "types/*": ["./types/*"],
       "utils/*": ["./utils/*"]
     }
   },
