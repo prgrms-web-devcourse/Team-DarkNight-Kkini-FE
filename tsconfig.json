@@ -14,11 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "assets/*": ["./assets/*"],
+      "components/*": ["./components/*"],
+      "hooks/*": ["./hooks/*"],
+      "pages/*": ["./pages/*"],
+      "utils/*": ["./utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./public/mockServiceWorker.js"],
   "exclude": ["node_modules"]
 }
