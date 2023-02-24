@@ -19,6 +19,11 @@ const KakaoMap = () => {
     level: INIT_MAP_LEVEL,
     isPanto: true,
   });
+  const [kakaoMap, setKakaoMap] = useState<kakao.maps.Map>();
+
+  const handleCreateMap = (map: kakao.maps.Map) => {
+    setKakaoMap(map);
+  };
 
   const handleClickCurrentLocationButton = () => {
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
@@ -29,6 +34,10 @@ const KakaoMap = () => {
           lng: longitude,
         },
       }));
+
+      if (kakaoMap) {
+        kakaoMap.setCenter(new kakao.maps.LatLng(latitude, longitude));
+      }
     };
 
     const errorCallback: PositionErrorCallback = (error) => {
@@ -51,6 +60,7 @@ const KakaoMap = () => {
         isPanto={mapOptions.isPanto}
         style={{ width: '100%', height: '100%' }}
         level={mapOptions.level}
+        onCreate={handleCreateMap}
       />
       <CurrentLocationButton onClick={handleClickCurrentLocationButton} />
     </Container>
