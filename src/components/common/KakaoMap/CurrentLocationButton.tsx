@@ -7,13 +7,7 @@ type Props = {
 
 const CurrentLocationButton = ({ onClick }: Props) => {
   return (
-    <Button
-      onClick={onClick}
-      colorScheme={'red'}
-      position={'absolute'}
-      bottom={'1rem'}
-      right={'1rem'}
-      zIndex={10}>
+    <Button onClick={onClick} colorScheme={'red'} zIndex={10}>
       <TfiTarget color='white' />
     </Button>
   );

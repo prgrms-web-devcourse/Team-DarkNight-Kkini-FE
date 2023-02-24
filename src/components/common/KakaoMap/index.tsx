@@ -1,8 +1,10 @@
-import styled from '@emotion/styled';
+import { Box, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Map } from 'react-kakao-maps-sdk';
 
 import CurrentLocationButton from './CurrentLocationButton';
+import ZoomInButton from './ZoomInButton';
+import ZoomOutButton from './ZoomOutButton';
 
 /**
  * To Do
@@ -12,6 +14,8 @@ import CurrentLocationButton from './CurrentLocationButton';
 const INIT_LATITUDE = 37.497969;
 const INIT_LONGITUDE = 127.02759;
 const INIT_MAP_LEVEL = 5;
+const MAX_LEVEL = 14;
+const MIN_LEVEL = 0;
 
 const KakaoMap = () => {
   const [mapOptions, setMapOptions] = useState({
@@ -53,8 +57,30 @@ const KakaoMap = () => {
     }
   };
 
+  const handleClickZoomInButton = () => {
+    const currentLevel = mapOptions.level;
+
+    if (currentLevel <= MIN_LEVEL) return;
+
+    setMapOptions((previousMapOptions) => ({
+      ...previousMapOptions,
+      level: previousMapOptions.level - 1,
+    }));
+  };
+
+  const handleClickZoomOutButton = () => {
+    const currentLevel = mapOptions.level;
+
+    if (currentLevel >= MAX_LEVEL) return;
+
+    setMapOptions((previousMapOptions) => ({
+      ...previousMapOptions,
+      level: previousMapOptions.level + 1,
+    }));
+  };
+
   return (
-    <Container>
+    <Box position='relative' width='100%' height='100%'>
       <Map
         center={mapOptions.center}
         isPanto={mapOptions.isPanto}
@@ -62,15 +88,13 @@ const KakaoMap = () => {
         level={mapOptions.level}
         onCreate={handleCreateMap}
       />
-      <CurrentLocationButton onClick={handleClickCurrentLocationButton} />
-    </Container>
+      <VStack position='absolute' bottom='1rem' right='1rem'>
+        <CurrentLocationButton onClick={handleClickCurrentLocationButton} />
+        <ZoomInButton onClick={handleClickZoomInButton} />
+        <ZoomOutButton onClick={handleClickZoomOutButton} />
+      </VStack>
+    </Box>
   );
 };
 
 export default KakaoMap;
-
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
