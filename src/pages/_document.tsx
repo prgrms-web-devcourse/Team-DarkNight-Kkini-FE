@@ -15,9 +15,10 @@ const Document = () => {
           strategy='beforeInteractive'
         />
         <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${
+          src={`https://maps.googleapis.com/maps/api/js?key=${
             process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string
-          }&libraries=services,clusterer&autoload=false`}
+          }&libraries=places'
+          `}
           strategy='beforeInteractive'
         />
       </body>
