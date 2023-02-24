@@ -1,5 +1,12 @@
 const Navigation = () => {
-  return <nav>Navigation</nav>;
+  return (
+    <nav
+      style={{
+        height: '3.5rem',
+      }}>
+      Navigation
+    </nav>
+  );
 };
 
 export default Navigation;
