@@ -1,4 +1,4 @@
-import KakaoMap from 'components/KakaoMap';
+import KakaoMap from 'components/common/KakaoMap';
 
 const Home = () => {
   return <KakaoMap />;
