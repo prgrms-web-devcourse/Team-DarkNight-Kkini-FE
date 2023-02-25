@@ -99,7 +99,7 @@ const KakaoMap = () => {
         level={mapOptions.level}
         onCreate={handleCreateMap}
       />
-      <VStack position='absolute' bottom='1rem' right='1rem'>
+      <VStack position='absolute' top='3rem' right='1rem'>
         <CurrentLocationButton
           onClick={handleClickCurrentLocationButton}
           isLoading={currentLocationIsLoading}
