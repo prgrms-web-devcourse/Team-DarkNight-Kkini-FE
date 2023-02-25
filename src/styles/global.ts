@@ -10,7 +10,7 @@ const globalStyle = css`
     justify-content: center;
   }
 
-  #main {
+  #app {
     max-width: 560px;
     width: 100%;
     height: 100vh;
