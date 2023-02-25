@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import { BiTargetLock } from 'react-icons/bi';
 
 type CurrentLocationButtonProps = {
@@ -8,16 +9,19 @@ type CurrentLocationButtonProps = {
 
 const CurrentLocationButton = ({ isLoading, onClick }: CurrentLocationButtonProps) => {
   return (
-    <Button
+    <StyledButton
       isLoading={isLoading}
       backgroundColor='white'
       zIndex={10}
       onClick={onClick}
-      padding='0 0.5rem'
-      boxShadow={'2px 2px 2px 1px rgba(0,0,0,0.25)'}>
+      padding='0 0.5rem'>
       <BiTargetLock fontSize='1.5rem' />
-    </Button>
+    </StyledButton>
   );
 };
 
 export default CurrentLocationButton;
+
+const StyledButton = styled(Button)`
+  box-shadow: ${({ theme }) => theme.boxShadow.button};
+`;

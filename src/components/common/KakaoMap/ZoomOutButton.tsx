@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import { BiMinus } from 'react-icons/bi';
 
 type ZoomOutButtonProps = {
@@ -7,15 +8,18 @@ type ZoomOutButtonProps = {
 
 const ZoomOutButton = ({ onClick }: ZoomOutButtonProps) => {
   return (
-    <Button
+    <StyledButton
       backgroundColor='white'
       zIndex={10}
       onClick={onClick}
-      padding='0 0.5rem'
-      boxShadow={'2px 2px 2px 1px rgba(0,0,0,0.25)'}>
+      padding='0 0.5rem'>
       <BiMinus fontSize='1.5rem' />
-    </Button>
+    </StyledButton>
   );
 };
 
 export default ZoomOutButton;
+
+const StyledButton = styled(Button)`
+  box-shadow: ${({ theme }) => theme.boxShadow.button};
+`;
