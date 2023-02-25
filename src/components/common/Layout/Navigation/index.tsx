@@ -1,70 +1,50 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
 
+import NavigationButton from './NavigationButton';
+
 const Navigation = () => {
   return (
-    <Flex as='nav' h='3.5rem' justify='space-around' align='center' px='10'>
-      <ButtonContainer
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='space-between'
-        h='100%'
-        color='#949494'>
+    <Flex as='nav' h='3rem' justify='space-around' align='center' px='10'>
+      <NavigationButton>
         <MapIcon />
-        <Label>밥모임 생성</Label>
-      </ButtonContainer>
-      <ButtonContainer
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='space-between'
-        h='100%'
-        color='#949494'>
+        <Label>주변 밥모임</Label>
+      </NavigationButton>
+      <NavigationButton>
         <PlusIcon />
         <Label>밥모임 생성</Label>
-      </ButtonContainer>
-      <ButtonContainer
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='space-between'
-        h='100%'
-        color='#949494'>
+      </NavigationButton>
+      <NavigationButton>
         <CommunityIcon />
-        <Label>밥모임 생성</Label>
-      </ButtonContainer>
+        <Label>내 밥모임</Label>
+      </NavigationButton>
     </Flex>
   );
 };
 
 export default Navigation;
 
-const ButtonContainer = styled(Box)`
-  cursor: pointer;
-  &:hover {
-    color: #ff5c00;
-  }
+const PlusIcon = styled(AiOutlinePlusCircle)`
+  width: 1.6rem;
+  height: 1.6rem;
+`;
+
+const MapIcon = styled(BsMap)`
+  width: 1.6rem;
+  height: 1.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.1rem;
+`;
+
+const CommunityIcon = styled(CgCommunity)`
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.1rem;
 `;
 
 const Label = styled.span`
   font-size: 0.8rem;
-`;
-
-const PlusIcon = styled(AiOutlinePlusCircle)`
-  width: 1.8rem;
-  height: 1.8rem;
-`;
-
-const MapIcon = styled(BsMap)`
-  width: 1.4rem;
-  height: 1.4rem;
-`;
-
-const CommunityIcon = styled(CgCommunity)`
-  width: 2rem;
-  height: 2rem;
 `;
