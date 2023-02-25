@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
 
 type Props = {
-  width?: string | number;
-  height?: string | number;
+  width?: string;
+  height?: string;
   children?: ReactNode;
 };
 
