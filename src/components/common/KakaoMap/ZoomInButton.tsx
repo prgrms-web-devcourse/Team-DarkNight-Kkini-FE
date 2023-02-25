@@ -1,11 +1,11 @@
 import { Button } from '@chakra-ui/react';
 import { BiPlus } from 'react-icons/bi';
 
-type Props = {
+type ZoomInButtonProps = {
   onClick: () => void;
 };
 
-const ZoomInButton = ({ onClick }: Props) => {
+const ZoomInButton = ({ onClick }: ZoomInButtonProps) => {
   return (
     <Button
       backgroundColor='white'

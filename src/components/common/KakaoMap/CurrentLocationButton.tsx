@@ -1,12 +1,12 @@
 import { Button } from '@chakra-ui/react';
 import { BiTargetLock } from 'react-icons/bi';
 
-type Props = {
+type CurrentLocationButtonProps = {
   isLoading: boolean;
   onClick: () => void;
 };
 
-const CurrentLocationButton = ({ isLoading, onClick }: Props) => {
+const CurrentLocationButton = ({ isLoading, onClick }: CurrentLocationButtonProps) => {
   return (
     <Button
       isLoading={isLoading}

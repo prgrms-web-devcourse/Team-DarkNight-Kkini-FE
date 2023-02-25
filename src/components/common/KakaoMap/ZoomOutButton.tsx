@@ -1,11 +1,11 @@
 import { Button } from '@chakra-ui/react';
 import { BiMinus } from 'react-icons/bi';
 
-type Props = {
+type ZoomOutButtonProps = {
   onClick: () => void;
 };
 
-const ZoomOutButton = ({ onClick }: Props) => {
+const ZoomOutButton = ({ onClick }: ZoomOutButtonProps) => {
   return (
     <Button
       backgroundColor='white'
