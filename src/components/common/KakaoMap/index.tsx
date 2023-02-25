@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Map } from 'react-kakao-maps-sdk';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 
+import RecommendRandomRestaurantButton from '../Buttons/RecommendRandomRestaurantButton';
 import CurrentLocationButton from './CurrentLocationButton';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
@@ -107,6 +108,7 @@ const KakaoMap = () => {
         <ZoomInButton onClick={handleClickZoomInButton} />
         <ZoomOutButton onClick={handleClickZoomOutButton} />
       </VStack>
+      <RecommendRandomRestaurantButton />
     </Box>
   );
 };
