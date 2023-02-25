@@ -27,6 +27,7 @@ const Button = ({ width = '100%', height = '3rem', ...props }: Props) => {
 
 const ButtonContainer = styled(Flex)`
   background-color: ${({ theme }) => theme.color.primary};
+  cursor: pointer;
 
   &:hover {
     filter: brightness(0.9);
