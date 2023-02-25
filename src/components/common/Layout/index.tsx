@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <ChakraProvider resetCSS>
-      <Flex flexDirection='column'>
+      <Flex flexDirection='column' id='main'>
         <Header />
         {children}
         <Navigation />
