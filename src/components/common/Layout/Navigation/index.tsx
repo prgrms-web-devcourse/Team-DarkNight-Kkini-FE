@@ -8,7 +8,7 @@ import NavigationButton from './NavigationButton';
 
 const Navigation = () => {
   return (
-    <Flex as='nav' h='3rem' justify='space-around' align='center' px='10'>
+    <Flex as='nav' h='4rem' justify='space-around' align='center' px='10' py='1'>
       <NavigationButton>
         <MapIcon />
         <Label>주변 밥모임</Label>
@@ -30,6 +30,7 @@ export default Navigation;
 const PlusIcon = styled(AiOutlinePlusCircle)`
   width: 1.6rem;
   height: 1.6rem;
+  margin-top: 0.1rem;
 `;
 
 const MapIcon = styled(BsMap)`

@@ -9,7 +9,7 @@ const NavigationButton = ({ children }: { children: ReactNode }) => {
       flexDirection='column'
       alignItems='center'
       justifyContent='space-between'
-      h='100%'
+      h='90%'
       color='#949494'>
       {children}
     </ButtonContainer>
