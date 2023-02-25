@@ -29,8 +29,10 @@ const ButtonContainer = styled(Flex)`
   background-color: ${({ theme }) => theme.color.primary};
   cursor: pointer;
 
-  &:hover {
-    filter: brightness(0.9);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      filter: brightness(0.9);
+    }
   }
 `;
 
