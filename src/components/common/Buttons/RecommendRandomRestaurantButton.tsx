@@ -1,8 +1,14 @@
 import { Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
-const RecommendRandomRestaurantButton = () => {
-  return <StyledButton>랜덤 맛집 뽑기</StyledButton>;
+type RecommendRandomRestaurantButtonProps = {
+  onClick: () => void;
+};
+
+const RecommendRandomRestaurantButton = ({
+  onClick,
+}: RecommendRandomRestaurantButtonProps) => {
+  return <StyledButton onClick={onClick}>랜덤 맛집 뽑기</StyledButton>;
 };
 
 export default RecommendRandomRestaurantButton;
