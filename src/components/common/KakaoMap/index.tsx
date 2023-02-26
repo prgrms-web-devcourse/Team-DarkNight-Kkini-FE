@@ -1,6 +1,6 @@
 import { Box, useToast, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Map } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, MapMarkerProps } from 'react-kakao-maps-sdk';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 
 import RecommendRandomRestaurantButton from '../Buttons/RecommendRandomRestaurantButton';
@@ -98,12 +98,18 @@ const KakaoMap = () => {
   //////////////////////////////////////////////////////////////////////////////////////////
   // To Do
   // 해당 버튼 로딩
+  const [randomRestaurantMarker, setRandomRestaurantMarker] =
+    useState<MapMarkerProps | null>(null);
+  const [randomRestaurantIsLoading, setRandomRestaurantIsLoading] = useState(false);
+
   const handleClickRecommendRandomRestaurantButton = () => {
     const kakaoPlacesService = new kakao.maps.services.Places();
 
     if (navigator.geolocation) {
+      setRandomRestaurantIsLoading(true);
       navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
         // 이렇게 하면 현재 위치를 들렸다가 랜덤 맛집으로 이동한다.
+        // mapOptions는 따로 저장해야 될 수도 있겠다.
         setMapOptions((previousMapOptions) => ({
           ...previousMapOptions,
           center: {
@@ -122,35 +128,48 @@ const KakaoMap = () => {
           radius: INIT_RADIUS,
         };
 
-        const nearbyPlaces: kakao.maps.services.PlacesSearchResultItem[] = [];
-
+        const nearbyRestaurants: kakao.maps.services.PlacesSearchResultItem[] = [];
         kakaoPlacesService.categorySearch(
           KAKAO_RESTAURANT_CATEGORY_CODE,
           (result, status, pagination) => {
             const { OK, ZERO_RESULT, ERROR } = kakao.maps.services.Status;
             if (status === OK) {
-              nearbyPlaces.push(...result);
+              nearbyRestaurants.push(...result);
 
               pagination.nextPage();
             }
 
             if (!pagination.hasNextPage && kakaoMap) {
               const bounds = new kakao.maps.LatLngBounds();
+              const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
               bounds.extend(
                 new kakao.maps.LatLng(
-                  Number(nearbyPlaces[0].y),
-                  Number(nearbyPlaces[0].x)
+                  Number(nearbyRestaurants[randomIndex].y),
+                  Number(nearbyRestaurants[randomIndex].x)
                 )
               );
               kakaoMap.setBounds(bounds);
+              setRandomRestaurantMarker((previousRandomRestaurantMarker) => ({
+                ...previousRandomRestaurantMarker,
+                position: {
+                  lat: Number(nearbyRestaurants[randomIndex].y),
+                  lng: Number(nearbyRestaurants[randomIndex].x),
+                },
+                title: nearbyRestaurants[randomIndex].place_name,
+              }));
+              setRandomRestaurantIsLoading(false);
             }
 
             // To Do
             // 서칭 결과 없을 때 toast UI 띄우기
-            // if (status === ZERO_RESULT) {}
+            // if (status === ZERO_RESULT) {
+            //   setRandomRestaurantIsLoading(false);
+            // }
 
             // 서칭 에러 시 toast UI 띄우기
-            // if (status === ERROR) {}
+            // if (status === ERROR) {
+            //   setRandomRestaurantIsLoading(false);
+            // }
           },
           placesSearchOptions
         );
@@ -160,14 +179,35 @@ const KakaoMap = () => {
     }
   };
 
+  const handleClickMapMarker = (event: kakao.maps.Marker) => {
+    console.log(event.getTitle());
+  };
+
+  console.log(randomRestaurantIsLoading);
+
   return (
     <Box position='relative' width='100%' height='100%'>
       <Map
         center={mapOptions.center}
         style={{ width: '100%', height: '100%' }}
         level={mapOptions.level}
-        onCreate={handleCreateMap}
-      />
+        onCreate={handleCreateMap}>
+        {/* 어떻게 해줘야 randomRestaurantMarker가 있을 때랑 없을 때를 잘 구분할 수 있을까? */}
+        {randomRestaurantMarker && (
+          <MapMarker
+            position={randomRestaurantMarker.position}
+            title={randomRestaurantMarker.title}
+            onClick={handleClickMapMarker}
+            image={{
+              src: '/images/restaurant-badge.svg',
+              size: {
+                width: 72,
+                height: 72,
+              },
+            }}
+          />
+        )}
+      </Map>
       <VStack position='absolute' top='3rem' right='1rem'>
         <CurrentLocationButton
           onClick={handleClickCurrentLocationButton}
@@ -178,6 +218,7 @@ const KakaoMap = () => {
       </VStack>
       <RecommendRandomRestaurantButton
         onClick={handleClickRecommendRandomRestaurantButton}
+        isLoading={randomRestaurantIsLoading}
       />
     </Box>
   );
