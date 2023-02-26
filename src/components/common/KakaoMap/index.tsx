@@ -1,6 +1,8 @@
 import { Box, useToast, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Map, MapMarker, MapMarkerProps } from 'react-kakao-maps-sdk';
+import { useRecoilState } from 'recoil';
+import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 
 import RecommendRandomRestaurantButton from '../Buttons/RecommendRandomRestaurantButton';
@@ -12,9 +14,6 @@ import ZoomOutButton from './ZoomOutButton';
  * To Do
  * 초기 위치를 localStorage로부터 받아온다.
  */
-const INIT_LATITUDE = 37.497969;
-const INIT_LONGITUDE = 127.02759;
-const INIT_MAP_LEVEL = 5;
 const MAX_LEVEL = 12;
 const MIN_LEVEL = 0;
 
@@ -24,10 +23,7 @@ const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 const INIT_RADIUS = 300;
 
 const KakaoMap = () => {
-  const [mapOptions, setMapOptions] = useState({
-    center: { lat: INIT_LATITUDE, lng: INIT_LONGITUDE },
-    level: INIT_MAP_LEVEL,
-  });
+  const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const [kakaoMap, setKakaoMap] = useState<kakao.maps.Map>();
   const [currentLocationIsLoading, setCurrentLocationIsLoading] = useState(false);
   const errorToast = useToast({
@@ -42,8 +38,8 @@ const KakaoMap = () => {
 
   const handleClickCurrentLocationButton = () => {
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
-      setMapOptions((previousMapOptions) => ({
-        ...previousMapOptions,
+      setKakaoMapOptions((previousKakaoMapOptions) => ({
+        ...previousKakaoMapOptions,
         center: {
           lat: latitude,
           lng: longitude,
@@ -74,24 +70,24 @@ const KakaoMap = () => {
   };
 
   const handleClickZoomInButton = () => {
-    const currentLevel = mapOptions.level;
+    const currentLevel = kakaoMapOptions.level;
 
     if (currentLevel <= MIN_LEVEL) return;
 
-    setMapOptions((previousMapOptions) => ({
-      ...previousMapOptions,
-      level: previousMapOptions.level - 1,
+    setKakaoMapOptions((previousKakaoMapOptions) => ({
+      ...previousKakaoMapOptions,
+      level: previousKakaoMapOptions.level - 1,
     }));
   };
 
   const handleClickZoomOutButton = () => {
-    const currentLevel = mapOptions.level;
+    const currentLevel = kakaoMapOptions.level;
 
     if (currentLevel >= MAX_LEVEL) return;
 
-    setMapOptions((previousMapOptions) => ({
-      ...previousMapOptions,
-      level: previousMapOptions.level + 1,
+    setKakaoMapOptions((previousKakaoMapOptions) => ({
+      ...previousKakaoMapOptions,
+      level: previousKakaoMapOptions.level + 1,
     }));
   };
 
@@ -110,8 +106,8 @@ const KakaoMap = () => {
       navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
         // 이렇게 하면 현재 위치를 들렸다가 랜덤 맛집으로 이동한다.
         // mapOptions는 따로 저장해야 될 수도 있겠다.
-        setMapOptions((previousMapOptions) => ({
-          ...previousMapOptions,
+        setKakaoMapOptions((previousKakaoMapOptions) => ({
+          ...previousKakaoMapOptions,
           center: {
             lat: latitude,
             lng: longitude,
@@ -183,14 +179,12 @@ const KakaoMap = () => {
     console.log(event.getTitle());
   };
 
-  console.log(randomRestaurantIsLoading);
-
   return (
     <Box position='relative' width='100%' height='100%'>
       <Map
-        center={mapOptions.center}
+        center={kakaoMapOptions.center}
         style={{ width: '100%', height: '100%' }}
-        level={mapOptions.level}
+        level={kakaoMapOptions.level}
         onCreate={handleCreateMap}>
         {/* 어떻게 해줘야 randomRestaurantMarker가 있을 때랑 없을 때를 잘 구분할 수 있을까? */}
         {randomRestaurantMarker && (
