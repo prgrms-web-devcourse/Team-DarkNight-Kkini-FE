@@ -29,7 +29,6 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.2",
     "react-icons": "^4.7.1",
-    "react-kakao-maps-sdk": "^1.1.6",
     "recoil": "^0.7.6",
     "typescript": "4.9.5"
   },
