@@ -5,6 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 
 const DEFAULT_RADIUS = 300;
+const DEFAULT_BADGE_IMAGE_SIZE = 72;
 const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 
@@ -48,7 +49,7 @@ const useRecommendRandomRestaurant = () => {
           const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
           const markerImage = new kakao.maps.MarkerImage(
             RESTAURANT_BADGE_IMAGE_FILE_PATH,
-            new kakao.maps.Size(72, 72)
+            new kakao.maps.Size(DEFAULT_BADGE_IMAGE_SIZE, DEFAULT_BADGE_IMAGE_SIZE)
           );
           const createdMarker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(
@@ -57,6 +58,8 @@ const useRecommendRandomRestaurant = () => {
             ),
             image: markerImage,
           });
+
+          // const googlePlacesService = new google
 
           setKakaoMapOptions((previousKakaoMapOptions) => ({
             ...previousKakaoMapOptions,
