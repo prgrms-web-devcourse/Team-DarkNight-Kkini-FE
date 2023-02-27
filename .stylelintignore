@@ -1,2 +1,4 @@
 src/**/*.ts
 node_modules
+next-env.d.ts
+env.d.ts
