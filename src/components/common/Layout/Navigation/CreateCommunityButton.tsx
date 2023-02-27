@@ -2,9 +2,15 @@ import { Box } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
 
-const NavigationButton = ({ children }: { children: ReactNode }) => {
+type CreateCommunityButtonProps = {
+  children: ReactNode;
+  onClick: () => void;
+};
+
+const CreateCommunityButton = ({ children, onClick }: CreateCommunityButtonProps) => {
   return (
     <ButtonContainer
+      onClick={onClick}
       display='flex'
       flexDirection='column'
       alignItems='center'
@@ -16,7 +22,7 @@ const NavigationButton = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default NavigationButton;
+export default CreateCommunityButton;
 
 const ButtonContainer = styled(Box)`
   cursor: pointer;
