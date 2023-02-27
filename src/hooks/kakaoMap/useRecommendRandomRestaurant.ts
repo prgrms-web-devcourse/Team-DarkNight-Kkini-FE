@@ -1,5 +1,5 @@
 import useKakaoMapContext from 'contexts/kakaoMap';
-import useKakaoMapMarkerContext from 'contexts/kakaoMapMarker';
+import useRandomRestaurantMarkerContext from 'contexts/kakaoMap/randomRestaurantMarker';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
@@ -14,7 +14,7 @@ const useRecommendRandomRestaurant = () => {
     useState(false);
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
   const { kakaoMap } = useKakaoMapContext();
-  const { setKakaoMapMarker } = useKakaoMapMarkerContext();
+  const { setRandomRestaurantMarker } = useRandomRestaurantMarkerContext();
 
   const recommendRandomRestaurant = () => {
     if (!kakaoMap) return;
@@ -104,7 +104,7 @@ const useRecommendRandomRestaurant = () => {
               lng: currentLongitude,
             },
           }));
-          setKakaoMapMarker(createdMarker);
+          setRandomRestaurantMarker(createdMarker);
           setRecommendRandomRestaurantIsLoading(false);
         }
       },

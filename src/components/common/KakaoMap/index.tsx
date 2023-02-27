@@ -1,6 +1,6 @@
 import { Box, VStack } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
-import useKakaoMapMarkerContext from 'contexts/kakaoMapMarker';
+import useRandomRestaurantMarkerContext from 'contexts/kakaoMap/randomRestaurantMarker';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
 import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomRestaurant';
 import { useEffect, useRef } from 'react';
@@ -24,7 +24,7 @@ const KakaoMap = () => {
     useOperateKakaoMap();
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
-  const { kakaoMapMarker } = useKakaoMapMarkerContext();
+  const { randomRestaurantMarker } = useRandomRestaurantMarkerContext();
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
@@ -40,11 +40,15 @@ const KakaoMap = () => {
         };
         const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
 
-        if (kakaoMapMarker) {
-          kakaoMapMarker.setMap(createdKakaoMap);
-          kakaoMapAddEventListener(kakaoMapMarker, KAKAO_MARKER_EVENT_TYPE.CLICK, () => {
-            console.log('marker');
-          });
+        if (randomRestaurantMarker) {
+          randomRestaurantMarker.setMap(createdKakaoMap);
+          kakaoMapAddEventListener(
+            randomRestaurantMarker,
+            KAKAO_MARKER_EVENT_TYPE.CLICK,
+            () => {
+              console.log('marker');
+            }
+          );
         }
 
         setKakaoMap(createdKakaoMap);
@@ -54,7 +58,7 @@ const KakaoMap = () => {
     () => {
       // kakao.maps.event.removeListener();
     };
-  }, [kakaoMapOptions, setKakaoMap, kakaoMapMarker, kakaoMapAddEventListener]);
+  }, [kakaoMapOptions, setKakaoMap, randomRestaurantMarker, kakaoMapAddEventListener]);
 
   return (
     <Box position='relative' width='100%' height='100%'>
