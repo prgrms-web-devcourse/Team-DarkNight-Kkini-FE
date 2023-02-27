@@ -17,6 +17,13 @@ export const getRandomRestaurantWithKakaoMapAPI = (
     categoryCode,
     (result, status, pagination) => {
       const { OK, ZERO_RESULT, ERROR } = kakao.maps.services.Status;
+
+      if (status === OK) {
+        nearbyRestaurants.push(...result);
+        pagination.hasNextPage && pagination.nextPage();
+      }
+
+      // if (!pagination.hasNextPage)
     },
     placesSearchOptions
   );

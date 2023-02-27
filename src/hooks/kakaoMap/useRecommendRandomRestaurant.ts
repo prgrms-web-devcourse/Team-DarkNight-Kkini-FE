@@ -1,4 +1,3 @@
-import useKakaoMapContext from 'contexts/kakaoMap';
 import useKakaoMapMarkerContext from 'contexts/kakaoMapMarker';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -9,7 +8,6 @@ const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 
 const useRecommendRandomRestaurant = () => {
-  const { kakaoMap } = useKakaoMapContext();
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
     useState(false);
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
@@ -39,7 +37,7 @@ const useRecommendRandomRestaurant = () => {
 
         // 더 이상 맛집 데이터가 없을 때 랜덤으로 맛집을 추천하는 로직을 수행.
         // 최대 45개의 맛집 데이터를 얻을 수 있다.
-        if (!pagination.hasNextPage && kakaoMap) {
+        if (!pagination.hasNextPage) {
           const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
           const markerImage = new kakao.maps.MarkerImage(
             RESTAURANT_BADGE_IMAGE_FILE_PATH,
