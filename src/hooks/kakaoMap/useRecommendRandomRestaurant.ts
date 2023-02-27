@@ -1,5 +1,5 @@
 import useKakaoMapContext from 'contexts/kakaoMap';
-import useRandomRestaurantMarkerContext from 'contexts/kakaoMap/randomRestaurantMarker';
+import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
@@ -14,7 +14,7 @@ const useRecommendRandomRestaurant = () => {
     useState(false);
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
   const { kakaoMap } = useKakaoMapContext();
-  const { setRandomRestaurantMarker } = useRandomRestaurantMarkerContext();
+  const { setRandomRestaurant } = useRandomRestaurantContext();
 
   const recommendRandomRestaurant = () => {
     if (!kakaoMap) return;
@@ -92,20 +92,44 @@ const useRecommendRandomRestaurant = () => {
                 },
                 (resultByGoogleGetDetails, status) => {
                   if (!resultByGoogleGetDetails) return;
+
+                  // 데이터 정합성은 아무래도 한국이다보니 카카오맵이 더 나을 것 같아 최대한 카카오맵 데이터를 이용함.
+                  const {
+                    place_name: placeName,
+                    category_name: categoryName,
+                    road_address_name: roadAddressName,
+                    place_url: kakaoPlaceUrl,
+                    phone: phoneNumber,
+                  } = nearbyRestaurants[randomIndex];
+                  const { photos, opening_hours } = resultByGoogleGetDetails;
+                  const categories = categoryName
+                    .split('>')
+                    .map((category) => category.trim());
+                  const photoUrls = photos?.map((photo) => photo.getUrl());
+                  const isOpen = opening_hours?.isOpen();
+
+                  setRandomRestaurant({
+                    placeName,
+                    categories,
+                    roadAddressName,
+                    photoUrls,
+                    isOpen,
+                    kakaoPlaceUrl,
+                    phoneNumber,
+                    marker: createdMarker,
+                  });
+                  setRecommendRandomRestaurantIsLoading(false);
+                  setKakaoMapOptions((previousKakaoMapOptions) => ({
+                    ...previousKakaoMapOptions,
+                    center: {
+                      lat: currentLatitude,
+                      lng: currentLongitude,
+                    },
+                  }));
                 }
               );
             }
           );
-
-          setKakaoMapOptions((previousKakaoMapOptions) => ({
-            ...previousKakaoMapOptions,
-            center: {
-              lat: currentLatitude,
-              lng: currentLongitude,
-            },
-          }));
-          setRandomRestaurantMarker(createdMarker);
-          setRecommendRandomRestaurantIsLoading(false);
         }
       },
       placesSearchOptions
