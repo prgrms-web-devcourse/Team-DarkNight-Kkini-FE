@@ -12,9 +12,13 @@ import CurrentLocationButton from './CurrentLocationButton';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
 
+const KAKAO_MARKER_EVENT_TYPE = {
+  CLICK: 'click',
+};
+
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
-  const { setKakaoMap } = useKakaoMapContext();
+  const { setKakaoMap, kakaoMapAddEventListener } = useKakaoMapContext();
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
@@ -36,12 +40,21 @@ const KakaoMap = () => {
         };
         const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
 
-        if (kakaoMapMarker) kakaoMapMarker.setMap(createdKakaoMap);
+        if (kakaoMapMarker) {
+          kakaoMapMarker.setMap(createdKakaoMap);
+          kakaoMapAddEventListener(kakaoMapMarker, KAKAO_MARKER_EVENT_TYPE.CLICK, () => {
+            console.log('marker');
+          });
+        }
 
         setKakaoMap(createdKakaoMap);
       }
     });
-  }, [kakaoMapOptions, setKakaoMap, kakaoMapMarker]);
+
+    () => {
+      // kakao.maps.event.removeListener();
+    };
+  }, [kakaoMapOptions, setKakaoMap, kakaoMapMarker, kakaoMapAddEventListener]);
 
   return (
     <Box position='relative' width='100%' height='100%'>
