@@ -62,7 +62,7 @@ const useRecommendRandomRestaurant = () => {
             image: markerImage,
           });
 
-          // google api
+          // google api 시작
           const dummyGoogleMap = new google.maps.Map(document.createElement('div'), {
             center: {
               lat: currentLatitude,
