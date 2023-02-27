@@ -1,7 +1,8 @@
 import { Box, VStack } from '@chakra-ui/react';
+import useKakaoMapContext from 'contexts/kakaoMap';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
 import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomRestaurant';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 
@@ -12,14 +13,12 @@ import ZoomOutButton from './ZoomOutButton';
 
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
-  // recoil로 kakaoMap을 저장하면 에러 발생함... 원인을 모르겠음.
-  // const [kakaoMap, setKakaoMap] = useRecoilState(kakaoMapState);
-  const [kakaoMap, setKakaoMap] = useState<kakao.maps.Map>();
+  const { setKakaoMap } = useKakaoMapContext();
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
-    useRecommendRandomRestaurant(kakaoMap);
+    useRecommendRandomRestaurant();
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
@@ -37,7 +36,7 @@ const KakaoMap = () => {
         setKakaoMap(createdKakaoMap);
       }
     });
-  }, [kakaoMapOptions]);
+  }, [kakaoMapOptions, setKakaoMap]);
 
   return (
     <Box position='relative' width='100%' height='100%'>

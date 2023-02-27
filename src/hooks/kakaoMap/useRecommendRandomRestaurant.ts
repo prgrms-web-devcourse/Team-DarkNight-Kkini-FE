@@ -1,3 +1,4 @@
+import useKakaoMapContext from 'contexts/kakaoMap';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
@@ -5,7 +6,8 @@ import { kakaoMapOptionsState } from 'stores/kakaoMap';
 const DEFAULT_RADIUS = 300;
 const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 
-const useRecommendRandomRestaurant = (kakaoMap?: kakao.maps.Map) => {
+const useRecommendRandomRestaurant = () => {
+  const { kakaoMap } = useKakaoMapContext();
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
     useState(false);
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
