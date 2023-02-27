@@ -5,5 +5,8 @@ declare module '@emotion/react' {
     color: {
       primary: string;
     };
+    boxShadow: {
+      button: string;
+    };
   }
 }

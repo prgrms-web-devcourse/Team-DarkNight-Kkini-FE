@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import { useTheme } from '@emotion/react';
 import { BiPlus } from 'react-icons/bi';
 
 type ZoomInButtonProps = {
@@ -6,13 +7,17 @@ type ZoomInButtonProps = {
 };
 
 const ZoomInButton = ({ onClick }: ZoomInButtonProps) => {
+  const theme = useTheme();
+
   return (
     <Button
       backgroundColor='white'
       zIndex={10}
       onClick={onClick}
       padding='0 0.5rem'
-      boxShadow={'2px 2px 2px 1px rgba(0,0,0,0.25)'}>
+      css={{
+        boxShadow: theme.boxShadow.button,
+      }}>
       <BiPlus fontSize='1.5rem' />
     </Button>
   );
