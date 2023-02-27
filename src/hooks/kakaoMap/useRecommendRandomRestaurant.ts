@@ -1,6 +1,7 @@
+import useKakaoMapContext from 'contexts/kakaoMap';
 import useKakaoMapMarkerContext from 'contexts/kakaoMapMarker';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 
 const DEFAULT_RADIUS = 300;
@@ -10,15 +11,21 @@ const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 const useRecommendRandomRestaurant = () => {
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
     useState(false);
-  const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
+  const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
+  const { kakaoMap } = useKakaoMapContext();
   const { setKakaoMapMarker } = useKakaoMapMarkerContext();
 
   const recommendRandomRestaurant = () => {
+    if (!kakaoMap) return;
+
     setRecommendRandomRestaurantIsLoading(true);
     const kakaoPlacesService = new kakao.maps.services.Places();
+
+    const currentLatitude = kakaoMap.getCenter().getLat();
+    const currentLongitude = kakaoMap.getCenter().getLng();
     const placesSearchOptions: kakao.maps.services.PlacesSearchOptions = {
-      x: kakaoMapOptions.center.lng,
-      y: kakaoMapOptions.center.lat,
+      x: currentLongitude,
+      y: currentLatitude,
       radius: DEFAULT_RADIUS,
     };
 
@@ -51,6 +58,13 @@ const useRecommendRandomRestaurant = () => {
             image: markerImage,
           });
 
+          setKakaoMapOptions((previousKakaoMapOptions) => ({
+            ...previousKakaoMapOptions,
+            center: {
+              lat: currentLatitude,
+              lng: currentLongitude,
+            },
+          }));
           setKakaoMapMarker(createdMarker);
           setRecommendRandomRestaurantIsLoading(false);
         }
