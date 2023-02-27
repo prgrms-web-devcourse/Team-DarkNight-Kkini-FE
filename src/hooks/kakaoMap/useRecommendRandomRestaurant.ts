@@ -5,6 +5,7 @@ import { kakaoMapOptionsState } from 'stores/kakaoMap';
 
 const DEFAULT_RADIUS = 300;
 const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
+const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 
 const useRecommendRandomRestaurant = () => {
   const { kakaoMap } = useKakaoMapContext();
@@ -40,12 +41,17 @@ const useRecommendRandomRestaurant = () => {
         if (!pagination.hasNextPage && kakaoMap) {
           const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
           const bounds = new kakao.maps.LatLngBounds();
+          const markerImage = new kakao.maps.MarkerImage(
+            RESTAURANT_BADGE_IMAGE_FILE_PATH,
+            new kakao.maps.Size(72, 72)
+          );
           const createdMarker = new kakao.maps.Marker({
             map: kakaoMap,
             position: new kakao.maps.LatLng(
               Number(nearbyRestaurants[randomIndex].y),
               Number(nearbyRestaurants[randomIndex].x)
             ),
+            image: markerImage,
           });
 
           // 지도 뷰를 랜덤 맛집에 맞춘다.
