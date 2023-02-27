@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
 
 type RecommendRandomRestaurantButtonProps = {
   isLoading: boolean;
@@ -10,8 +10,10 @@ const RecommendRandomRestaurantButton = ({
   isLoading,
   onClick,
 }: RecommendRandomRestaurantButtonProps) => {
+  const theme = useTheme();
+
   return (
-    <StyledButton
+    <Button
       position='absolute'
       bottom='1.5rem'
       left='50%'
@@ -20,24 +22,22 @@ const RecommendRandomRestaurantButton = ({
       color='white'
       transform='translateX(-50%)'
       isLoading={isLoading}
-      onClick={onClick}>
+      onClick={onClick}
+      css={{
+        backgroundColor: theme.color.primary,
+        boxShadow: theme.boxShadow.button,
+
+        '&:hover, &:disabled': {
+          backgroundColor: theme.color.primary,
+
+          '&:hover': {
+            backgroundColor: theme.color.primary,
+          },
+        },
+      }}>
       랜덤 맛집 뽑기
-    </StyledButton>
+    </Button>
   );
 };
 
 export default RecommendRandomRestaurantButton;
-
-const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => theme.color.primary};
-  box-shadow: ${({ theme }) => theme.boxShadow.button};
-
-  &:hover,
-  &:disabled {
-    background-color: ${({ theme }) => theme.color.primary};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.color.primary};
-    }
-  }
-`;
