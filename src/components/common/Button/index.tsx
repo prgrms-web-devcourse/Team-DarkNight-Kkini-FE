@@ -1,10 +1,11 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, FlexProps } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
 
 type Props = {
   width?: string;
   height?: string;
+  style?: FlexProps;
   children?: ReactNode;
 };
 
@@ -14,19 +15,16 @@ const Button = ({ width = '100%', height = '3rem', ...props }: Props) => {
       as='button'
       align='center'
       justify='center'
-      gap='8px'
       w={width}
       h={height}
-      color='white'
       borderRadius='8px'
-      {...props}>
+      {...props.style}>
       {props.children}
     </ButtonContainer>
   );
 };
 
 const ButtonContainer = styled(Flex)`
-  background-color: ${({ theme }) => theme.color.primary};
   cursor: pointer;
 
   @media (hover: hover) and (pointer: fine) {
