@@ -18,7 +18,7 @@ const BottomDrawer = ({ isOpen, onClose, header, body }: BottomDrawerProps) => {
   return (
     <Drawer placement='bottom' onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
-      <DrawerContent>
+      <DrawerContent style={{ maxWidth: '570px', margin: '0 auto' }}>
         <DrawerHeader borderBottomWidth='1px'>{header}</DrawerHeader>
         <DrawerBody>{body}</DrawerBody>
       </DrawerContent>
