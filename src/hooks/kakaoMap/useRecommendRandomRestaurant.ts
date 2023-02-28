@@ -34,8 +34,7 @@ const useRecommendRandomRestaurant = () => {
     kakaoPlacesService.categorySearch(
       KAKAO_RESTAURANT_CATEGORY_CODE,
       (resultByKakaoCategorySearch, status, pagination) => {
-        // To Do
-        // ZERO_RESULT, ERROR 각 상황 처리 필요
+        // To Do: ZERO_RESULT, ERROR 각 상황 처리 필요 by. 승준
         const { OK, ZERO_RESULT, ERROR } = kakao.maps.services.Status;
 
         if (status === OK) {
@@ -82,6 +81,7 @@ const useRecommendRandomRestaurant = () => {
               type: 'restaurant',
             },
             (resultByGoogleTextSearch, status, pagination) => {
+              // To Do: status 값에 따라 재시도 등 예외 처리 필요 by. 승준
               if (!resultByGoogleTextSearch || !resultByGoogleTextSearch[0].place_id)
                 return;
 
@@ -91,6 +91,7 @@ const useRecommendRandomRestaurant = () => {
                   placeId: resultByGoogleTextSearch[0].place_id,
                 },
                 (resultByGoogleGetDetails, status) => {
+                  // To Do: status 값에 따라 재시도 등 예외 처리 필요 by. 승준
                   if (!resultByGoogleGetDetails) return;
 
                   // 데이터 정합성은 아무래도 한국이다보니 카카오맵이 더 나을 것 같아 최대한 카카오맵 데이터를 이용함.
@@ -101,7 +102,8 @@ const useRecommendRandomRestaurant = () => {
                     place_url: kakaoPlaceUrl,
                     phone: phoneNumber,
                   } = nearbyRestaurants[randomIndex];
-                  const { photos, opening_hours } = resultByGoogleGetDetails;
+                  const { photos, opening_hours, rating } = resultByGoogleGetDetails;
+                  console.log(photos);
                   const categories = categoryName
                     .split('>')
                     .map((category) => category.trim());
@@ -112,6 +114,7 @@ const useRecommendRandomRestaurant = () => {
                     placeName,
                     categories,
                     roadAddressName,
+                    rating,
                     photoUrls,
                     isOpen,
                     kakaoPlaceUrl,
