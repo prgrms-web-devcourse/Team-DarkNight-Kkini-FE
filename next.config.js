@@ -2,14 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['maps.googleapis.com'],
-    path: '/_next/image',
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'maps.googleapis.com',
-      },
-    ],
+    domains: ['maps.googleapis.com', 'team-kkini-mukvengers-fe.vercel.app'],
+    // path: '/_next/image',
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'maps.googleapis.com',
+    //   },
+    // ],
   },
 };
 
