@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
+import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 const DEFAULT_MIN_LEVEL = 0;
 const DEFAULT_MAX_LEVEL = 12;
@@ -58,8 +59,8 @@ const useOperateKakaoMap = () => {
     if (currentLevel <= DEFAULT_MIN_LEVEL) return;
     if (!kakaoMap) return;
 
-    const currentLatitude = kakaoMap.getCenter().getLat();
-    const currentLongitude = kakaoMap.getCenter().getLng();
+    const { latitude: currentLatitude, longitude: currentLongitude } =
+      kakaoMapHelpers.getCenter(kakaoMap);
 
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,
@@ -77,8 +78,8 @@ const useOperateKakaoMap = () => {
     if (currentLevel >= DEFAULT_MAX_LEVEL) return;
     if (!kakaoMap) return;
 
-    const currentLatitude = kakaoMap.getCenter().getLat();
-    const currentLongitude = kakaoMap.getCenter().getLng();
+    const { latitude: currentLatitude, longitude: currentLongitude } =
+      kakaoMapHelpers.getCenter(kakaoMap);
 
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,

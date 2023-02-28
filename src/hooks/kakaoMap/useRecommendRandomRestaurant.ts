@@ -3,6 +3,7 @@ import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
+import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 const DEFAULT_RADIUS = 300;
 const DEFAULT_BADGE_IMAGE_SIZE = 72;
@@ -22,8 +23,8 @@ const useRecommendRandomRestaurant = () => {
     setRecommendRandomRestaurantIsLoading(true);
     const kakaoPlacesService = new kakao.maps.services.Places();
 
-    const currentLatitude = kakaoMap.getCenter().getLat();
-    const currentLongitude = kakaoMap.getCenter().getLng();
+    const { latitude: currentLatitude, longitude: currentLongitude } =
+      kakaoMapHelpers.getCenter(kakaoMap);
     const placesSearchOptions: kakao.maps.services.PlacesSearchOptions = {
       x: currentLongitude,
       y: currentLatitude,
