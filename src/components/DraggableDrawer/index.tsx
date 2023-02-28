@@ -22,7 +22,8 @@ const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
       ref={drawer}
       css={css`
         position: absolute;
-        bottom: 60px;
+        bottom: 0;
+        left: 0;
         z-index: 11;
         display: flex;
         flex-direction: column;
@@ -33,6 +34,15 @@ const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         transform: translateY(120px);
+        animation: 0.5s ease-in-out Open;
+        @keyframes Open {
+          from {
+            transform: translateY(${windowHeight - 120}px);
+          }
+          to {
+            transform: translateY(120px);
+          }
+        }
       `}>
       <DrawerHeader />
       <Box
