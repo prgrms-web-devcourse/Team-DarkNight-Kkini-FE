@@ -7,9 +7,15 @@ type Props = {
   height?: string;
   style?: FlexProps;
   children?: ReactNode;
+  onClick?: () => void;
 };
 
-const Button = ({ width = '100%', height = '3rem', ...props }: Props) => {
+const Button = ({
+  width = '100%',
+  height = '3rem',
+  onClick = () => {},
+  ...props
+}: Props) => {
   return (
     <ButtonContainer
       as='button'
@@ -18,6 +24,7 @@ const Button = ({ width = '100%', height = '3rem', ...props }: Props) => {
       w={width}
       h={height}
       borderRadius='8px'
+      onClick={onClick}
       {...props.style}>
       {props.children}
     </ButtonContainer>

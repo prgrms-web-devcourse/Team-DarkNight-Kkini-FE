@@ -1,5 +1,6 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import LoginButton from 'components/login/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
 import { GangwonEduFont } from 'styles/fonts';
@@ -19,7 +20,8 @@ const Header = () => {
           </Text>
         </Flex>
       </Link>
-      <Avatar src='https://bit.ly/broken-link' size='sm' />
+      {/* <Avatar src='https://bit.ly/broken-link' size='sm' onClick={onOpen} /> */}
+      <LoginButton />
     </Container>
   );
 };
