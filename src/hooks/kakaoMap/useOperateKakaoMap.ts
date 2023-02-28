@@ -1,8 +1,10 @@
 import { useToast } from '@chakra-ui/react';
+import useKakaoMapContext from 'contexts/kakaoMap';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
+import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 const DEFAULT_MIN_LEVEL = 0;
 const DEFAULT_MAX_LEVEL = 12;
@@ -18,6 +20,7 @@ const useOperateKakaoMap = () => {
     position: 'bottom',
     status: 'error',
   });
+  const { kakaoMap } = useKakaoMapContext();
 
   const moveToCurrentLocation = () => {
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
@@ -54,9 +57,17 @@ const useOperateKakaoMap = () => {
     const currentLevel = kakaoMapOptions.level;
 
     if (currentLevel <= DEFAULT_MIN_LEVEL) return;
+    if (!kakaoMap) return;
+
+    const { latitude: currentLatitude, longitude: currentLongitude } =
+      kakaoMapHelpers.getCenter(kakaoMap);
 
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,
+      center: {
+        lat: currentLatitude,
+        lng: currentLongitude,
+      },
       level: previousKakaoMapOptions.level - 1,
     }));
   };
@@ -65,9 +76,17 @@ const useOperateKakaoMap = () => {
     const currentLevel = kakaoMapOptions.level;
 
     if (currentLevel >= DEFAULT_MAX_LEVEL) return;
+    if (!kakaoMap) return;
+
+    const { latitude: currentLatitude, longitude: currentLongitude } =
+      kakaoMapHelpers.getCenter(kakaoMap);
 
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,
+      center: {
+        lat: currentLatitude,
+        lng: currentLongitude,
+      },
       level: previousKakaoMapOptions.level + 1,
     }));
   };

@@ -1,27 +1,46 @@
 import { Box, VStack } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
+import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
 import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomRestaurant';
-import { useEffect, useRef } from 'react';
+import useClickAway from 'hooks/useClickAway';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 
 import RecommendRandomRestaurantButton from '../Buttons/RecommendRandomRestaurantButton';
 import CurrentLocationButton from './CurrentLocationButton';
+import RandomRestaurantModal from './RandomRestaurantModal';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
 
+const KAKAO_MARKER_EVENT_TYPE = {
+  CLICK: 'click',
+};
+
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
-  const { setKakaoMap } = useKakaoMapContext();
+  const { setKakaoMap, kakaoMapAddEventListener } = useKakaoMapContext();
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
+  const { randomRestaurant } = useRandomRestaurantContext();
+
+  // 랜덤 맛집 모달
+  const [randomRestaurantOpen, setRandomRestaurantOpen] = useState(false);
+  const handleCloseRandomRestaurantModal = () => {
+    setRandomRestaurantOpen(false);
+  };
+  const randomRestaurantModalRef = useClickAway(handleCloseRandomRestaurantModal);
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
+    const handleClickKakaoMapMarker = () => {
+      setRandomRestaurantOpen(true);
+    };
+
     kakao.maps.load(() => {
       if (kakaoMapRef.current) {
         const {
@@ -33,10 +52,30 @@ const KakaoMap = () => {
           level: level,
         };
         const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
+
+        if (randomRestaurant.marker) {
+          randomRestaurant.marker.setMap(createdKakaoMap);
+          kakaoMapAddEventListener(
+            randomRestaurant.marker,
+            KAKAO_MARKER_EVENT_TYPE.CLICK,
+            handleClickKakaoMapMarker
+          );
+        }
+
         setKakaoMap(createdKakaoMap);
       }
     });
-  }, [kakaoMapOptions, setKakaoMap]);
+
+    return () => {
+      if (randomRestaurant.marker) {
+        kakao.maps.event.removeListener(
+          randomRestaurant.marker,
+          KAKAO_MARKER_EVENT_TYPE.CLICK,
+          handleClickKakaoMapMarker
+        );
+      }
+    };
+  }, [kakaoMapOptions, setKakaoMap, randomRestaurant, kakaoMapAddEventListener]);
 
   return (
     <Box position='relative' width='100%' height='100%'>
@@ -58,6 +97,14 @@ const KakaoMap = () => {
       <RecommendRandomRestaurantButton
         isLoading={recommendRandomRestaurantIsLoading}
         onClick={recommendRandomRestaurant}
+      />
+
+      {/* 랜덤 맛집 모달 */}
+      <RandomRestaurantModal
+        ref={randomRestaurantModalRef}
+        isOpen={randomRestaurantOpen}
+        onClose={handleCloseRandomRestaurantModal}
+        randomRestaurant={randomRestaurant}
       />
     </Box>
   );

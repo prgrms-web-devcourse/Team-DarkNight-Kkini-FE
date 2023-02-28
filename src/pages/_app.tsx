@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Layout from 'components/common/Layout';
 import { KakaoMapProvider } from 'contexts/kakaoMap';
+import { RandomRestaurantProvider } from 'contexts/kakaoMap/randomRestaurant';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import globalStyle from 'styles/global';
@@ -17,9 +18,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ThemeProvider theme={theme}>
           <Global styles={globalStyle} />
           <KakaoMapProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <RandomRestaurantProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </RandomRestaurantProvider>
           </KakaoMapProvider>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
