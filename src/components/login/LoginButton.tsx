@@ -37,7 +37,7 @@ const LoginButton = () => {
             <Text fontSize='1.125rem' paddingBottom='0.8rem'>
               지금 로그인해서 맛집을 함께 경험해보세요
             </Text>
-            <Flex direction='column'>
+            <Flex direction='column' gap='0.5rem'>
               <KakaoButton />
               <GoogleButton />
             </Flex>

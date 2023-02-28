@@ -1,12 +1,15 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Avatar, Flex, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import LoginButton from 'components/login/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { isLogin } from 'stores/auth';
 import { GangwonEduFont } from 'styles/fonts';
 
-// TODO: 로그인 상태값에 따라 유저정보 / 로그인버튼 보여주기 by suhwa
 const Header = () => {
+  const isLoginState = useRecoilValue(isLogin);
+
   return (
     <Container>
       <Link href='/'>
@@ -20,8 +23,11 @@ const Header = () => {
           </Text>
         </Flex>
       </Link>
-      {/* <Avatar src='https://bit.ly/broken-link' size='sm' onClick={onOpen} /> */}
-      <LoginButton />
+      {isLoginState ? (
+        <Avatar src='https://bit.ly/broken-link' size='sm' />
+      ) : (
+        <LoginButton />
+      )}
     </Container>
   );
 };
