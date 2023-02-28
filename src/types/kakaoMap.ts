@@ -15,5 +15,7 @@ export type RandomRestaurantType = {
   isOpen?: boolean;
   kakaoPlaceUrl?: string;
   phoneNumber?: string;
+  // x, y 추가
+  // 구글 place_id
   marker?: kakao.maps.Marker | null;
 };
