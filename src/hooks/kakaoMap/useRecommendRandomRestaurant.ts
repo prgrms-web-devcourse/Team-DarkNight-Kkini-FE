@@ -63,16 +63,8 @@ const useRecommendRandomRestaurant = () => {
           });
 
           // google api 시작
-          const dummyGoogleMap = new google.maps.Map(document.createElement('div'), {
-            center: {
-              lat: currentLatitude,
-              lng: currentLongitude,
-            },
-            zoom: 15,
-          });
-
           const googlePlacesService = new google.maps.places.PlacesService(
-            dummyGoogleMap
+            document.createElement('div')
           );
 
           // google textSearch
