@@ -48,6 +48,7 @@ const RandomRestaurantModal = forwardRef<HTMLDivElement, RandomRestaurantModalPr
               _hover={{
                 textDecoration: 'underline',
               }}>
+              {/* To Do: 특정 아이콘 클릭 시 가게 이름 복사되도록 clipboard api 이용해서 구현 by 승준 */}
               {randomRestaurant.placeName}
             </Heading>
             <BiRightArrowCircle size='1.1rem' cursor='pointer' />
