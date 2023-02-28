@@ -31,7 +31,6 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

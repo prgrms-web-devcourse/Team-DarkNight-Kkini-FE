@@ -78,4 +78,6 @@ const RandomRestaurantModal = forwardRef<HTMLDivElement, RandomRestaurantModalPr
   }
 );
 
+RandomRestaurantModal.displayName = 'RandomRestaurantModal';
+
 export default RandomRestaurantModal;
