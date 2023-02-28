@@ -103,7 +103,6 @@ const useRecommendRandomRestaurant = () => {
                     phone: phoneNumber,
                   } = nearbyRestaurants[randomIndex];
                   const { photos, opening_hours, rating } = resultByGoogleGetDetails;
-                  console.log(photos);
                   const categories = categoryName
                     .split('>')
                     .map((category) => category.trim());
