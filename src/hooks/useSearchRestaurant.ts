@@ -55,7 +55,6 @@ const useSearchRestaurant = () => {
     kakaoPlaces.keywordSearch(
       keyword,
       (result, status) => {
-        console.log(result, status);
         const { OK, ZERO_RESULT } = kakao.maps.services.Status;
         if (status === ZERO_RESULT) {
           setRestaurants([]);
