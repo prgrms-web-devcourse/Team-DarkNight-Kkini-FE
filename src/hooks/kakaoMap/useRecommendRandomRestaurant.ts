@@ -21,7 +21,15 @@ const useRecommendRandomRestaurant = () => {
   /**
    * To Do: placeName 나오는 부분 스타일링 필요 by 승준
    */
-  const makeRandomRestaurantOverlayContent = (placeName: string) => {
+  const makeRandomRestaurantOverlayContent = ({
+    placeName,
+    latitude,
+    longitude,
+  }: {
+    placeName: string;
+    latitude: number;
+    longitude: number;
+  }) => {
     const containerElement = document.createElement('div');
     containerElement.innerHTML = `<img
                                     class='random-restaurant-custom-overlay'
@@ -36,7 +44,10 @@ const useRecommendRandomRestaurant = () => {
                                   />
                                   <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>`;
     containerElement.onclick = () => {
+      if (!kakaoMap) return;
+
       handleOpenRandomRestaurantModal();
+      kakaoMapHelpers.panto({ kakaoMap, latitude, longitude });
     };
 
     return containerElement;
@@ -121,7 +132,11 @@ const useRecommendRandomRestaurant = () => {
                       Number(nearbyRestaurants[randomIndex].x)
                     ),
                     clickable: true,
-                    content: makeRandomRestaurantOverlayContent(placeName),
+                    content: makeRandomRestaurantOverlayContent({
+                      placeName,
+                      latitude: Number(nearbyRestaurants[randomIndex].y),
+                      longitude: Number(nearbyRestaurants[randomIndex].x),
+                    }),
                   });
 
                   setRandomRestaurant({
