@@ -20,7 +20,7 @@ const KAKAO_MARKER_EVENT_TYPE = {
 
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
-  const { setKakaoMap, kakaoMapAddEventListener } = useKakaoMapContext();
+  const { kakaoMap, setKakaoMap, kakaoMapAddEventListener } = useKakaoMapContext();
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
@@ -42,6 +42,8 @@ const KakaoMap = () => {
     };
 
     kakao.maps.load(() => {
+      if (kakaoMap) return;
+
       if (kakaoMapRef.current) {
         const {
           center: { lat, lng },
@@ -75,7 +77,7 @@ const KakaoMap = () => {
         );
       }
     };
-  }, [kakaoMapOptions, setKakaoMap, randomRestaurant, kakaoMapAddEventListener]);
+  }, []);
 
   return (
     <Box position='relative' width='100%' height='100%'>

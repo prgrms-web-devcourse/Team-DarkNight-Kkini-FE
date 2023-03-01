@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
@@ -12,7 +12,7 @@ const DEFAULT_MAX_LEVEL = 12;
 const DEFAULT_TOAST_DURATION = 5000;
 
 const useOperateKakaoMap = () => {
-  const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
+  const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
   const [moveToCurrentLocationIsLoading, setMoveToCurrentLocationIsLoading] =
     useState(false);
   const errorToast = useToast({
@@ -24,6 +24,12 @@ const useOperateKakaoMap = () => {
 
   const moveToCurrentLocation = () => {
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
+      if (!kakaoMap) return;
+      kakaoMapHelpers.panto({
+        kakaoMap,
+        latitude,
+        longitude,
+      });
       setKakaoMapOptions((previousKakaoMapOptions) => ({
         ...previousKakaoMapOptions,
         center: {
@@ -54,40 +60,44 @@ const useOperateKakaoMap = () => {
   };
 
   const zoomIn = () => {
-    const currentLevel = kakaoMapOptions.level;
+    if (!kakaoMap) return;
+    const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);
 
     if (currentLevel <= DEFAULT_MIN_LEVEL) return;
-    if (!kakaoMap) return;
-
+    kakaoMapHelpers.setLevel({
+      kakaoMap,
+      nextLevel: currentLevel - 1,
+    });
     const { latitude: currentLatitude, longitude: currentLongitude } =
       kakaoMapHelpers.getCenter(kakaoMap);
-
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,
       center: {
         lat: currentLatitude,
         lng: currentLongitude,
       },
-      level: previousKakaoMapOptions.level - 1,
+      level: currentLevel - 1,
     }));
   };
 
   const zoomOut = () => {
-    const currentLevel = kakaoMapOptions.level;
+    if (!kakaoMap) return;
+    const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);
 
     if (currentLevel >= DEFAULT_MAX_LEVEL) return;
-    if (!kakaoMap) return;
-
+    kakaoMapHelpers.setLevel({
+      kakaoMap,
+      nextLevel: currentLevel + 1,
+    });
     const { latitude: currentLatitude, longitude: currentLongitude } =
       kakaoMapHelpers.getCenter(kakaoMap);
-
     setKakaoMapOptions((previousKakaoMapOptions) => ({
       ...previousKakaoMapOptions,
       center: {
         lat: currentLatitude,
         lng: currentLongitude,
       },
-      level: previousKakaoMapOptions.level + 1,
+      level: currentLevel + 1,
     }));
   };
 
