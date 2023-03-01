@@ -1,38 +1,29 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { isDrawerOpened } from 'stores/drawer';
 import { searchRestaurantList } from 'stores/Restaurant';
 import { GangwonEduFont } from 'styles/fonts';
 
 import RestaurantItem from './RestaurantItem';
 
-const DO_NOT_SEARCH_MESSAGE = '검색어를 입력해주세요!';
 const NO_RESULT_MESSAGE = '결과가 없습니다!';
 
 const SearchRestaurantContent = () => {
   const restaurantList = useRecoilValue(searchRestaurantList);
-  const [isSearched, setIsSearched] = useState<boolean>(false);
-  const isOpened = useRecoilValue(isDrawerOpened);
-
-  useEffect(() => {
-    setIsSearched(false);
-    restaurantList && setIsSearched(true);
-  }, [isOpened, restaurantList]);
-
-  console.log(isSearched, isOpened, restaurantList);
 
   return (
     <Flex
-      pos='relative'
+      pos='absolute'
+      top='0'
+      left='0'
+      right='0'
       flexDir='column'
       bgColor='#f4f4f4'
-      height='100%'
+      height='75%'
       m='1rem'
       borderRadius='8px'
       p='0.4rem'
-      overflowY='auto'>
+      overflow='auto'>
       {restaurantList.length > 0 ? (
         restaurantList.map(({ place_name, road_address_name }) => (
           <RestaurantItem
@@ -58,7 +49,7 @@ const SearchRestaurantContent = () => {
             style={{ borderRadius: '8px' }}
           />
           <Text fontSize='lg' className={GangwonEduFont.className}>
-            {isSearched ? NO_RESULT_MESSAGE : DO_NOT_SEARCH_MESSAGE}
+            {NO_RESULT_MESSAGE}
           </Text>
         </Flex>
       )}
