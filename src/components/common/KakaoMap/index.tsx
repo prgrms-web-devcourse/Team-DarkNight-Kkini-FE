@@ -55,6 +55,17 @@ const KakaoMap = () => {
           level: kakaoMapHelpers.getLevel(createdKakaoMap),
         }));
       });
+
+      kakaoMapAddEventListener(createdKakaoMap, 'center_changed', () => {
+        const { latitude, longitude } = kakaoMapHelpers.getCenter(createdKakaoMap);
+        setKakaoMapOptions((previousKakaoMapOptions) => ({
+          ...previousKakaoMapOptions,
+          center: {
+            lat: latitude,
+            lng: longitude,
+          },
+        }));
+      });
     });
   }, [kakaoMap, kakaoMapOptions, setKakaoMap, setKakaoMapOptions]);
 
