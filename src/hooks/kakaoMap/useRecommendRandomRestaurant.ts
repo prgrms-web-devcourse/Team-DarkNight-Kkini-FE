@@ -101,7 +101,6 @@ const useRecommendRandomRestaurant = () => {
                     .map((category) => category.trim());
                   const photoUrls = photos?.map((photo) => photo.getUrl());
                   const isOpen = opening_hours?.isOpen();
-                  console.log(photoUrls);
 
                   setRandomRestaurant({
                     placeName,

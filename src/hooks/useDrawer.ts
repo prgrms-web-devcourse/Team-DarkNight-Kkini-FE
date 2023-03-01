@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { isDrawerOpened } from '../stores/drawer';
 import { useWindowHeight } from './useWindowHeight';
@@ -76,7 +76,6 @@ export function useDrawer() {
       }
 
       if (canUserMoveDrawer()) {
-        e.preventDefault();
         // 터치 시작점에서부터 현재 터치 포인트까지 변화된 값
         const touchOffsetY = currentTouch.clientY - touchStart.touchY;
         let nextDrawerY = touchStart.drawerY + touchOffsetY;
@@ -89,7 +88,7 @@ export function useDrawer() {
           nextDrawerY = MAX_Y;
         }
 
-        drawerRef.style.setProperty('transform', `translateY(${nextDrawerY}px)`);
+        drawerRef.style.setProperty('transform', `translateY(${nextDrawerY - 60}px)`);
       } else {
         document.body.style.overflowY = 'hidden';
       }
@@ -129,8 +128,8 @@ export function useDrawer() {
       };
     };
 
-    drawerRef.addEventListener('touchstart', handleTouchStart);
-    drawerRef.addEventListener('touchmove', handleTouchMove);
+    drawerRef.addEventListener('touchstart', handleTouchStart, { passive: true });
+    drawerRef.addEventListener('touchmove', handleTouchMove, { passive: true });
     drawerRef.addEventListener('touchend', handleTouchEnd);
 
     return () => {
@@ -147,7 +146,7 @@ export function useDrawer() {
     const contentRef = content.current;
     if (!contentRef) return;
 
-    contentRef.addEventListener('touchstart', handleTouchStart);
+    contentRef.addEventListener('touchstart', handleTouchStart, { passive: true });
 
     return () => contentRef.removeEventListener('touchstart', handleTouchStart);
   }, [isOpened]);
