@@ -1,3 +1,23 @@
+/**
+ * https://apis.map.kakao.com/web/documentation/
+ * 위 링크에서 Docs의 Events 항목에 나오는 이벤트 타입들을 참고하여 KakaoMapEventType 지정.
+ */
+type KakaoMapEventType =
+  | 'center_changed'
+  | 'zoom_start'
+  | 'zoom_changed'
+  | 'bounds_changed'
+  | 'click'
+  | 'dblclick'
+  | 'rightclick'
+  | 'mousemove'
+  | 'dragstart'
+  | 'drag'
+  | 'dragend'
+  | 'idle'
+  | 'tilesloaded'
+  | 'maptypeid_changed';
+
 export const kakaoMapHelpers = {
   panto: ({
     kakaoMap,
@@ -24,4 +44,12 @@ export const kakaoMapHelpers = {
   }) => {
     kakaoMap.setLevel(nextLevel);
   },
+};
+
+export const kakaoMapAddEventListener = (
+  eventTarget: kakao.maps.event.EventTarget,
+  type: KakaoMapEventType,
+  callback: () => void
+) => {
+  kakao.maps.event.addListener(eventTarget, type, callback);
 };
