@@ -1,15 +1,13 @@
 import { Box } from '@chakra-ui/react';
+import SearchRestaurantContent from 'components/SearchRestaurant/SearchRestaurantContent';
 
-import SearchRestaurant from '../SearchRestaurant/index';
-import CreateCommunityContent from './CreateCommunityContent';
 import DraggableDrawer from './index';
 
 const CreateCommunityDrawer = () => {
   return (
     <DraggableDrawer>
-      <Box h='100%'>
-        <SearchRestaurant />
-        <CreateCommunityContent />
+      <Box pos='relative' h='100%'>
+        <SearchRestaurantContent />
       </Box>
     </DraggableDrawer>
   );
