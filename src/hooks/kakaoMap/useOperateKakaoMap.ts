@@ -22,6 +22,7 @@ const useOperateKakaoMap = () => {
   });
   const { kakaoMap } = useKakaoMapContext();
 
+  // 현재 위치로 카카오맵을 이동
   const moveToCurrentLocation = () => {
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
       if (!kakaoMap) return;
@@ -59,6 +60,7 @@ const useOperateKakaoMap = () => {
     }
   };
 
+  // 카카오맵 확대
   const zoomIn = () => {
     if (!kakaoMap) return;
     const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);
@@ -80,6 +82,7 @@ const useOperateKakaoMap = () => {
     }));
   };
 
+  // 카카오맵 축소
   const zoomOut = () => {
     if (!kakaoMap) return;
     const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);

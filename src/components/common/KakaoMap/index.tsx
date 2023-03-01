@@ -37,36 +37,36 @@ const KakaoMap = () => {
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
+    kakao.maps.load(() => {
+      if (kakaoMap || !kakaoMapRef.current) return;
+
+      const {
+        center: { lat, lng },
+        level,
+      } = kakaoMapOptions;
+      const options: kakao.maps.MapOptions = {
+        center: new kakao.maps.LatLng(lat, lng),
+        level: level,
+      };
+      const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
+      setKakaoMap(createdKakaoMap);
+    });
+  }, [kakaoMap, kakaoMapOptions, setKakaoMap]);
+
+  // 마커 생성
+  useEffect(() => {
+    if (!kakaoMap || !randomRestaurant.marker) return;
+
     const handleClickKakaoMapMarker = () => {
       setRandomRestaurantOpen(true);
     };
 
-    kakao.maps.load(() => {
-      if (kakaoMap) return;
-
-      if (kakaoMapRef.current) {
-        const {
-          center: { lat, lng },
-          level,
-        } = kakaoMapOptions;
-        const options: kakao.maps.MapOptions = {
-          center: new kakao.maps.LatLng(lat, lng),
-          level: level,
-        };
-        const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
-
-        if (randomRestaurant.marker) {
-          randomRestaurant.marker.setMap(createdKakaoMap);
-          kakaoMapAddEventListener(
-            randomRestaurant.marker,
-            KAKAO_MARKER_EVENT_TYPE.CLICK,
-            handleClickKakaoMapMarker
-          );
-        }
-
-        setKakaoMap(createdKakaoMap);
-      }
-    });
+    randomRestaurant.marker.setMap(kakaoMap);
+    kakaoMapAddEventListener(
+      randomRestaurant.marker,
+      KAKAO_MARKER_EVENT_TYPE.CLICK,
+      handleClickKakaoMapMarker
+    );
 
     return () => {
       if (randomRestaurant.marker) {
@@ -75,9 +75,10 @@ const KakaoMap = () => {
           KAKAO_MARKER_EVENT_TYPE.CLICK,
           handleClickKakaoMapMarker
         );
+        randomRestaurant.marker.setMap(null);
       }
     };
-  }, []);
+  }, [kakaoMap, kakaoMapAddEventListener, randomRestaurant]);
 
   return (
     <Box position='relative' width='100%' height='100%'>
