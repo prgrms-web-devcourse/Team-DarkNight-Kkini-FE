@@ -15,7 +15,43 @@ const useRecommendRandomRestaurant = () => {
     useState(false);
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
   const { kakaoMap } = useKakaoMapContext();
-  const { setRandomRestaurant } = useRandomRestaurantContext();
+  const { setRandomRestaurant, handleOpenRandomRestaurantModal } =
+    useRandomRestaurantContext();
+
+  /**
+   * To Do: placeName 나오는 부분 스타일링 필요 by 승준
+   */
+  const makeRandomRestaurantOverlayContent = ({
+    placeName,
+    latitude,
+    longitude,
+  }: {
+    placeName: string;
+    latitude: number;
+    longitude: number;
+  }) => {
+    const containerElement = document.createElement('div');
+    containerElement.innerHTML = `<img
+                                    class='random-restaurant-custom-overlay'
+                                    src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
+                                    style="
+                                      width: ${DEFAULT_BADGE_IMAGE_SIZE}px;
+                                      height: ${DEFAULT_BADGE_IMAGE_SIZE}px;
+                                      z-index: 11;
+                                      border-radius: 50%;
+                                      box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.25);
+                                    "
+                                  />
+                                  <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>`;
+    containerElement.onclick = () => {
+      if (!kakaoMap) return;
+
+      handleOpenRandomRestaurantModal();
+      kakaoMapHelpers.panto({ kakaoMap, latitude, longitude });
+    };
+
+    return containerElement;
+  };
 
   const recommendRandomRestaurant = () => {
     if (!kakaoMap) return;
@@ -48,19 +84,6 @@ const useRecommendRandomRestaurant = () => {
         if (!pagination.hasNextPage) {
           // 랜덤 숫자 생성
           const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
-
-          // kakao marker 생성
-          const markerImage = new kakao.maps.MarkerImage(
-            RESTAURANT_BADGE_IMAGE_FILE_PATH,
-            new kakao.maps.Size(DEFAULT_BADGE_IMAGE_SIZE, DEFAULT_BADGE_IMAGE_SIZE)
-          );
-          const createdMarker = new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(
-              Number(nearbyRestaurants[randomIndex].y),
-              Number(nearbyRestaurants[randomIndex].x)
-            ),
-            image: markerImage,
-          });
 
           // google api 시작
           const googlePlacesService = new google.maps.places.PlacesService(
@@ -102,6 +125,20 @@ const useRecommendRandomRestaurant = () => {
                   const photoUrls = photos?.map((photo) => photo.getUrl());
                   const isOpen = opening_hours?.isOpen();
 
+                  // kakao custom overlay 생성
+                  const createdCustomOverlay = new kakao.maps.CustomOverlay({
+                    position: new kakao.maps.LatLng(
+                      Number(nearbyRestaurants[randomIndex].y),
+                      Number(nearbyRestaurants[randomIndex].x)
+                    ),
+                    clickable: true,
+                    content: makeRandomRestaurantOverlayContent({
+                      placeName,
+                      latitude: Number(nearbyRestaurants[randomIndex].y),
+                      longitude: Number(nearbyRestaurants[randomIndex].x),
+                    }),
+                  });
+
                   setRandomRestaurant({
                     placeName,
                     categories,
@@ -111,7 +148,7 @@ const useRecommendRandomRestaurant = () => {
                     isOpen,
                     kakaoPlaceUrl,
                     phoneNumber,
-                    marker: createdMarker,
+                    customOverlay: createdCustomOverlay,
                   });
                   setRecommendRandomRestaurantIsLoading(false);
                   setKakaoMapOptions((previousKakaoMapOptions) => ({

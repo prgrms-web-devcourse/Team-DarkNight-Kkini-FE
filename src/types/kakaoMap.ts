@@ -15,7 +15,8 @@ export type RandomRestaurantType = {
   isOpen?: boolean;
   kakaoPlaceUrl?: string;
   phoneNumber?: string;
+  // To Do: 해당 속성 추가하기(setState 할 때에도 추가 필요) by 승준
   // x, y 추가
   // 구글 place_id
-  marker?: kakao.maps.Marker | null;
+  customOverlay?: kakao.maps.CustomOverlay | null;
 };
