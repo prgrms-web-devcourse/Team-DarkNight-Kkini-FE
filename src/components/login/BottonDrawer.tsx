@@ -20,7 +20,10 @@ const BottomDrawer = ({ isOpen, onClose, header, body }: BottomDrawerProps) => {
       <DrawerOverlay />
       <DrawerContent
         borderTopRadius='1rem'
-        style={{ maxWidth: '570px', margin: '0 auto' }}>
+        style={{
+          maxWidth: 'var(--chakra-sizes-kkiniMobile)',
+          margin: '0 auto',
+        }}>
         <DrawerHeader borderBottomWidth='1px'>{header}</DrawerHeader>
         <DrawerBody>{body}</DrawerBody>
       </DrawerContent>
