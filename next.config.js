@@ -7,11 +7,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'maps.googleapis.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'team-kkini-mukvengers-fe.vercel.app',
-        pathname: '/_next/image/**',
-      },
     ],
   },
   compiler: {
