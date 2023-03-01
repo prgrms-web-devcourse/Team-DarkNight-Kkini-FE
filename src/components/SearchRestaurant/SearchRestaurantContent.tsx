@@ -34,13 +34,7 @@ const SearchRestaurantContent = () => {
           />
         ))
       ) : (
-        <Flex
-          pos='absolute'
-          top='20%'
-          left='30%'
-          flexDir='column'
-          justify='center'
-          align='center'>
+        <Flex flexDir='column' justify='center' align='center' m='auto 0'>
           <Image
             src='/assets/kkini-logo.svg'
             alt='default'
