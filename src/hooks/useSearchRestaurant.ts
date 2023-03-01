@@ -55,7 +55,12 @@ const useSearchRestaurant = () => {
     kakaoPlaces.keywordSearch(
       keyword,
       (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
+        console.log(result, status);
+        const { OK, ZERO_RESULT } = kakao.maps.services.Status;
+        if (status === ZERO_RESULT) {
+          setRestaurants([]);
+        }
+        if (status === OK) {
           const searchResult = result.map(
             ({ category_name, place_name, x, y, road_address_name }) => {
               const photos = getRestaurantPhoto(road_address_name);
