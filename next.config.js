@@ -1,15 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'maps.googleapis.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'team-kkini-mukvengers-fe.vercel.app',
         pathname: '/_next/image/**',
       },
     ],
