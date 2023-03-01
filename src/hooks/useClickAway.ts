@@ -30,7 +30,7 @@ const useClickAway = (callback: () => void) => {
         document.removeEventListener(eventType, handleEvent);
       });
     };
-  });
+  }, [callback, ref]);
 
   return ref;
 };
