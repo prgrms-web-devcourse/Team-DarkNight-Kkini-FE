@@ -23,14 +23,14 @@ const SearchRestaurant = () => {
   };
 
   return (
-    <Flex border='1px solid black' borderRadius='8px' mx='1rem'>
-      <Button disabled bgColor='transparent'>
+    <Flex border='1px solid black' borderRadius='8px' mx='1rem' mt='0.5rem'>
+      <Button disabled bgColor='transparent' px='0.2rem' width='20px'>
         <BsSearch />
       </Button>
       <Form onSubmit={handleSubmit}>
         <Input type='text' value={value} onChange={handleChange} />
       </Form>
-      <Button onClick={handleReset} bgColor='transparent'>
+      <Button onClick={handleReset} bgColor='transparent' px='0.2rem'>
         <BiX />
       </Button>
     </Flex>
