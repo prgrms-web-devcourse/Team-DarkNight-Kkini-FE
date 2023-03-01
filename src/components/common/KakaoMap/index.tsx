@@ -66,7 +66,7 @@ const KakaoMap = () => {
     });
   }, [kakaoMap, kakaoMapOptions, setKakaoMap, setKakaoMapOptions]);
 
-  // 마커 생성
+  // 랜덤 맛집 커스텀 오버레이 생성
   useEffect(() => {
     if (!kakaoMap || !randomRestaurant.customOverlay) return;
     randomRestaurant.customOverlay.setMap(kakaoMap);
@@ -100,7 +100,6 @@ const KakaoMap = () => {
         onClick={recommendRandomRestaurant}
       />
 
-      {/* 랜덤 맛집 모달 */}
       <RandomRestaurantModal
         ref={randomRestaurantModalRef}
         isOpen={randomRestaurantModalOpen}
