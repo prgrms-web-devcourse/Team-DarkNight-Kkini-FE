@@ -1,8 +1,8 @@
 import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import BottomDrawer from 'components/login/BottonDrawer';
-import GoogleButton from 'components/login/GoogleButton';
-import KakaoButton from 'components/login/KakaoButton';
+import GoogleButton from 'components/login/OAuth/GoogleButton';
+import KakaoButton from 'components/login/OAuth/KakaoButton';
 import Image from 'next/image';
 
 const LoginButton = () => {
