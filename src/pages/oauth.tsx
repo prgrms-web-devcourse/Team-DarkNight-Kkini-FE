@@ -12,7 +12,7 @@ const OAuthLogin = () => {
     const token = router.query.accessToken as string;
     setAccessToken(token);
     setLoginState(true);
-    router.push('/');
+    router.push('/', undefined, { shallow: true });
   }, [router]);
 
   return <div>로그인 중..</div>;
