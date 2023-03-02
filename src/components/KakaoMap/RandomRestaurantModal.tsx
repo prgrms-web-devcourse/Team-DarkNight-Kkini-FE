@@ -4,8 +4,8 @@ import { forwardRef } from 'react';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { RandomRestaurantType } from 'types/kakaoMap';
 
-import Button from '../Button';
-import Category from '../Category';
+import Button from '../common/Button';
+import Category from '../common/Category';
 
 type RandomRestaurantModalProps = {
   isOpen: boolean;

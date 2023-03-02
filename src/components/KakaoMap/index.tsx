@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import { kakaoMapAddEventListener, kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
-import RecommendRandomRestaurantButton from '../Buttons/RecommendRandomRestaurantButton';
+import RecommendRandomRestaurantButton from '../common/Buttons/RecommendRandomRestaurantButton';
 import CurrentLocationButton from './CurrentLocationButton';
 import RandomRestaurantModal from './RandomRestaurantModal';
 import ZoomInButton from './ZoomInButton';
