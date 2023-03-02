@@ -1,5 +1,4 @@
 import { Box, CloseButton, Flex, Heading, Stack } from '@chakra-ui/react';
-import Image from 'next/image';
 import { forwardRef } from 'react';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { RandomRestaurantType } from 'types/kakaoMap';

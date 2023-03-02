@@ -1,3 +1,5 @@
+import ERROR_MESSAGE from 'utils/constants/errorMessage';
+
 /**
  * https://apis.map.kakao.com/web/documentation/
  * 위 링크에서 Docs의 Events 항목에 나오는 이벤트 타입들을 참고하여 KakaoMapEventType 지정.
@@ -52,4 +54,45 @@ export const kakaoMapAddEventListener = (
   callback: () => void
 ) => {
   kakao.maps.event.addListener(eventTarget, type, callback);
+};
+
+export const getNearbyRestaurants = ({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}): Promise<kakao.maps.services.PlacesSearchResultItem[]> => {
+  const DEFAULT_RADIUS = 300;
+  const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
+
+  const nearbyRestaurants: kakao.maps.services.PlacesSearchResultItem[] = [];
+  const kakaoPlacesService = new kakao.maps.services.Places();
+  const placesSearchOptions: kakao.maps.services.PlacesSearchOptions = {
+    x: longitude,
+    y: latitude,
+    radius: DEFAULT_RADIUS,
+  };
+
+  return new Promise((resolve, reject) => {
+    kakaoPlacesService.categorySearch(
+      KAKAO_RESTAURANT_CATEGORY_CODE,
+      (result, status, pagination) => {
+        const { OK, ZERO_RESULT, ERROR } = kakao.maps.services.Status;
+        if (status === OK) {
+          nearbyRestaurants.push(...result);
+          pagination.hasNextPage && pagination.nextPage();
+        }
+
+        if (!pagination.hasNextPage || status === ZERO_RESULT) {
+          resolve(nearbyRestaurants);
+        }
+
+        if (status === ERROR) {
+          reject(new Error(ERROR_MESSAGE.REQUEST_FAILED_BY_KAKAO_MAP_SERVER_ERROR));
+        }
+      },
+      placesSearchOptions
+    );
+  });
 };
