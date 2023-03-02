@@ -24,7 +24,7 @@ const LoginButton = () => {
           <Flex justifyContent='space-between'>
             <Text fontSize='1.5rem'>로그인</Text>
             <Image
-              src='/assets/delete-btn.svg'
+              src='/images/delete-btn.svg'
               alt='modal-close-button'
               onClick={onClose}
               width='25'
