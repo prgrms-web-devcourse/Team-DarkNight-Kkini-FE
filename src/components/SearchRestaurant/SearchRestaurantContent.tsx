@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
-import { searchRestaurantList } from 'stores/Restaurant';
+import { searchRestaurantListState } from 'stores/Restaurant';
 import { GangwonEduFont } from 'styles/fonts';
 
 import RestaurantItem from './RestaurantItem';
@@ -9,7 +9,7 @@ import RestaurantItem from './RestaurantItem';
 const NO_RESULT_MESSAGE = '결과가 없습니다!';
 
 const SearchRestaurantContent = () => {
-  const restaurantList = useRecoilValue(searchRestaurantList);
+  const restaurantList = useRecoilValue(searchRestaurantListState);
 
   return (
     <Flex

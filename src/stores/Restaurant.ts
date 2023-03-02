@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { RestaurantProps } from 'types/Restaurant';
 
-export const searchRestaurantList = atom<RestaurantProps[]>({
-  key: 'restaurants',
+export const searchRestaurantListState = atom<RestaurantProps[]>({
+  key: 'searchRestaurantList',
   default: [],
 });
