@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { isDrawerOpened } from '../stores/drawer';
+import { isDrawerOpenedState } from '../stores/drawer';
 import { useWindowHeight } from './useWindowHeight';
 
 type DrawerMatrics = {
@@ -21,7 +21,7 @@ export function useDrawer() {
   const content = useRef<HTMLDivElement>(null);
   const MIN_Y = 120; // 바텀시트가 최대로 높이 올라갔을 때의 y 값
   const { MAX_Y } = useWindowHeight(); // 바텀시트가 최소로 내려갔을 때의 y 값
-  const [isOpened, setIsOpened] = useRecoilState(isDrawerOpened);
+  const [isOpened, setIsOpened] = useRecoilState(isDrawerOpenedState);
 
   const metrics = useRef<DrawerMatrics>({
     touchStart: {
