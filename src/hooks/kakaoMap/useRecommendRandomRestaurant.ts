@@ -85,83 +85,48 @@ const useRecommendRandomRestaurant = () => {
           // 랜덤 숫자 생성
           const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
 
-          // google api 시작
-          const googlePlacesService = new google.maps.places.PlacesService(
-            document.createElement('div')
-          );
+          // 데이터 정합성은 아무래도 한국이다보니 카카오맵이 더 나을 것 같아 최대한 카카오맵 데이터를 이용함.
+          const {
+            place_name: placeName,
+            category_name: categoryName,
+            road_address_name: roadAddressName,
+            place_url: kakaoPlaceUrl,
+            phone: phoneNumber,
+            distance,
+          } = nearbyRestaurants[randomIndex];
+          const categories = categoryName.split('>').map((category) => category.trim());
 
-          // google textSearch
-          googlePlacesService.textSearch(
-            {
-              query: nearbyRestaurants[randomIndex].road_address_name,
-              type: 'restaurant',
+          // kakao custom overlay 생성
+          const createdCustomOverlay = new kakao.maps.CustomOverlay({
+            position: new kakao.maps.LatLng(
+              Number(nearbyRestaurants[randomIndex].y),
+              Number(nearbyRestaurants[randomIndex].x)
+            ),
+            clickable: true,
+            content: makeRandomRestaurantOverlayContent({
+              placeName,
+              latitude: Number(nearbyRestaurants[randomIndex].y),
+              longitude: Number(nearbyRestaurants[randomIndex].x),
+            }),
+          });
+
+          setRandomRestaurant({
+            placeName,
+            categories,
+            roadAddressName,
+            kakaoPlaceUrl,
+            phoneNumber,
+            distance: Number(distance),
+            customOverlay: createdCustomOverlay,
+          });
+          setRecommendRandomRestaurantIsLoading(false);
+          setKakaoMapOptions((previousKakaoMapOptions) => ({
+            ...previousKakaoMapOptions,
+            center: {
+              lat: currentLatitude,
+              lng: currentLongitude,
             },
-            (resultByGoogleTextSearch, status, pagination) => {
-              // To Do: status 값에 따라 재시도 등 예외 처리 필요 by. 승준
-              if (!resultByGoogleTextSearch || !resultByGoogleTextSearch[0].place_id)
-                return;
-
-              // google getDetails
-              googlePlacesService.getDetails(
-                {
-                  placeId: resultByGoogleTextSearch[0].place_id,
-                },
-                (resultByGoogleGetDetails, status) => {
-                  // To Do: status 값에 따라 재시도 등 예외 처리 필요 by. 승준
-                  if (!resultByGoogleGetDetails) return;
-
-                  // 데이터 정합성은 아무래도 한국이다보니 카카오맵이 더 나을 것 같아 최대한 카카오맵 데이터를 이용함.
-                  const {
-                    place_name: placeName,
-                    category_name: categoryName,
-                    road_address_name: roadAddressName,
-                    place_url: kakaoPlaceUrl,
-                    phone: phoneNumber,
-                  } = nearbyRestaurants[randomIndex];
-                  const { photos, opening_hours, rating } = resultByGoogleGetDetails;
-                  const categories = categoryName
-                    .split('>')
-                    .map((category) => category.trim());
-                  const photoUrls = photos?.map((photo) => photo.getUrl());
-                  const isOpen = opening_hours?.isOpen();
-
-                  // kakao custom overlay 생성
-                  const createdCustomOverlay = new kakao.maps.CustomOverlay({
-                    position: new kakao.maps.LatLng(
-                      Number(nearbyRestaurants[randomIndex].y),
-                      Number(nearbyRestaurants[randomIndex].x)
-                    ),
-                    clickable: true,
-                    content: makeRandomRestaurantOverlayContent({
-                      placeName,
-                      latitude: Number(nearbyRestaurants[randomIndex].y),
-                      longitude: Number(nearbyRestaurants[randomIndex].x),
-                    }),
-                  });
-
-                  setRandomRestaurant({
-                    placeName,
-                    categories,
-                    roadAddressName,
-                    rating,
-                    photoUrls,
-                    isOpen,
-                    kakaoPlaceUrl,
-                    phoneNumber,
-                    customOverlay: createdCustomOverlay,
-                  });
-                  setRecommendRandomRestaurantIsLoading(false);
-                  setKakaoMapOptions((previousKakaoMapOptions) => ({
-                    ...previousKakaoMapOptions,
-                    center: {
-                      lat: currentLatitude,
-                      lng: currentLongitude,
-                    },
-                  }));
-                }
-              );
-            }
-          );
+          }));
         }
       },
       placesSearchOptions
