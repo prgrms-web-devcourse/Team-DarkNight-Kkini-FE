@@ -1,11 +1,10 @@
 import { Box, CloseButton, Flex, Heading, Stack } from '@chakra-ui/react';
-import Image from 'next/image';
 import { forwardRef } from 'react';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { RandomRestaurantType } from 'types/kakaoMap';
 
-import Button from '../Button';
-import Category from '../Category';
+import Button from '../common/Button';
+import Category from '../common/Category';
 
 type RandomRestaurantModalProps = {
   isOpen: boolean;
@@ -36,9 +35,6 @@ const RandomRestaurantModal = forwardRef<HTMLDivElement, RandomRestaurantModalPr
               <Category key={category}>{category}</Category>
             ))}
           </Stack>
-          <Stack direction='row' paddingBottom='0.5rem'>
-            <Category>{randomRestaurant.isOpen ? '영업 중' : '영업 종료'}</Category>
-          </Stack>
         </Flex>
         <Flex alignItems='center' justifyContent='space-between'>
           <Flex alignItems='end' gap='0.5rem'>
@@ -57,22 +53,9 @@ const RandomRestaurantModal = forwardRef<HTMLDivElement, RandomRestaurantModalPr
             <CloseButton onClick={onClose} />
           </Box>
         </Flex>
-        {/* To Do: 별점 by 승준 */}
         <Box>{randomRestaurant.roadAddressName}</Box>
         <Box>{randomRestaurant.phoneNumber}</Box>
         {/* To Do: 넓이/높이(aspect ratio)랑 스크롤바 스타일링 필요 by 승준 */}
-        <Flex overflowX='auto' gap='1rem'>
-          {randomRestaurant.photoUrls?.map((photoUrl) => (
-            <Image
-              priority
-              key={photoUrl}
-              src={photoUrl}
-              width={120}
-              height={90}
-              alt='음식점 사진'
-            />
-          ))}
-        </Flex>
         <Button width='100%'>밥모임 참여하기</Button>
       </Box>
     );
