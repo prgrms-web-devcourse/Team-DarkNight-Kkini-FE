@@ -1,6 +1,6 @@
 import { Avatar } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import LoginButton from 'components/login/LoginButton';
+import LoginButton from 'components/Login/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
