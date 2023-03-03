@@ -1,4 +1,5 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+// import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 const DUMMY_PARTIES = [
@@ -64,3 +65,26 @@ const MyFoodParties = () => {
 };
 
 export default MyFoodParties;
+
+// To Do: 서버 사이드 렌더링 by 승준
+// type ParamsType = {
+//   userId: string;
+// };
+
+// type GetServerSidePropsReturnType = {
+//   userId: string;
+// };
+
+// export const getServerSideProps: GetServerSideProps<
+//   GetServerSidePropsReturnType,
+//   ParamsType
+// > = async ({ params }) => {
+//   const { userId } = params!;
+//   const foodParties = await getMyFoodParties('asd');
+
+//   return {
+//     props: {
+//       userId,
+//     },
+//   };
+// };
