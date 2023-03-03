@@ -32,29 +32,34 @@ const KakaoMap = () => {
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
     kakao.maps.load(() => {
-      if (kakaoMap || !kakaoMapRef.current) return;
+      if (!kakaoMapRef.current) return;
 
       const {
         center: { lat, lng },
         level,
       } = kakaoMapOptions;
-      const options: kakao.maps.MapOptions = {
+      const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, {
         center: new kakao.maps.LatLng(lat, lng),
-        level: level,
-      };
-      const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
+        level,
+      });
       setKakaoMap(createdKakaoMap);
+    });
+  }, []);
 
-      // 카카오맵의 상태(level, 위치 등)를 실시간 추적하기 위한 event 등록
-      kakaoMapAddEventListener(createdKakaoMap, 'zoom_changed', () => {
+  // 카카오맵 현재 상태(level, 위치 등) 추적을 위한 event 등록
+  useEffect(() => {
+    kakao.maps.load(() => {
+      if (!kakaoMap) return;
+
+      kakaoMapAddEventListener(kakaoMap, 'zoom_changed', () => {
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,
-          level: kakaoMapHelpers.getLevel(createdKakaoMap),
+          level: kakaoMapHelpers.getLevel(kakaoMap),
         }));
       });
 
-      kakaoMapAddEventListener(createdKakaoMap, 'center_changed', () => {
-        const { latitude, longitude } = kakaoMapHelpers.getCenter(createdKakaoMap);
+      kakaoMapAddEventListener(kakaoMap, 'center_changed', () => {
+        const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,
           center: {
@@ -64,7 +69,7 @@ const KakaoMap = () => {
         }));
       });
     });
-  }, [kakaoMap, kakaoMapOptions, setKakaoMap, setKakaoMapOptions]);
+  }, [kakaoMap, setKakaoMapOptions]);
 
   // 랜덤 맛집 커스텀 오버레이 생성
   useEffect(() => {
