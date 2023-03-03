@@ -1,11 +1,11 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
-import { searchRestaurantList } from 'stores/Restaurant';
+import { searchRestaurantListState } from 'stores/Restaurant';
 
 const useSearchRestaurant = () => {
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const kakaoPlaces = new kakao.maps.services.Places();
-  const setRestaurants = useSetRecoilState(searchRestaurantList);
+  const setRestaurants = useSetRecoilState(searchRestaurantListState);
 
   const getRestaurantPhoto = (address: string) => {
     const result: string[] = [];

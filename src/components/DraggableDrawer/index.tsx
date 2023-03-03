@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { css, keyframes } from '@emotion/react';
 import React, { ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
-import { isDrawerOpened } from 'stores/drawer';
+import { isDrawerOpenedState } from 'stores/drawer';
 
 import { useDrawer } from '../../hooks/useDrawer';
 import { useWindowHeight } from '../../hooks/useWindowHeight';
@@ -15,7 +15,7 @@ type DraggableDrawerProps = {
 const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
   const { drawer, content } = useDrawer();
   const { windowHeight } = useWindowHeight();
-  const isOpened = useRecoilValue(isDrawerOpened);
+  const isOpened = useRecoilValue(isDrawerOpenedState);
 
   return isOpened ? (
     <Box

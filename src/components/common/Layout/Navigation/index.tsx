@@ -4,13 +4,13 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
 import { useSetRecoilState } from 'recoil';
-import { isDrawerOpened } from 'stores/drawer';
+import { isDrawerOpenedState } from 'stores/drawer';
 
 import CreateCommunityButton from './CreateCommunityButton';
 import NavigationLinkButton from './NavigationLinkButton';
 
 const Navigation = () => {
-  const setIsDrawerOpened = useSetRecoilState(isDrawerOpened);
+  const setIsDrawerOpened = useSetRecoilState(isDrawerOpenedState);
   const handleClickCommunity = () => {
     setIsDrawerOpened(true);
   };
