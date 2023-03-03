@@ -23,7 +23,6 @@ const useSearchRestaurant = () => {
     const keywordSearchResult: kakao.maps.services.PlacesSearchResult =
       await keywordSearch(kakaoPlaces, keyword, options).then((result) => result);
 
-    console.log(keywordSearchResult[0]);
     const getPhotoPromises = keywordSearchResult.map(
       async ({ address_name, place_name }) => {
         return await getKeywordPhotos(address_name, place_name);
@@ -41,7 +40,6 @@ const useSearchRestaurant = () => {
     const photos = photoList.map(({ documents }) => {
       return documents.map(({ image_url }) => image_url);
     });
-    console.log(photos);
 
     const searchResult = keywordSearchResult.map((item, i) => {
       const {
