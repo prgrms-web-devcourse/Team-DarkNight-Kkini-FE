@@ -1,4 +1,4 @@
-import { Box, VStack } from '@chakra-ui/react';
+import { Box, Divider, VStack } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';

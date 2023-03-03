@@ -1,11 +1,14 @@
+import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 const FoodPartyDetail = () => {
   const router = useRouter();
+  const partyId = router.query.partyId;
 
-  console.log(router.query);
+  // To Do: 404 처리 by 승준
+  // if (!partyId) router.push('')
 
-  return <div>{}</div>;
+  return <Box padding='1rem'>{partyId}</Box>;
 };
 
 export default FoodPartyDetail;
