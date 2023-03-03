@@ -97,7 +97,9 @@ const KakaoMap = () => {
       </VStack>
       <RecommendRandomRestaurantButton
         isLoading={recommendRandomRestaurantIsLoading}
-        onClick={recommendRandomRestaurant}
+        onClick={() => {
+          recommendRandomRestaurant();
+        }}
       />
 
       <RandomRestaurantModal
