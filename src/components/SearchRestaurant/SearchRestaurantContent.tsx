@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Accordion, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import { searchRestaurantListState } from 'stores/Restaurant';
@@ -9,7 +9,7 @@ import RestaurantItem from './RestaurantItem';
 const NO_RESULT_MESSAGE = '결과가 없습니다!';
 
 const SearchRestaurantContent = () => {
-  const restaurantList = useRecoilValue(searchRestaurantListState);
+  const searchRestaurantList = useRecoilValue(searchRestaurantListState);
 
   return (
     <Flex
@@ -24,15 +24,29 @@ const SearchRestaurantContent = () => {
       borderRadius='8px'
       p='0.4rem'
       overflow='auto'>
-      {restaurantList.length > 0 ? (
-        restaurantList.map(({ place_name, road_address_name }) => (
-          <RestaurantItem
-            key={road_address_name}
-            name={place_name}
-            address={road_address_name}
-            photo={'/images/default_restaurant.svg'}
-          />
-        ))
+      {searchRestaurantList.length > 0 ? (
+        <Accordion allowToggle>
+          {searchRestaurantList.map(
+            ({
+              placeName,
+              categories,
+              roadAddressName,
+              photoUrls,
+              kakaoPlaceUrl,
+              phoneNumber,
+            }) => (
+              <RestaurantItem
+                key={roadAddressName}
+                name={placeName}
+                address={roadAddressName}
+                categories={categories}
+                photos={photoUrls}
+                placeUrl={kakaoPlaceUrl}
+                phoneNumber={phoneNumber}
+              />
+            )
+          )}
+        </Accordion>
       ) : (
         <Flex flexDir='column' justify='center' align='center' m='auto 0'>
           <Image
