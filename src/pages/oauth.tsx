@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { isLogin } from 'stores/auth';
+import { isLoginState } from 'stores/auth';
 import { setAccessToken } from 'utils/apis/axios';
 
 const OAuthLogin = () => {
   const router = useRouter();
-  const setLoginState = useSetRecoilState(isLogin);
+  const setLoginState = useSetRecoilState(isLoginState);
 
   useEffect(() => {
     const token = router.query.accessToken as string;
