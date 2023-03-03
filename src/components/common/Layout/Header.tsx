@@ -13,7 +13,7 @@ const Header = () => {
     <Container>
       <Link href='/'>
         <Image
-          src='/assets/kkini-logo.svg'
+          src='/images/kkini-logo.svg'
           alt='kkini-logo'
           width='200'
           height='100'
