@@ -22,7 +22,7 @@ const Navigation = () => {
       align='center'
       px='10'
       py='1'
-      backgroundColor='#f9f9f9'
+      backgroundColor='#ffffff'
       zIndex={100}>
       <NavigationLinkButton href='/'>
         <MapIcon />
