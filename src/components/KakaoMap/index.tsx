@@ -1,4 +1,4 @@
-import { Box, Divider, VStack } from '@chakra-ui/react';
+import { Box, useDisclosure, VStack } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
@@ -10,7 +10,7 @@ import { kakaoMapAddEventListener, kakaoMapHelpers } from 'utils/helpers/kakaoMa
 
 import RecommendRandomRestaurantButton from '../common/Buttons/RecommendRandomRestaurantButton';
 import CurrentLocationButton from './CurrentLocationButton';
-import RandomRestaurantModal from './RandomRestaurantModal';
+import RandomRestaurantDrawer from './RandomRestaurantDrawer';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
 
@@ -20,14 +20,13 @@ const KakaoMap = () => {
   const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
+  const { randomRestaurant } = useRandomRestaurantContext();
+
+  // 랜덤 맛집 드로어
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  // 73 ~ 83
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
-    useRecommendRandomRestaurant();
-  const {
-    randomRestaurant,
-    randomRestaurantModalOpen,
-    handleCloseRandomRestaurantModal,
-    randomRestaurantModalRef,
-  } = useRandomRestaurantContext();
+    useRecommendRandomRestaurant({ onRandomRestaurantDrawerOpen: onOpen });
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
   useEffect(() => {
@@ -106,11 +105,9 @@ const KakaoMap = () => {
           recommendRandomRestaurant();
         }}
       />
-
-      <RandomRestaurantModal
-        ref={randomRestaurantModalRef}
-        isOpen={randomRestaurantModalOpen}
-        onClose={handleCloseRandomRestaurantModal}
+      <RandomRestaurantDrawer
+        isOpen={isOpen}
+        onClose={onClose}
         randomRestaurant={randomRestaurant}
       />
     </Box>

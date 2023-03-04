@@ -7,18 +7,21 @@ import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
-import { getNearbyRestaurants } from './../../utils/helpers/kakaoMap';
+import { getNearbyRestaurants } from '../../utils/helpers/kakaoMap';
 
 const DEFAULT_BADGE_IMAGE_SIZE = 72;
 const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 
-const useRecommendRandomRestaurant = () => {
+const useRecommendRandomRestaurant = ({
+  onRandomRestaurantDrawerOpen,
+}: {
+  onRandomRestaurantDrawerOpen: () => void;
+}) => {
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
     useState(false);
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
   const { kakaoMap } = useKakaoMapContext();
-  const { setRandomRestaurant, handleOpenRandomRestaurantModal } =
-    useRandomRestaurantContext();
+  const { setRandomRestaurant } = useRandomRestaurantContext();
   const errorToast = useToast({
     duration: 5000,
     status: 'error',
@@ -117,7 +120,7 @@ const useRecommendRandomRestaurant = () => {
     containerElement.onclick = () => {
       if (!kakaoMap) return;
 
-      handleOpenRandomRestaurantModal();
+      onRandomRestaurantDrawerOpen();
       kakaoMapHelpers.panto({ kakaoMap, latitude, longitude });
     };
 
