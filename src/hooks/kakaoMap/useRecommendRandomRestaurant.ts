@@ -12,11 +12,7 @@ import { getNearbyRestaurants } from '../../utils/helpers/kakaoMap';
 const DEFAULT_BADGE_IMAGE_SIZE = 72;
 const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
 
-const useRecommendRandomRestaurant = ({
-  onRandomRestaurantDrawerOpen,
-}: {
-  onRandomRestaurantDrawerOpen: () => void;
-}) => {
+const useRecommendRandomRestaurant = () => {
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
     useState(false);
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
@@ -58,11 +54,7 @@ const useRecommendRandomRestaurant = ({
           Number(randomRestaurant.x)
         ),
         clickable: true,
-        content: makeRandomRestaurantOverlayContent({
-          placeName,
-          latitude: Number(randomRestaurant.y),
-          longitude: Number(randomRestaurant.x),
-        }),
+        content: makeRandomRestaurantOverlayContent(placeName),
       });
 
       setRandomRestaurant({
@@ -95,16 +87,9 @@ const useRecommendRandomRestaurant = ({
   /**
    * To Do: placeName 나오는 부분 스타일링 필요 by 승준
    */
-  const makeRandomRestaurantOverlayContent = ({
-    placeName,
-    latitude,
-    longitude,
-  }: {
-    placeName: string;
-    latitude: number;
-    longitude: number;
-  }) => {
+  const makeRandomRestaurantOverlayContent = (placeName: string) => {
     const containerElement = document.createElement('div');
+    containerElement.id = 'random-restaurant-custom-overlay-container';
     containerElement.innerHTML = `<img
                                     class='random-restaurant-custom-overlay'
                                     src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
@@ -117,12 +102,6 @@ const useRecommendRandomRestaurant = ({
                                     "
                                   />
                                   <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>`;
-    containerElement.onclick = () => {
-      if (!kakaoMap) return;
-
-      onRandomRestaurantDrawerOpen();
-      kakaoMapHelpers.panto({ kakaoMap, latitude, longitude });
-    };
 
     return containerElement;
   };
