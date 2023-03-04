@@ -5,14 +5,19 @@ import {
   AccordionPanel,
   Box,
   Flex,
+  Heading,
   Image,
   Stack,
   Text,
 } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import Category from 'components/common/Category';
+import { useRouter } from 'next/router';
 // import Image from 'next/image';
 import React from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isDrawerOpenedState } from 'stores/drawer';
+import { searchRestaurantListState, selectedRestaurantState } from 'stores/Restaurant';
 
 type RestaurantItemProps = {
   name: string;
@@ -21,6 +26,7 @@ type RestaurantItemProps = {
   photos: string[];
   placeUrl: string;
   phoneNumber: string;
+  index: number;
 };
 
 const RestaurantItem = ({
@@ -29,16 +35,30 @@ const RestaurantItem = ({
   categories,
   photos,
   placeUrl,
+  index,
   phoneNumber,
 }: RestaurantItemProps) => {
+  const router = useRouter();
+  const searchRestaurantList = useRecoilValue(searchRestaurantListState);
+  const setSelectedRestaurantList = useSetRecoilState(selectedRestaurantState);
+  const isDrawerOpened = useSetRecoilState(isDrawerOpenedState);
+
+  const handleClickCreateFoodParty = () => {
+    setSelectedRestaurantList({ ...searchRestaurantList[index] });
+    isDrawerOpened(false);
+    router.push('/food-party/create');
+  };
+
   return (
     <AccordionItem w='100%'>
       <h2>
         <AccordionButton borderRadius='8px'>
           <Box as='span' flex='1' textAlign='left'>
-            <Text fontSize='xl' fontWeight={600}>
-              {name}
-            </Text>
+            <Heading fontSize='xl'>
+              <a href={placeUrl} target='_blank' rel='noreferrer noopener'>
+                {name}
+              </a>
+            </Heading>
             <Text fontSize='md' color='#b2b4b8'>
               {address}
             </Text>
@@ -69,7 +89,14 @@ const RestaurantItem = ({
               />
             ))}
           </Flex>
-          <Button>밥모임 생성하기</Button>
+          <Button
+            onClick={handleClickCreateFoodParty}
+            style={{
+              backgroundColor: 'primary',
+              color: 'white',
+            }}>
+            밥모임 생성하기
+          </Button>
         </Flex>
       </AccordionPanel>
     </AccordionItem>

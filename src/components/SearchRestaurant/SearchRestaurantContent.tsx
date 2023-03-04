@@ -27,16 +27,20 @@ const SearchRestaurantContent = () => {
       {searchRestaurantList.length > 0 ? (
         <Accordion allowToggle>
           {searchRestaurantList.map(
-            ({
-              placeName,
-              categories,
-              roadAddressName,
-              photoUrls,
-              kakaoPlaceUrl,
-              phoneNumber,
-            }) => (
+            (
+              {
+                placeName,
+                categories,
+                roadAddressName,
+                photoUrls,
+                kakaoPlaceUrl,
+                phoneNumber,
+              },
+              index
+            ) => (
               <RestaurantItem
                 key={roadAddressName}
+                index={index}
                 name={placeName}
                 address={roadAddressName}
                 categories={categories}
