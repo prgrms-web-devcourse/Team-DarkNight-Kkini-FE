@@ -5,8 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { isLoginState } from 'stores/auth';
+import { LoginModal } from 'types/modal';
 
-const Header = () => {
+const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
   const isLogin = useRecoilValue(isLoginState);
 
   return (
@@ -20,7 +21,11 @@ const Header = () => {
           style={{ marginLeft: '-40px' }}
         />
       </Link>
-      {isLogin ? <Avatar src='https://bit.ly/broken-link' size='sm' /> : <LoginButton />}
+      {isLogin ? (
+        <Avatar src='https://bit.ly/broken-link' size='sm' />
+      ) : (
+        <LoginButton isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+      )}
     </Container>
   );
 };

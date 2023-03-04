@@ -1,13 +1,12 @@
-import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import GoogleButton from 'components/Login/OAuth/GoogleButton';
 import KakaoButton from 'components/Login/OAuth/KakaoButton';
 import Image from 'next/image';
+import { LoginModal } from 'types/modal';
 
-const LoginButton = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
+const LoginButton = ({ isOpen, onClose, onOpen }: LoginModal) => {
   return (
     <>
       <Button
