@@ -1,19 +1,57 @@
 import { Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import NavigationButton from 'components/common/Layout/Navigation/NavigationButton';
+import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isLoginState } from 'stores/auth';
 import { isDrawerOpenedState } from 'stores/drawer';
+import { LoginModal } from 'types/modal';
+import { NavigationButtonProps } from 'types/navigation';
 
-import CreateCommunityButton from './CreateCommunityButton';
-import NavigationLinkButton from './NavigationLinkButton';
-
-const Navigation = () => {
+const Navigation = ({ onOpen }: LoginModal) => {
   const setIsDrawerOpened = useSetRecoilState(isDrawerOpenedState);
-  const handleClickCommunity = () => {
-    setIsDrawerOpened(true);
+  const isLogin = useRecoilValue(isLoginState);
+  const router = useRouter();
+
+  const checkLoginUser = () => {
+    if (!isLogin) {
+      onOpen();
+    }
+    return isLogin;
   };
+
+  const handleClickCommunity = () => {
+    checkLoginUser() && setIsDrawerOpened(true);
+  };
+
+  const handleClickMyFoodParty = () => {
+    if (!checkLoginUser()) {
+      return;
+    }
+    /* 123은 테스트용 userId */
+    router.push('/food-party/123');
+  };
+
+  const NavigationItem: NavigationButtonProps[] = [
+    {
+      Icon: <MapIcon />,
+      label: '주변밥모임',
+    },
+    {
+      Icon: <PlusIcon />,
+      label: '밥모임생성',
+      onClick: handleClickCommunity,
+    },
+    {
+      Icon: <CommunityIcon />,
+      label: '내 밥모임',
+      onClick: handleClickMyFoodParty,
+    },
+  ];
+
   return (
     <Flex
       as='nav'
@@ -24,19 +62,9 @@ const Navigation = () => {
       py='1'
       backgroundColor='#ffffff'
       zIndex={100}>
-      <NavigationLinkButton href='/'>
-        <MapIcon />
-        <Label>주변 밥모임</Label>
-      </NavigationLinkButton>
-      <CreateCommunityButton onClick={handleClickCommunity}>
-        <PlusIcon />
-        <Label>밥모임 생성</Label>
-      </CreateCommunityButton>
-      {/* 123은 테스트용 userId */}
-      <NavigationLinkButton href='/food-party/123'>
-        <CommunityIcon />
-        <Label>내 밥모임</Label>
-      </NavigationLinkButton>
+      {NavigationItem.map((item) => (
+        <NavigationButton {...item} key={item.label} />
+      ))}
     </Flex>
   );
 };
@@ -59,9 +87,4 @@ const MapIcon = styled(BsMap)`
 const CommunityIcon = styled(CgCommunity)`
   width: 2.5rem;
   height: 2.5rem;
-  margin-bottom: 0.1rem;
-`;
-
-const Label = styled.span`
-  font-size: 0.8rem;
 `;
