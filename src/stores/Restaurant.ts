@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { RestaurantProps } from 'types/restaurant';
+import { RestaurantFromKeywordSearchProps } from 'types/kakaoSearch';
 
-export const searchRestaurantListState = atom<RestaurantProps[]>({
+export const searchRestaurantListState = atom<RestaurantFromKeywordSearchProps[]>({
   key: 'searchRestaurantList',
   default: [],
 });

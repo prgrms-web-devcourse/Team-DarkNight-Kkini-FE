@@ -19,6 +19,12 @@ type KakaoMapEventType =
   | 'idle'
   | 'tilesloaded'
   | 'maptypeid_changed';
+type keywordSearchOptionsType = {
+  category_group_code: string;
+  x: number;
+  y: number;
+  radius: number;
+};
 
 export const kakaoMapHelpers = {
   panto: ({
@@ -93,6 +99,27 @@ export const getNearbyRestaurants = ({
         }
       },
       placesSearchOptions
+    );
+  });
+};
+
+export const keywordSearch = (
+  kakaoPlaces: kakao.maps.services.Places,
+  keyword: string,
+  options: keywordSearchOptionsType
+): Promise<kakao.maps.services.PlacesSearchResult> => {
+  return new Promise((resolve, reject) => {
+    kakaoPlaces.keywordSearch(
+      keyword,
+      (result, status) => {
+        const { OK, ZERO_RESULT } = kakao.maps.services.Status;
+        if (status === OK || status === ZERO_RESULT) {
+          resolve(result);
+        } else {
+          reject(result);
+        }
+      },
+      options
     );
   });
 };
