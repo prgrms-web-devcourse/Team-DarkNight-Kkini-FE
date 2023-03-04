@@ -1,7 +1,7 @@
 import { Box, CloseButton, Flex, Heading, Stack } from '@chakra-ui/react';
+import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Category from 'components/common/Category';
-import BottomDrawer from 'components/login/BottomDrawer';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { RandomRestaurantType } from 'types/kakaoMap';
 
