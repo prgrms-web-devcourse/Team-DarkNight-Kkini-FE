@@ -1,7 +1,7 @@
-import CreateFoodParty from 'components/FoodParty/Create';
+import FoodPartyCreateForm from 'components/FoodParty/Create';
 
 const Create = () => {
-  return <CreateFoodParty />;
+  return <FoodPartyCreateForm />;
 };
 
 export default Create;

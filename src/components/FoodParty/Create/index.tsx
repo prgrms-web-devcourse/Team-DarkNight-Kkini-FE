@@ -35,7 +35,7 @@ type PartyForm = {
 };
 
 /** 컴포넌트 분리 필요 */
-const CreateFoodParty = () => {
+const FoodPartyCreateForm = () => {
   const router = useRouter();
   const toast = useToast();
   const { register, setValue, handleSubmit } = useForm<PartyForm>();
@@ -72,6 +72,7 @@ const CreateFoodParty = () => {
             placeholder='제목을 입력해주세요!'
             size='lg'
             border='none'
+            focusBorderColor='none'
           />
           {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
           <Accordion
@@ -102,7 +103,7 @@ const CreateFoodParty = () => {
               <Flex align='center'>
                 <Flex
                   as='span'
-                  w={100}
+                  flex='1'
                   h={50}
                   pl='1rem'
                   justify='flex-start'
@@ -115,10 +116,10 @@ const CreateFoodParty = () => {
                     required: true,
                     minLength: 1,
                   })}
-                  flex='1'
+                  w={100}
                   h='100%'
                   bgColor='transparent'
-                  border='none'
+                  borderColor='none'
                   defaultValue={2}
                   min={2}
                   max={8}>
@@ -152,8 +153,20 @@ const CreateFoodParty = () => {
               </h2>
               <AccordionPanel></AccordionPanel>
             </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left'>
+                    밥모임 설명
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                <Textarea></Textarea>
+              </AccordionPanel>
+            </AccordionItem>
           </Accordion>
-          <Textarea></Textarea>
           <Button
             style={{
               backgroundColor: 'primary',
@@ -167,7 +180,7 @@ const CreateFoodParty = () => {
   );
 };
 
-export default CreateFoodParty;
+export default FoodPartyCreateForm;
 
 const Form = styled.form`
   overflow: scroll;
