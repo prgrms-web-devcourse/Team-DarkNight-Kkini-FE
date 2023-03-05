@@ -5,7 +5,7 @@ import { ImBubble } from 'react-icons/im';
 const KakaoButton = () => {
   return (
     <a
-      href={`http://3.35.95.125:8080/oauth2/authorization/kakao?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}`}>
+      href={`${process.env.NEXT_PUBLIC_API_END_POINT}/oauth2/authorization/kakao?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}`}>
       <Button
         style={{
           color: 'black',
