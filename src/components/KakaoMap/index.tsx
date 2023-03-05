@@ -29,7 +29,7 @@ const KakaoMap = () => {
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
 
-  // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
+  // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
     kakao.maps.load(() => {
       if (!kakaoMapRef.current) return;
@@ -43,14 +43,14 @@ const KakaoMap = () => {
         level: level,
       };
       const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
-      // 초기 현재 위치 커스텀 오버레이를 만든다.
-      currentPositionCurrentOverlay.current = new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(lat, lng),
-        content: `<div class="container">
+      currentPositionCurrentOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+        lat,
+        lng,
+        `<div class="container">
           <div class="center"></div>
           <div class="circle"></div>
-        </div>`,
-      });
+        </div>`
+      );
       currentPositionCurrentOverlay.current.setMap(createdKakaoMap);
       setKakaoMap(createdKakaoMap);
     });
@@ -78,18 +78,18 @@ const KakaoMap = () => {
           },
         }));
 
-        // 현재 위치 커스텀 오버레이가 존재하면 지운다.
-        // 그리고 변경된 위치에 현재 위치 커스텀 오버레이를 올린다.
+        // 현재 위치 커스텀 오버레이가 존재하면 지운다. 그리고 변경된 위치에 현재 위치 커스텀 오버레이를 올린다.
         if (currentPositionCurrentOverlay.current) {
           currentPositionCurrentOverlay.current.setMap(null);
         }
-        currentPositionCurrentOverlay.current = new kakao.maps.CustomOverlay({
-          position: new kakao.maps.LatLng(latitude, longitude),
-          content: `<div class="container">
+        currentPositionCurrentOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+          latitude,
+          longitude,
+          `<div class="container">
             <div class="center"></div>
             <div class="circle"></div>
-          </div>`,
-        });
+          </div>`
+        );
         currentPositionCurrentOverlay.current.setMap(kakaoMap);
       });
     });
