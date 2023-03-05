@@ -32,7 +32,8 @@ const Navigation = () => {
         <PlusIcon />
         <Label>밥모임 생성</Label>
       </CreateCommunityButton>
-      <NavigationLinkButton href='/*'>
+      {/* 123은 테스트용 userId */}
+      <NavigationLinkButton href='/food-party/123'>
         <CommunityIcon />
         <Label>내 밥모임</Label>
       </NavigationLinkButton>

@@ -32,10 +32,11 @@ export const kakaoMapHelpers = {
     latitude,
     longitude,
   }: {
-    kakaoMap: kakao.maps.Map;
-    latitude: number;
-    longitude: number;
+    kakaoMap?: kakao.maps.Map;
+    latitude?: number;
+    longitude?: number;
   }) => {
+    if (!kakaoMap || !latitude || !longitude) return;
     kakaoMap.panTo(new kakao.maps.LatLng(latitude, longitude));
   },
   getCenter: (kakaoMap: kakao.maps.Map) => ({
