@@ -4,6 +4,8 @@
 // 내 밥모임 목록과 같은 경우는 노출 될 필요가 없다고 생각해서 CSR로 데이터 페칭하려 합니다.
 
 import {
+  Avatar,
+  AvatarGroup,
   Box,
   Flex,
   Heading,
@@ -42,7 +44,7 @@ const DUMMY_PARTIES = [
   {
     id: 2,
     name: '라멘 뇸뇸뇸, 나가면 지상렬',
-    currentStaff: 2,
+    currentStaff: 3,
     capacity: 3,
     promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
     status: 'RECRUITING',
@@ -91,18 +93,23 @@ const MyFoodParties = () => {
             justifyContent='space-between'
             cursor='pointer'
             padding='1rem'
-            boxShadow='button'
             borderRadius='1rem'
             border='1px solid #e2e5e6'
             marginBottom='1rem'
             key={party.id}>
-            <Box>
+            <Flex flexDirection='column'>
               {/* To Do: ellipsis 처리 by 승준 */}
               <Text>{party.name}</Text>
               <Text>{party.content}</Text>
-            </Box>
-            <Box>/ {party.capacity}</Box>
-            {/* To Do: Avatar Group 보여주기 by 승준 */}
+            </Flex>
+            <Flex flexDirection='column' alignItems='flex-end'>
+              {party.currentStaff} / {party.capacity}
+              <AvatarGroup size='xs' max={2}>
+                {party.avatarUrls.map((avatarUrl) => (
+                  <Avatar key={avatarUrl} src={avatarUrl} />
+                ))}
+              </AvatarGroup>
+            </Flex>
           </Flex>
         ))}
       </Flex>
