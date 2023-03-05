@@ -48,7 +48,7 @@ const useRecommendRandomRestaurant = () => {
         distance,
       } = randomRestaurant;
       const categories = categoryName.split('>').map((category) => category.trim());
-      const createdCustomOverlay = new kakao.maps.CustomOverlay({
+      const createdRandomRestaurantCustomOverlay = new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng(
           Number(randomRestaurant.y),
           Number(randomRestaurant.x)
@@ -64,7 +64,7 @@ const useRecommendRandomRestaurant = () => {
         kakaoPlaceUrl,
         phoneNumber,
         distance: Number(distance),
-        customOverlay: createdCustomOverlay,
+        customOverlay: createdRandomRestaurantCustomOverlay,
       });
       setKakaoMapOptions((previousKakaoMapOptions) => ({
         ...previousKakaoMapOptions,
