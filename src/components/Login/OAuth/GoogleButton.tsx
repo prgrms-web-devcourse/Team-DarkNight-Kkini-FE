@@ -5,7 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 const GoogleButton = () => {
   return (
     <a
-      href={`http://ec2-3-35-95-125.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}`}>
+      href={`${process.env.NEXT_PUBLIC_API_END_POINT}/oauth2/authorization/google?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}`}>
       <Button
         style={{
           color: '#777776',
