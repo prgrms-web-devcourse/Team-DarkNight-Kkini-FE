@@ -22,7 +22,7 @@ const KakaoMap = () => {
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
   const { randomRestaurant } = useRandomRestaurantContext();
-  const currentPositionCurrentOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
+  const currentPositionCustomOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
 
   // 랜덤 맛집 드로어
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -43,7 +43,7 @@ const KakaoMap = () => {
         level: level,
       };
       const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
-      currentPositionCurrentOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+      currentPositionCustomOverlay.current = kakaoMapHelpers.makeCustomOverlay(
         lat,
         lng,
         `<div class="container">
@@ -51,7 +51,7 @@ const KakaoMap = () => {
           <div class="circle"></div>
         </div>`
       );
-      currentPositionCurrentOverlay.current.setMap(createdKakaoMap);
+      currentPositionCustomOverlay.current.setMap(createdKakaoMap);
       setKakaoMap(createdKakaoMap);
     });
   }, []);
@@ -79,10 +79,10 @@ const KakaoMap = () => {
         }));
 
         // 현재 위치 커스텀 오버레이가 존재하면 지운다. 그리고 변경된 위치에 현재 위치 커스텀 오버레이를 올린다.
-        if (currentPositionCurrentOverlay.current) {
-          currentPositionCurrentOverlay.current.setMap(null);
+        if (currentPositionCustomOverlay.current) {
+          currentPositionCustomOverlay.current.setMap(null);
         }
-        currentPositionCurrentOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+        currentPositionCustomOverlay.current = kakaoMapHelpers.makeCustomOverlay(
           latitude,
           longitude,
           `<div class="container">
@@ -90,7 +90,7 @@ const KakaoMap = () => {
             <div class="circle"></div>
           </div>`
         );
-        currentPositionCurrentOverlay.current.setMap(kakaoMap);
+        currentPositionCustomOverlay.current.setMap(kakaoMap);
       });
     });
   }, [kakaoMap, setKakaoMapOptions]);
