@@ -1,27 +1,66 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-// import { GetServerSideProps } from 'next';
+// 내 밥모임 목록들은 개인 데이터라서 SEO에 노출되지 않아도 될 것 같습니다.
+// 따라서 getServerSideProps를 사용하기보다는 CSR로 밥모임을 가져오면 될 것 같습니다.
+// github의 개인 프로필의 경우 SEO에 노출 될 필요가 있는데
+// 내 밥모임 목록과 같은 경우는 노출 될 필요가 없다고 생각해서 CSR로 데이터 페칭하려 합니다.
+
+import {
+  Box,
+  Flex,
+  Heading,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Text,
+} from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+
+type FoodParty = {
+  id: number;
+  name: string;
+  currentStaff: number;
+  capacity: number;
+  promiseTime: number[];
+  status: string;
+  content: string;
+  category: string[];
+  avatarUrls: string[];
+};
 
 const DUMMY_PARTIES = [
   {
     id: 1,
     name: '햄최삼 모여라',
+    currentStaff: 2,
     capacity: 5,
     promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
     status: 'RECRUITING',
     content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
-    category: 'QUIET',
+    category: ['QUIET'],
+    avatarUrls: ['https://bit.ly/ryan-florence', 'https://bit.ly/sage-adebayo'],
   },
   {
     id: 2,
     name: '라멘 뇸뇸뇸, 나가면 지상렬',
+    currentStaff: 2,
     capacity: 3,
     promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
     status: 'RECRUITING',
     content: '식사 예절 좋으신 분만',
-    category: 'MANNERS MAKETH MAN',
+    category: ['MANNERS MAKETH MAN'],
+    avatarUrls: [
+      'https://bit.ly/kent-c-dodds',
+      'https://bit.ly/prosper-baba',
+      'https://bit.ly/code-beast',
+    ],
   },
 ];
+
+const getMyFoodParties = () => {
+  return new Promise<FoodParty[]>((resolve, reject) => {
+    resolve(DUMMY_PARTIES);
+  });
+};
 
 const MyFoodParties = () => {
   const router = useRouter();
@@ -31,12 +70,19 @@ const MyFoodParties = () => {
     router.push(`/food-party/detail/${partyId}`);
   };
 
+  const { data: myFoodParties, isLoading } = useQuery<FoodParty[]>({
+    queryKey: ['my-food-parties'],
+    queryFn: getMyFoodParties,
+  });
+
+  if (isLoading) return MyFoodPartiesSkeleton;
+
   return (
-    <Flex flexDirection='column'>
-      <Heading marginLeft='1rem'>너님의 밥모임 목록</Heading>
-      <Flex flexDirection='column' padding='1rem'>
+    <Flex flexDirection='column' padding='1rem'>
+      <Heading paddingBottom='1rem'>너님의 밥모임 목록</Heading>
+      <Flex flexDirection='column'>
         {/* To Do: 컴포넌트화 필요 by 승준 */}
-        {DUMMY_PARTIES.map((party) => (
+        {myFoodParties?.map((party) => (
           <Flex
             onClick={() => {
               handleClickFoodPartyItem(party.id);
@@ -66,25 +112,35 @@ const MyFoodParties = () => {
 
 export default MyFoodParties;
 
-// To Do: 서버 사이드 렌더링 by 승준
-// type ParamsType = {
-//   userId: string;
-// };
-
-// type GetServerSidePropsReturnType = {
-//   userId: string;
-// };
-
-// export const getServerSideProps: GetServerSideProps<
-//   GetServerSidePropsReturnType,
-//   ParamsType
-// > = async ({ params }) => {
-//   const { userId } = params!;
-//   const foodParties = await getMyFoodParties('asd');
-
-//   return {
-//     props: {
-//       userId,
-//     },
-//   };
-// };
+const MyFoodPartiesSkeleton = (
+  <Flex flexDirection='column' padding='1rem'>
+    <Skeleton marginBottom='1rem' borderRadius='0.5rem' height='4rem'></Skeleton>
+    <Flex flexDirection='column'>
+      {[
+        'food-party-dummy-skeleton-1',
+        'food-party-dummy-skeleton-2',
+        'food-party-dummy-skeleton-3',
+        'food-party-dummy-skeleton-4',
+      ].map((key) => (
+        <Flex
+          key={key}
+          alignItems='center'
+          justifyContent='space-between'
+          boxShadow='button'
+          borderRadius='1rem'
+          padding='1rem'
+          marginBottom='1rem'
+          border='1px solid #e2e5e6'>
+          <Box width='60%'>
+            <SkeletonText noOfLines={2} spacing='4' skeletonHeight='3' />
+          </Box>
+          <Flex alignItems='center'>
+            <SkeletonCircle />
+            <SkeletonCircle marginLeft='-0.5rem' />
+            <SkeletonCircle marginLeft='-0.5rem' />
+          </Flex>
+        </Flex>
+      ))}
+    </Flex>
+  </Flex>
+);
