@@ -33,10 +33,10 @@ const useRecommendRandomRestaurant = () => {
     try {
       const { latitude: currentLatitude, longitude: currentLongitude } =
         kakaoMapHelpers.getCenter(kakaoMap);
-      const nearbyRestaurants = await getNearbyRestaurants({
-        latitude: currentLatitude,
-        longitude: currentLongitude,
-      });
+      const nearbyRestaurants = await getNearbyRestaurants(
+        currentLatitude,
+        currentLongitude
+      );
       const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
       const randomRestaurant = nearbyRestaurants[randomIndex];
       const {
@@ -48,14 +48,27 @@ const useRecommendRandomRestaurant = () => {
         distance,
       } = randomRestaurant;
       const categories = categoryName.split('>').map((category) => category.trim());
-      const createdCustomOverlay = new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(
-          Number(randomRestaurant.y),
-          Number(randomRestaurant.x)
-        ),
-        clickable: true,
-        content: makeRandomRestaurantOverlayContent(placeName),
-      });
+
+      // To Do: placeName 나오는 부분 스타일링 필요 by 승준
+      const createdRandomRestaurantCustomOverlay = kakaoMapHelpers.makeCustomOverlay(
+        Number(randomRestaurant.y),
+        Number(randomRestaurant.x),
+        `
+          <div id="random-restaurant-custom-overlay-container">
+            <img
+            class='random-restaurant-custom-overlay'
+            src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
+            style="
+              width: ${DEFAULT_BADGE_IMAGE_SIZE}px;
+              height: ${DEFAULT_BADGE_IMAGE_SIZE}px;
+              z-index: 11;
+              border-radius: 50%;
+              box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.25);
+            "/>
+            <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>
+          </div>
+        `
+      );
 
       setRandomRestaurant({
         placeName,
@@ -64,7 +77,7 @@ const useRecommendRandomRestaurant = () => {
         kakaoPlaceUrl,
         phoneNumber,
         distance: Number(distance),
-        customOverlay: createdCustomOverlay,
+        customOverlay: createdRandomRestaurantCustomOverlay,
       });
       setKakaoMapOptions((previousKakaoMapOptions) => ({
         ...previousKakaoMapOptions,
@@ -82,28 +95,6 @@ const useRecommendRandomRestaurant = () => {
     } finally {
       setRecommendRandomRestaurantIsLoading(false);
     }
-  };
-
-  /**
-   * To Do: placeName 나오는 부분 스타일링 필요 by 승준
-   */
-  const makeRandomRestaurantOverlayContent = (placeName: string) => {
-    const containerElement = document.createElement('div');
-    containerElement.id = 'random-restaurant-custom-overlay-container';
-    containerElement.innerHTML = `<img
-                                    class='random-restaurant-custom-overlay'
-                                    src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
-                                    style="
-                                      width: ${DEFAULT_BADGE_IMAGE_SIZE}px;
-                                      height: ${DEFAULT_BADGE_IMAGE_SIZE}px;
-                                      z-index: 11;
-                                      border-radius: 50%;
-                                      box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.25);
-                                    "
-                                  />
-                                  <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>`;
-
-    return containerElement;
   };
 
   return {

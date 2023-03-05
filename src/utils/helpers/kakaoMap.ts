@@ -19,6 +19,7 @@ type KakaoMapEventType =
   | 'idle'
   | 'tilesloaded'
   | 'maptypeid_changed';
+
 type keywordSearchOptionsType = {
   category_group_code: string;
   x: number;
@@ -53,6 +54,11 @@ export const kakaoMapHelpers = {
   }) => {
     kakaoMap.setLevel(nextLevel);
   },
+  makeCustomOverlay: (latitude: number, longitude: number, content: string) =>
+    new kakao.maps.CustomOverlay({
+      position: new kakao.maps.LatLng(latitude, longitude),
+      content,
+    }),
 };
 
 export const kakaoMapAddEventListener = (
@@ -63,13 +69,10 @@ export const kakaoMapAddEventListener = (
   kakao.maps.event.addListener(eventTarget, type, callback);
 };
 
-export const getNearbyRestaurants = ({
-  latitude,
-  longitude,
-}: {
-  latitude: number;
-  longitude: number;
-}): Promise<kakao.maps.services.PlacesSearchResultItem[]> => {
+export const getNearbyRestaurants = (
+  latitude: number,
+  longitude: number
+): Promise<kakao.maps.services.PlacesSearchResultItem[]> => {
   const DEFAULT_RADIUS = 300;
   const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 

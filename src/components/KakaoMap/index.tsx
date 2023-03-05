@@ -22,13 +22,14 @@ const KakaoMap = () => {
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
   const { randomRestaurant } = useRandomRestaurantContext();
+  const currentPositionCustomOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
 
   // 랜덤 맛집 드로어
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
 
-  // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장.
+  // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
     kakao.maps.load(() => {
       if (!kakaoMapRef.current) return;
@@ -37,10 +38,20 @@ const KakaoMap = () => {
         center: { lat, lng },
         level,
       } = kakaoMapOptions;
-      const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, {
+      const options: kakao.maps.MapOptions = {
         center: new kakao.maps.LatLng(lat, lng),
-        level,
-      });
+        level: level,
+      };
+      const createdKakaoMap = new kakao.maps.Map(kakaoMapRef.current, options);
+      currentPositionCustomOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+        lat,
+        lng,
+        `<div class="container">
+          <div class="center"></div>
+          <div class="circle"></div>
+        </div>`
+      );
+      currentPositionCustomOverlay.current.setMap(createdKakaoMap);
       setKakaoMap(createdKakaoMap);
     });
   }, []);
@@ -66,6 +77,20 @@ const KakaoMap = () => {
             lng: longitude,
           },
         }));
+
+        // 현재 위치 커스텀 오버레이가 존재하면 지운다. 그리고 변경된 위치에 현재 위치 커스텀 오버레이를 올린다.
+        if (currentPositionCustomOverlay.current) {
+          currentPositionCustomOverlay.current.setMap(null);
+        }
+        currentPositionCustomOverlay.current = kakaoMapHelpers.makeCustomOverlay(
+          latitude,
+          longitude,
+          `<div class="container">
+            <div class="center"></div>
+            <div class="circle"></div>
+          </div>`
+        );
+        currentPositionCustomOverlay.current.setMap(kakaoMap);
       });
     });
   }, [kakaoMap, setKakaoMapOptions]);
