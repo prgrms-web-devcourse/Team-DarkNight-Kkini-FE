@@ -55,7 +55,7 @@ const CreateFoodParty = () => {
   }, [router, selectedRestaurant, toast]);
 
   return (
-    <Flex align='center' justify='center' backgroundColor='background' h='100%'>
+    <Flex align='center' justify='center' backgroundColor='subBackground' h='100%'>
       <Box w='90%' h='95%' bgColor='white' borderRadius='8px' p='2rem'>
         <Text fontSize='2xl' fontWeight={600}>
           어떤 밥모임을 만들까요?
