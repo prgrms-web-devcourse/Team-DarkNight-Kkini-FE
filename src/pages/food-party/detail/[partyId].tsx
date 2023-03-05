@@ -34,6 +34,7 @@ const DUMMY_PARTY = {
       avatarUrl: 'amklgaerg',
       createdAt: [2023, 3, 3, 12, 10, 0, 893316700],
       updatedAt: [2023, 3, 3, 12, 10, 0, 893316700],
+      content: '안녕하세요',
     },
     {
       commentId: 19274,
@@ -42,6 +43,7 @@ const DUMMY_PARTY = {
       avatarUrl: 'sdbfml',
       createdAt: [2023, 3, 3, 12, 12, 0, 893316700],
       updatedAt: [2023, 3, 3, 12, 12, 0, 893316700],
+      content: '네, 하이요',
     },
     {
       commentId: 19275,
@@ -50,6 +52,7 @@ const DUMMY_PARTY = {
       avatarUrl: 'amklgaerg',
       createdAt: [2023, 3, 3, 12, 15, 0, 893316700],
       updatedAt: [2023, 3, 3, 12, 17, 0, 893316700],
+      content: '반갑습니다!',
     },
   ],
 };
