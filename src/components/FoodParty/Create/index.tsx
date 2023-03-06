@@ -1,5 +1,3 @@
-import 'react-calendar/dist/Calendar.css';
-
 import {
   Accordion,
   AccordionButton,
@@ -18,19 +16,21 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from 'components/common/Button';
+import moment, { Moment } from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
+import { getTwoDigitNum } from 'utils/helpers/dateFormat';
 
 import FoodPartyCalendar from './FoodPartyCalendar';
 import FoodPartyCategoryItem from './FoodPartyCategory';
+import FoodPartyTimePicker from './FoodPartyTimePicker';
 
-type PartyForm = {
+type PartyFormType = {
   title: string;
   category: string;
   participants: number;
@@ -44,7 +44,11 @@ const FoodPartyCreateForm = () => {
   const toast = useToast();
   const [categoryState, setCategoryState] = useState('');
   const [date, setDate] = useState<Date>(new Date());
-  const { register, setValue, handleSubmit } = useForm<PartyForm>();
+  const [currentDate, setCurrentDate] = useState('');
+  const [time, setTime] = useState<Moment>(moment().hours(19).minute(0));
+  const [currentTime, setCurrentTime] = useState('');
+
+  const { register, setValue, getValues, handleSubmit } = useForm<PartyFormType>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
 
   const handleClickCategory = (value: string) => {
@@ -52,8 +56,28 @@ const FoodPartyCreateForm = () => {
     setCategoryState(value);
   };
 
-  const getSelectedDate = (date: Date) => {
-    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  const handleClickDate = (date: Date) => {
+    setDate(date);
+    setCurrentDate(
+      `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
+    );
+  };
+
+  const handleClickTime = (time: Moment) => {
+    if (!time) {
+      setCurrentTime(`시간을 설정해주세요`);
+      return;
+    }
+    setTime(time);
+    setCurrentTime(`${time.format('h:mm a')}`);
+  };
+
+  const onSubmit = (data: PartyFormType) => {
+    const promiseDate = `${date.getFullYear()}-${getTwoDigitNum(
+      date.getMonth() + 1
+    )}-${getTwoDigitNum(date.getDate())}`;
+    const promiseTime = `${time.format('hh.mm.ss')}`;
+    setValue('partyTime', `${promiseDate}T${promiseTime}`);
   };
 
   useEffect(() => {
@@ -78,31 +102,19 @@ const FoodPartyCreateForm = () => {
         <Form>
           <Input
             type='text'
-            {...(register('title'),
-            {
+            {...register('title', {
               required: true,
               minLength: 1,
             })}
             bgColor='transparent'
             placeholder='제목을 입력해주세요!'
             size='lg'
-            border='none'
-            focusBorderColor='none'
+            borderColor='transparent'
+            focusBorderColor='transparent'
           />
           {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
-          <Accordion
-            allowToggle
-            css={css`
-              animation: open 0.5s ease-in-out;
-              @keyframes open {
-                0% {
-                  opacity: 0;
-                }
-                100% {
-                  opacity: 1;
-                }
-              }
-            `}>
+          <Accordion allowToggle defaultIndex={[0]}>
+            {/** 밥모임 카테고리 */}
             <AccordionItem>
               <h2>
                 <AccordionButton>
@@ -119,6 +131,7 @@ const FoodPartyCreateForm = () => {
                 <FoodPartyCategoryItem onClick={handleClickCategory} />
               </AccordionPanel>
             </AccordionItem>
+            {/** 밥모임 인원 */}
             <AccordionItem>
               <Flex align='center'>
                 <Flex
@@ -132,11 +145,6 @@ const FoodPartyCreateForm = () => {
                   인원
                 </Flex>
                 <NumberInput
-                  {...(register('participants'),
-                  {
-                    required: true,
-                    minLength: 1,
-                  })}
                   w={70}
                   h='100%'
                   mr={3.5}
@@ -147,7 +155,12 @@ const FoodPartyCreateForm = () => {
                   defaultValue={2}
                   min={2}
                   max={8}>
-                  <NumberInputField />
+                  <NumberInputField
+                    {...register('participants', {
+                      required: true,
+                      minLength: 1,
+                    })}
+                  />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
@@ -155,6 +168,7 @@ const FoodPartyCreateForm = () => {
                 </NumberInput>
               </Flex>
             </AccordionItem>
+            {/** 밥모임 날짜 */}
             <AccordionItem>
               <h2>
                 <AccordionButton>
@@ -162,41 +176,52 @@ const FoodPartyCreateForm = () => {
                     날짜
                   </Box>
                   <Box fontSize='sm' color='gray.500' pr={1.5}>
-                    {getSelectedDate(date)}
+                    {currentDate}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel>
-                <FoodPartyCalendar date={date} onChange={setDate} />
+                <FoodPartyCalendar date={date} onChange={handleClickDate} />
               </AccordionPanel>
             </AccordionItem>
+            {/** 밥모임 시간 */}
             <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box as='span' flex='1' fontWeight={600} textAlign='left'>
                     시간
                   </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {currentTime}
+                  </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel></AccordionPanel>
+              <AccordionPanel>
+                <FoodPartyTimePicker value={time} onChange={handleClickTime} />
+              </AccordionPanel>
             </AccordionItem>
+            {/** 밥모임 설명  */}
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as='span' flex='1' textAlign='left'>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
                     밥모임 설명
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel>
-                <Textarea></Textarea>
+                <Textarea
+                  {...register('description', {
+                    required: false,
+                  })}></Textarea>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
           <Button
+            type='submit'
             style={{
               backgroundColor: 'primary',
               color: 'white',
