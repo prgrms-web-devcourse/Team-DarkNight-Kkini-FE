@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Flex,
-  Heading,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Text,
-} from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Flex, Heading, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import MyFoodPartiesSkeleton from 'components/FoodParty/MyFoodParties/MyFoodPartiesSkeleton';
 import { useRouter } from 'next/router';
@@ -54,7 +44,7 @@ const DUMMY_PARTIES = [
   },
 ];
 
-const getMyFoodParties = () => {
+const fetchMyFoodParties = () => {
   return new Promise<FoodParty[]>((resolve, reject) => {
     resolve(DUMMY_PARTIES);
   });
@@ -70,7 +60,7 @@ const MyFoodParties = () => {
 
   const { data: myFoodParties, isLoading } = useQuery<FoodParty[]>({
     queryKey: ['my-food-parties'],
-    queryFn: getMyFoodParties,
+    queryFn: fetchMyFoodParties,
   });
 
   if (isLoading) return <MyFoodPartiesSkeleton foodPartyCount={4} />;
