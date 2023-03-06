@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import MyFoodPartiesSkeleton from 'components/FoodParty/MyFoodParties/MyFoodPartiesSkeleton';
 import { useRouter } from 'next/router';
 
 type FoodParty = {
@@ -72,7 +73,7 @@ const MyFoodParties = () => {
     queryFn: getMyFoodParties,
   });
 
-  if (isLoading) return MyFoodPartiesSkeleton;
+  if (isLoading) return <MyFoodPartiesSkeleton foodPartyCount={4} />;
 
   return (
     <Flex flexDirection='column' padding='1rem'>
@@ -113,36 +114,3 @@ const MyFoodParties = () => {
 };
 
 export default MyFoodParties;
-
-const MyFoodPartiesSkeleton = (
-  <Flex flexDirection='column' padding='1rem'>
-    <Skeleton marginBottom='1rem' borderRadius='0.5rem' height='4rem'></Skeleton>
-    <Flex flexDirection='column'>
-      {[
-        'food-party-dummy-skeleton-1',
-        'food-party-dummy-skeleton-2',
-        'food-party-dummy-skeleton-3',
-        'food-party-dummy-skeleton-4',
-      ].map((key) => (
-        <Flex
-          key={key}
-          alignItems='center'
-          justifyContent='space-between'
-          boxShadow='button'
-          borderRadius='1rem'
-          padding='1rem'
-          marginBottom='1rem'
-          border='1px solid #e2e5e6'>
-          <Box width='60%'>
-            <SkeletonText noOfLines={2} spacing='4' skeletonHeight='3' />
-          </Box>
-          <Flex alignItems='center'>
-            <SkeletonCircle />
-            <SkeletonCircle marginLeft='-0.5rem' />
-            <SkeletonCircle marginLeft='-0.5rem' />
-          </Flex>
-        </Flex>
-      ))}
-    </Flex>
-  </Flex>
-);
