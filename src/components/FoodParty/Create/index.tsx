@@ -1,3 +1,5 @@
+import 'react-calendar/dist/Calendar.css';
+
 import {
   Accordion,
   AccordionButton,
@@ -25,14 +27,14 @@ import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
 
+import FoodPartyCalendar from './FoodPartyCalendar';
 import FoodPartyCategoryItem from './FoodPartyCategory';
 
 type PartyForm = {
   title: string;
   category: string;
   participants: number;
-  date: string;
-  time: string;
+  partyTime: string;
   description: string;
 };
 
@@ -41,13 +43,17 @@ const FoodPartyCreateForm = () => {
   const router = useRouter();
   const toast = useToast();
   const [categoryState, setCategoryState] = useState('');
-  const [accordionIndex, setAccordionIndex] = useState(0);
+  const [date, setDate] = useState<Date>(new Date());
   const { register, setValue, handleSubmit } = useForm<PartyForm>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
 
   const handleClickCategory = (value: string) => {
+    setValue('category', value);
     setCategoryState(value);
-    setAccordionIndex(accordionIndex + 1);
+  };
+
+  const getSelectedDate = (date: Date) => {
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
   useEffect(() => {
@@ -134,6 +140,7 @@ const FoodPartyCreateForm = () => {
                   w={70}
                   h='100%'
                   mr={3.5}
+                  my={0.3}
                   bgColor='transparent'
                   borderColor='transparent'
                   focusBorderColor='transparent'
@@ -151,18 +158,23 @@ const FoodPartyCreateForm = () => {
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as='span' flex='1' textAlign='left'>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
                     날짜
+                  </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {getSelectedDate(date)}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel></AccordionPanel>
+              <AccordionPanel>
+                <FoodPartyCalendar date={date} onChange={setDate} />
+              </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as='span' flex='1' textAlign='left'>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
                     시간
                   </Box>
                   <AccordionIcon />
