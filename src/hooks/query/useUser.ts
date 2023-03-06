@@ -1,15 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from 'services/user';
+import { QUERY_KEY_USER } from 'utils/constants/queryKeys';
 
-// 1. query key 상수화(export 안함. 여기서만 쓸 것)
-const QUERY_KEY = {
-  user: 'user',
-};
-
-// 2. custom hooks(외부에서 사용)
+// custom hooks(컴포넌트에 바인딩해서 사용)
 const useGetUser = () => {
   return useQuery({
-    queryKey: [QUERY_KEY.user],
+    queryKey: [QUERY_KEY_USER.user],
     queryFn: fetchUser,
     staleTime: 10000,
     suspense: true,
