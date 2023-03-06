@@ -1,3 +1,4 @@
+import { SkeletonCircle } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import LoginButton from 'components/Login/LoginButton';
 import dynamic from 'next/dynamic';
@@ -9,7 +10,7 @@ import { LoginModal } from 'types/modal';
 
 const DynamicUserProfile = dynamic(() => import('./UserProfile'), {
   ssr: false,
-  loading: () => <div>loading..</div>,
+  loading: () => <SkeletonCircle />,
 });
 
 const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
