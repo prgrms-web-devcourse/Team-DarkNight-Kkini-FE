@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export const axiosApi = axios.create({
-  baseURL: '',
+  baseURL: process.env.NEXT_PUBLIC_API_END_POINT,
 });
 
 export const axiosAuthApi = axios.create({
-  baseURL: '',
+  baseURL: process.env.NEXT_PUBLIC_API_END_POINT,
   withCredentials: true,
 });
 
