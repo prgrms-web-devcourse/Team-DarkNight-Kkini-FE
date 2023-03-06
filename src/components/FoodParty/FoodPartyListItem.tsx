@@ -29,8 +29,8 @@ const FoodPartyListItem = ({
       <Flex flexDirection='column' alignItems='flex-end'>
         {party.currentStaff} / {party.capacity}
         <AvatarGroup size='xs' max={2}>
-          {party.avatarUrls.map((avatarUrl) => (
-            <Avatar key={avatarUrl} src={avatarUrl} />
+          {party.members.map((member) => (
+            <Avatar key={member.userId} src={member.avatarUrl} />
           ))}
         </AvatarGroup>
       </Flex>

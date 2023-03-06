@@ -1,3 +1,8 @@
+type Member = {
+  userId: number;
+  avatarUrl: string;
+};
+
 export type FoodParty = {
   id: number;
   name: string;
@@ -7,5 +12,5 @@ export type FoodParty = {
   status: string;
   content: string;
   category: string[];
-  avatarUrls: string[];
+  members: Member[];
 };

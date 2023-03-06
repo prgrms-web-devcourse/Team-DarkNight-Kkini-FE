@@ -15,7 +15,16 @@ const DUMMY_PARTY_LIST = [
     status: 'RECRUITING',
     content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
     category: ['QUIET'],
-    avatarUrls: ['https://bit.ly/ryan-florence', 'https://bit.ly/sage-adebayo'],
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/ryan-florence',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/sage-adebayo',
+      },
+    ],
   },
   {
     id: 2,
@@ -26,10 +35,19 @@ const DUMMY_PARTY_LIST = [
     status: 'RECRUITING',
     content: '식사 예절 좋으신 분만',
     category: ['MANNERS MAKETH MAN'],
-    avatarUrls: [
-      'https://bit.ly/kent-c-dodds',
-      'https://bit.ly/prosper-baba',
-      'https://bit.ly/code-beast',
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/kent-c-dodds',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/prosper-baba',
+      },
+      {
+        userId: 3,
+        avatarUrl: 'https://bit.ly/code-beast',
+      },
     ],
   },
 ];
