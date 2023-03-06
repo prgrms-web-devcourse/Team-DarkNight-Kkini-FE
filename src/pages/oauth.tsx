@@ -10,9 +10,11 @@ const OAuthLogin = () => {
 
   useEffect(() => {
     const token = router.query.accessToken as string;
-    setAccessToken(token);
-    setLoginState(true);
-    router.push('/', undefined, { shallow: true });
+    if (token) {
+      setAccessToken(token);
+      setLoginState(true);
+      router.push('/', undefined, { shallow: true });
+    }
   }, [router]);
 
   return <div>로그인 중..</div>;
