@@ -20,10 +20,12 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from 'components/common/Button';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
+
+import FoodPartyCategoryItem from './FoodPartyCategory';
 
 type PartyForm = {
   title: string;
@@ -38,8 +40,15 @@ type PartyForm = {
 const FoodPartyCreateForm = () => {
   const router = useRouter();
   const toast = useToast();
+  const [categoryState, setCategoryState] = useState('');
+  const [accordionIndex, setAccordionIndex] = useState(0);
   const { register, setValue, handleSubmit } = useForm<PartyForm>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
+
+  const handleClickCategory = (value: string) => {
+    setCategoryState(value);
+    setAccordionIndex(accordionIndex + 1);
+  };
 
   useEffect(() => {
     if (selectedRestaurant.placeName === '') {
@@ -91,20 +100,26 @@ const FoodPartyCreateForm = () => {
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as='span' flex='1' textAlign='left'>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
                     카테고리
+                  </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {categoryState}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel></AccordionPanel>
+              <AccordionPanel>
+                <FoodPartyCategoryItem onClick={handleClickCategory} />
+              </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
               <Flex align='center'>
                 <Flex
                   as='span'
                   flex='1'
-                  h={50}
+                  h={35}
+                  fontWeight={600}
                   pl='1rem'
                   justify='flex-start'
                   align='center'>
@@ -116,10 +131,12 @@ const FoodPartyCreateForm = () => {
                     required: true,
                     minLength: 1,
                   })}
-                  w={100}
+                  w={70}
                   h='100%'
+                  mr={3.5}
                   bgColor='transparent'
-                  borderColor='none'
+                  borderColor='transparent'
+                  focusBorderColor='transparent'
                   defaultValue={2}
                   min={2}
                   max={8}>
