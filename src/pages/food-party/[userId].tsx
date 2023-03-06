@@ -9,7 +9,7 @@ const DUMMY_PARTY_LIST = [
   {
     id: 1,
     name: '햄최삼 모여라',
-    currentStaff: 2,
+    currentMember: 2,
     capacity: 5,
     promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
     status: 'RECRUITING',
@@ -29,7 +29,7 @@ const DUMMY_PARTY_LIST = [
   {
     id: 2,
     name: '라멘 뇸뇸뇸, 나가면 지상렬',
-    currentStaff: 3,
+    currentMember: 3,
     capacity: 3,
     promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
     status: 'RECRUITING',

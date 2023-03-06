@@ -1,14 +1,15 @@
 import { RestaurantType } from './kakaoSearch';
 
-type Member = {
+export type Member = {
   userId: number;
+  userName?: string;
   avatarUrl: string;
 };
 
 export type FoodParty = {
   id: number;
   name: string;
-  currentStaff: number;
+  currentMember: number;
   capacity: number;
   promiseTime: number[];
   status: string;

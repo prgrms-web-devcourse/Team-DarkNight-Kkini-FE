@@ -1,5 +1,7 @@
-import { Avatar, AvatarGroup, Flex, Text } from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { FoodParty } from 'types/foodParty';
+
+const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 
 const FoodPartyListItem = ({
   party,
@@ -8,31 +10,40 @@ const FoodPartyListItem = ({
   party: FoodParty;
   onClick: (partyId: number) => void;
 }) => {
+  const [year, month, day, hour, minute] = party.promiseTime;
+
   return (
+    // ellipsis 처리 by 승준
     <Flex
-      onClick={() => {
-        onClick(party.id);
-      }}
-      alignItems='center'
-      justifyContent='space-between'
-      cursor='pointer'
-      padding='1rem'
+      flexDirection='column'
+      padding='1.5rem'
       borderRadius='1rem'
       border='1px solid #e2e5e6'
-      marginBottom='1rem'
-      key={party.id}>
+      marginBottom='1rem'>
       <Flex flexDirection='column'>
-        {/* To Do: ellipsis 처리 by 승준 */}
         <Text>{party.name}</Text>
-        <Text>{party.content}</Text>
+        <Flex justifyContent='space-between'>
+          <Text>
+            {year}-{month}-{day} {hour}:{minute}
+          </Text>
+          <Text>
+            {party.currentMember} / {party.capacity}
+          </Text>
+        </Flex>
       </Flex>
-      <Flex flexDirection='column' alignItems='flex-end'>
-        {party.currentStaff} / {party.capacity}
-        <AvatarGroup size='xs' max={2}>
+      <Divider margin='1rem 0' />
+      <Flex justifyContent='space-between' alignItems='center'>
+        <AvatarGroup size='sm' max={DEFAULT_AVATAR_GROUP_MAX_VALUE}>
           {party.members.map((member) => (
             <Avatar key={member.userId} src={member.avatarUrl} />
           ))}
         </AvatarGroup>
+        <Button
+          onClick={() => {
+            onClick(party.id);
+          }}>
+          View
+        </Button>
       </Flex>
     </Flex>
   );
