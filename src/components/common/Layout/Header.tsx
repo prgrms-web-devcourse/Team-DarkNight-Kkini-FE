@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { LoginModal } from 'types/modal';
 
-const DynamicUserProfile = dynamic(() => import('./UserProfile'), {
+const DynamicUserProfile = dynamic(() => import('../UserProfile'), {
   ssr: false,
   loading: () => <SkeletonCircle />,
 });
