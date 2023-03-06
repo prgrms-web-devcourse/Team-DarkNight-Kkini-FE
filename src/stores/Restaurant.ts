@@ -9,6 +9,7 @@ export const searchRestaurantListState = atom<RestaurantFromKeywordSearchProps[]
 export const selectedRestaurantState = atom<RestaurantFromKeywordSearchProps>({
   key: 'selectedRestaurant',
   default: {
+    placeId: '',
     placeName: '',
     categories: [],
     roadAddressName: '',

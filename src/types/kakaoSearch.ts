@@ -19,6 +19,7 @@ export type AxiosPhotoResponseValue = {
 };
 
 export type RestaurantFromKeywordSearchProps = {
+  placeId: string;
   placeName: string; // ex. '자갈치 곰장어' - kakao api
   categories: string[]; // ex. ['음식점', '한식', '해물,생선', '장어'] - kakao api
   roadAddressName: string; // ex. '부산 금정구 오시게로28번길 4' - kakao api

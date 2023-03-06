@@ -43,6 +43,7 @@ const useSearchRestaurant = () => {
 
     const searchResult = keywordSearchResult.map((item, i) => {
       const {
+        id: placeId,
         place_name: placeName,
         category_name: categoryName,
         road_address_name: roadAddressName,
@@ -55,6 +56,7 @@ const useSearchRestaurant = () => {
       const categories = categoryName.split('>').map((category) => category.trim());
 
       return {
+        placeId,
         placeName,
         categories,
         roadAddressName,
