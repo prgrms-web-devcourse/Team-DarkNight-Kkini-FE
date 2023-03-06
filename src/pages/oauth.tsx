@@ -1,8 +1,8 @@
+import { setAccessToken } from 'apis/axios';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
-import { setAccessToken } from 'utils/apis/axios';
 
 const OAuthLogin = () => {
   const router = useRouter();
