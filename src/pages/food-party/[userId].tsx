@@ -1,19 +1,9 @@
-import { Avatar, AvatarGroup, Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useRouter } from 'next/router';
-
-type FoodParty = {
-  id: number;
-  name: string;
-  currentStaff: number;
-  capacity: number;
-  promiseTime: number[];
-  status: string;
-  content: string;
-  category: string[];
-  avatarUrls: string[];
-};
+import { FoodParty } from 'types/foodParty';
 
 const DUMMY_PARTY_LIST = [
   {
@@ -63,42 +53,12 @@ const MyFoodPartyList = () => {
     queryFn: fetchMyFoodPartyList,
   });
 
-  if (isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
+  if (!myFoodPartyList || isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
 
   return (
     <Flex flexDirection='column' padding='1rem'>
       <Heading paddingBottom='1rem'>너님의 밥모임 목록</Heading>
-      <Flex flexDirection='column'>
-        {/* To Do: 컴포넌트화 필요 by 승준 */}
-        {myFoodPartyList?.map((party) => (
-          <Flex
-            onClick={() => {
-              handleClickFoodPartyItem(party.id);
-            }}
-            alignItems='center'
-            justifyContent='space-between'
-            cursor='pointer'
-            padding='1rem'
-            borderRadius='1rem'
-            border='1px solid #e2e5e6'
-            marginBottom='1rem'
-            key={party.id}>
-            <Flex flexDirection='column'>
-              {/* To Do: ellipsis 처리 by 승준 */}
-              <Text>{party.name}</Text>
-              <Text>{party.content}</Text>
-            </Flex>
-            <Flex flexDirection='column' alignItems='flex-end'>
-              {party.currentStaff} / {party.capacity}
-              <AvatarGroup size='xs' max={2}>
-                {party.avatarUrls.map((avatarUrl) => (
-                  <Avatar key={avatarUrl} src={avatarUrl} />
-                ))}
-              </AvatarGroup>
-            </Flex>
-          </Flex>
-        ))}
-      </Flex>
+      <FoodPartyList foodPartyList={myFoodPartyList} onClick={handleClickFoodPartyItem} />
     </Flex>
   );
 };
