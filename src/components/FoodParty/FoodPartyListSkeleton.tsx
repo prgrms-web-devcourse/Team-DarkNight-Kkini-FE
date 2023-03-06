@@ -1,6 +1,6 @@
 import { Box, Flex, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 
-const MyFoodPartiesSkeleton = ({ foodPartyCount }: { foodPartyCount: number }) => {
+const FoodPartyListSkeleton = ({ foodPartyCount }: { foodPartyCount: number }) => {
   const foodPartySkeletons = Array.from(
     { length: foodPartyCount },
     (_, index) => `food-party-dummy-skeleton-${index}`
@@ -35,4 +35,4 @@ const MyFoodPartiesSkeleton = ({ foodPartyCount }: { foodPartyCount: number }) =
   );
 };
 
-export default MyFoodPartiesSkeleton;
+export default FoodPartyListSkeleton;

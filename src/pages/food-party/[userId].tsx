@@ -1,6 +1,6 @@
 import { Avatar, AvatarGroup, Flex, Heading, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import MyFoodPartiesSkeleton from 'components/FoodParty/MyFoodParties/MyFoodPartiesSkeleton';
+import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useRouter } from 'next/router';
 
 type FoodParty = {
@@ -15,7 +15,7 @@ type FoodParty = {
   avatarUrls: string[];
 };
 
-const DUMMY_PARTIES = [
+const DUMMY_PARTY_LIST = [
   {
     id: 1,
     name: '햄최삼 모여라',
@@ -44,13 +44,13 @@ const DUMMY_PARTIES = [
   },
 ];
 
-const fetchMyFoodParties = () => {
+const fetchMyFoodPartyList = () => {
   return new Promise<FoodParty[]>((resolve, reject) => {
-    resolve(DUMMY_PARTIES);
+    resolve(DUMMY_PARTY_LIST);
   });
 };
 
-const MyFoodParties = () => {
+const MyFoodPartyList = () => {
   const router = useRouter();
 
   // To Do: 현재 인원 실시간 업데이트를 위한 refetch 필요 by 승준
@@ -58,19 +58,19 @@ const MyFoodParties = () => {
     router.push(`/food-party/detail/${partyId}`);
   };
 
-  const { data: myFoodParties, isLoading } = useQuery<FoodParty[]>({
-    queryKey: ['my-food-parties'],
-    queryFn: fetchMyFoodParties,
+  const { data: myFoodPartyList, isLoading } = useQuery<FoodParty[]>({
+    queryKey: ['myFoodPartyList'],
+    queryFn: fetchMyFoodPartyList,
   });
 
-  if (isLoading) return <MyFoodPartiesSkeleton foodPartyCount={4} />;
+  if (isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
 
   return (
     <Flex flexDirection='column' padding='1rem'>
       <Heading paddingBottom='1rem'>너님의 밥모임 목록</Heading>
       <Flex flexDirection='column'>
         {/* To Do: 컴포넌트화 필요 by 승준 */}
-        {myFoodParties?.map((party) => (
+        {myFoodPartyList?.map((party) => (
           <Flex
             onClick={() => {
               handleClickFoodPartyItem(party.id);
@@ -103,4 +103,4 @@ const MyFoodParties = () => {
   );
 };
 
-export default MyFoodParties;
+export default MyFoodPartyList;
