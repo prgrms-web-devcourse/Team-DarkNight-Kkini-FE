@@ -1,11 +1,16 @@
-import { Avatar } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import LoginButton from 'components/Login/LoginButton';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { LoginModal } from 'types/modal';
+
+const DynamicUserProfile = dynamic(() => import('./UserProfile'), {
+  ssr: false,
+  loading: () => <div>loading..</div>,
+});
 
 const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
   const isLogin = useRecoilValue(isLoginState);
@@ -22,7 +27,7 @@ const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
         />
       </Link>
       {isLogin ? (
-        <Avatar src='https://bit.ly/broken-link' size='sm' />
+        <DynamicUserProfile />
       ) : (
         <LoginButton isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
       )}
