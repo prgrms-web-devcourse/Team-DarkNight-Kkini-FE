@@ -1,29 +1,64 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-// import { GetServerSideProps } from 'next';
+import { Flex, Heading } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import FoodPartyList from 'components/FoodParty/FoodPartyList';
+import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useRouter } from 'next/router';
+import { FoodParty } from 'types/foodParty';
 
-const DUMMY_PARTIES = [
+const DUMMY_PARTY_LIST = [
   {
     id: 1,
     name: '햄최삼 모여라',
+    currentStaff: 2,
     capacity: 5,
     promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
     status: 'RECRUITING',
     content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
-    category: 'QUIET',
+    category: ['QUIET'],
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/ryan-florence',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/sage-adebayo',
+      },
+    ],
   },
   {
     id: 2,
     name: '라멘 뇸뇸뇸, 나가면 지상렬',
+    currentStaff: 3,
     capacity: 3,
     promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
     status: 'RECRUITING',
     content: '식사 예절 좋으신 분만',
-    category: 'MANNERS MAKETH MAN',
+    category: ['MANNERS MAKETH MAN'],
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/kent-c-dodds',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/prosper-baba',
+      },
+      {
+        userId: 3,
+        avatarUrl: 'https://bit.ly/code-beast',
+      },
+    ],
   },
 ];
 
-const MyFoodParties = () => {
+const fetchMyFoodPartyList = () => {
+  return new Promise<FoodParty[]>((resolve, reject) => {
+    resolve(DUMMY_PARTY_LIST);
+  });
+};
+
+const MyFoodPartyList = () => {
   const router = useRouter();
 
   // To Do: 현재 인원 실시간 업데이트를 위한 refetch 필요 by 승준
@@ -31,60 +66,19 @@ const MyFoodParties = () => {
     router.push(`/food-party/detail/${partyId}`);
   };
 
+  const { data: myFoodPartyList, isLoading } = useQuery<FoodParty[]>({
+    queryKey: ['myFoodPartyList'],
+    queryFn: fetchMyFoodPartyList,
+  });
+
+  if (!myFoodPartyList || isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
+
   return (
-    <Flex flexDirection='column'>
-      <Heading marginLeft='1rem'>너님의 밥모임 목록</Heading>
-      <Flex flexDirection='column' padding='1rem'>
-        {/* To Do: 컴포넌트화 필요 by 승준 */}
-        {DUMMY_PARTIES.map((party) => (
-          <Flex
-            onClick={() => {
-              handleClickFoodPartyItem(party.id);
-            }}
-            alignItems='center'
-            justifyContent='space-between'
-            cursor='pointer'
-            padding='1rem'
-            boxShadow='button'
-            borderRadius='1rem'
-            border='1px solid #e2e5e6'
-            marginBottom='1rem'
-            key={party.id}>
-            <Box>
-              {/* To Do: ellipsis 처리 by 승준 */}
-              <Text>{party.name}</Text>
-              <Text>{party.content}</Text>
-            </Box>
-            <Box>/ {party.capacity}</Box>
-            {/* To Do: Avatar Group 보여주기 by 승준 */}
-          </Flex>
-        ))}
-      </Flex>
+    <Flex flexDirection='column' padding='1rem'>
+      <Heading paddingBottom='1rem'>너님의 밥모임 목록</Heading>
+      <FoodPartyList foodPartyList={myFoodPartyList} onClick={handleClickFoodPartyItem} />
     </Flex>
   );
 };
 
-export default MyFoodParties;
-
-// To Do: 서버 사이드 렌더링 by 승준
-// type ParamsType = {
-//   userId: string;
-// };
-
-// type GetServerSidePropsReturnType = {
-//   userId: string;
-// };
-
-// export const getServerSideProps: GetServerSideProps<
-//   GetServerSidePropsReturnType,
-//   ParamsType
-// > = async ({ params }) => {
-//   const { userId } = params!;
-//   const foodParties = await getMyFoodParties('asd');
-
-//   return {
-//     props: {
-//       userId,
-//     },
-//   };
-// };
+export default MyFoodPartyList;
