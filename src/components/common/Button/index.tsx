@@ -7,6 +7,7 @@ type Props = {
   height?: string;
   style?: FlexProps;
   children?: ReactNode;
+  type?: string;
   onClick?: () => void;
 };
 
@@ -25,6 +26,7 @@ const Button = ({
       h={height}
       borderRadius='8px'
       onClick={onClick}
+      type={props.type}
       {...props.style}>
       {props.children}
     </ButtonContainer>

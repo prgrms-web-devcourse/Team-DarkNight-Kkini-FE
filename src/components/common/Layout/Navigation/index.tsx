@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { isDrawerOpenedState } from 'stores/drawer';
 import { LoginModal } from 'types/modal';
 import { NavigationButtonProps } from 'types/navigation';
 
 const Navigation = ({ onOpen }: LoginModal) => {
-  const setIsDrawerOpened = useSetRecoilState(isDrawerOpenedState);
+  const [isDrawerOpened, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
   const isLogin = useRecoilValue(isLoginState);
   const router = useRouter();
 
@@ -24,7 +24,9 @@ const Navigation = ({ onOpen }: LoginModal) => {
   };
 
   const handleClickCommunity = () => {
-    checkLoginUser() && setIsDrawerOpened(true);
+    if (checkLoginUser()) {
+      isDrawerOpened ? setIsDrawerOpened(false) : setIsDrawerOpened(true);
+    }
   };
 
   const handleClickMyFoodParty = () => {
