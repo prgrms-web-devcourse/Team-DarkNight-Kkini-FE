@@ -6,6 +6,6 @@ const ERROR_MESSAGE = {
   // https://apis.map.kakao.com/web/documentation/#services_Status
   // 위 문서 확인 시, ERROR 코드는 카카오맵 서버에 문제가 있을 시 발생함.
   REQUEST_FAILED_BY_KAKAO_MAP_SERVER_ERROR: '카카오맵 서버 에러로 요청이 실패했습니다.',
-};
+} as const;
 
 export default ERROR_MESSAGE;
