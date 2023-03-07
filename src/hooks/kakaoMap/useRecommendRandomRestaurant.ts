@@ -72,6 +72,7 @@ const useRecommendRandomRestaurant = () => {
           </div>
         `
       );
+      console.log(randomRestaurant);
 
       setRandomRestaurant({
         placeId: Number(placeId),
