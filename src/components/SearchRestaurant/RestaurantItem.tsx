@@ -18,11 +18,12 @@ import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isDrawerOpenedState } from 'stores/drawer';
 import { searchRestaurantListState, selectedRestaurantState } from 'stores/Restaurant';
+import { getCategoryArray } from 'utils/helpers/foodParty';
 
 type RestaurantItemProps = {
   name: string;
   address: string;
-  categories: string[];
+  categories: string;
   photos: string[];
   placeUrl: string;
   phoneNumber: string;
@@ -69,7 +70,7 @@ const RestaurantItem = ({
       <AccordionPanel>
         <Flex w='100%' flexDir='column' justify='space-between'>
           <Stack direction='row'>
-            {categories.map((category) => (
+            {getCategoryArray(categories).map((category) => (
               <Category key={category}>{category}</Category>
             ))}
           </Stack>
