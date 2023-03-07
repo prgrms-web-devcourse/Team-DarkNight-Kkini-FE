@@ -18,20 +18,12 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
-import { getTwoDigitNum } from 'utils/helpers/dateFormat';
+import { PartyFormType } from 'types/foodParty';
 
 import FoodPartyCalendar from './FoodPartyCalendar';
 import FoodPartyCapacity from './FoodPartyCapacity';
 import FoodPartyCategoryItem from './FoodPartyCategory';
 import FoodPartyTimePicker from './FoodPartyTimePicker';
-
-type PartyFormType = {
-  name: string;
-  category: string;
-  capacity: number;
-  promiseTime: string;
-  content: string;
-};
 
 /** 컴포넌트 분리 필요 */
 const FoodPartyCreateForm = () => {
@@ -68,10 +60,8 @@ const FoodPartyCreateForm = () => {
   };
 
   const setPartyTime = (date: Date, time: Moment) => {
-    const promiseDate = `${date.getFullYear()}-${getTwoDigitNum(
-      date.getMonth() + 1
-    )}-${getTwoDigitNum(date.getDate())}`;
-    const promiseTime = `${time.format('hh.mm.ss')}`;
+    const promiseDate = `${moment(date).format('YY-MM-DD')}`;
+    const promiseTime = `${time.format('HH:mm:ss')}`;
     setValue('promiseTime', `${promiseDate}T${promiseTime}`);
   };
 
