@@ -1,7 +1,12 @@
 import { useToast } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { createFoodParty } from 'services/foodParty';
+import {
+  createFoodParty,
+  fetchFoodPartyDetail,
+  fetchMyFoodPartyList,
+} from 'services/foodParty';
+import QUERY_KEYS from 'utils/constants/queryKeys';
 
 export const useCreateFoodParty = () => {
   const router = useRouter();
@@ -22,3 +27,24 @@ export const useCreateFoodParty = () => {
     },
   });
 };
+
+export const useGetMyFoodPartyList = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.MY_FOOD_PARTY_LIST],
+    queryFn: () => fetchMyFoodPartyList(),
+  });
+};
+
+export const useGetFoodPartyDetail = (partyId: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
+    queryFn: () => fetchFoodPartyDetail(partyId),
+  });
+};
+
+// export const useGetSearchedFoodPartyList = () => {
+//   return useQuery({
+//     queryKey: [],
+//     queryFn:
+//   })
+// }
