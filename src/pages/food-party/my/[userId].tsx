@@ -1,62 +1,8 @@
 import { Flex, Heading } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
+import { useGetMyFoodPartyList } from 'hooks/query/useFoodParty';
 import { useRouter } from 'next/router';
-import { FoodParty } from 'types/foodParty';
-
-const DUMMY_PARTY_LIST = [
-  {
-    id: 1,
-    name: '햄최삼 모여라',
-    currentMember: 2,
-    capacity: 5,
-    promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
-    status: 'RECRUITING',
-    content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
-    category: ['QUIET'],
-    members: [
-      {
-        userId: 1,
-        avatarUrl: 'https://bit.ly/ryan-florence',
-      },
-      {
-        userId: 2,
-        avatarUrl: 'https://bit.ly/sage-adebayo',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: '라멘 뇸뇸뇸, 나가면 지상렬',
-    currentMember: 3,
-    capacity: 3,
-    promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
-    status: 'RECRUITING',
-    content: '식사 예절 좋으신 분만',
-    category: ['MANNERS MAKETH MAN'],
-    members: [
-      {
-        userId: 1,
-        avatarUrl: 'https://bit.ly/kent-c-dodds',
-      },
-      {
-        userId: 2,
-        avatarUrl: 'https://bit.ly/prosper-baba',
-      },
-      {
-        userId: 3,
-        avatarUrl: 'https://bit.ly/code-beast',
-      },
-    ],
-  },
-];
-
-const fetchMyFoodPartyList = () => {
-  return new Promise<FoodParty[]>((resolve, reject) => {
-    resolve(DUMMY_PARTY_LIST);
-  });
-};
 
 const MyFoodPartyList = () => {
   const router = useRouter();
@@ -66,10 +12,7 @@ const MyFoodPartyList = () => {
     router.push(`/food-party/detail/${partyId}`);
   };
 
-  const { data: myFoodPartyList, isLoading } = useQuery<FoodParty[]>({
-    queryKey: ['myFoodPartyList'],
-    queryFn: fetchMyFoodPartyList,
-  });
+  const { data: myFoodPartyList, isLoading } = useGetMyFoodPartyList();
 
   if (!myFoodPartyList || isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
 
