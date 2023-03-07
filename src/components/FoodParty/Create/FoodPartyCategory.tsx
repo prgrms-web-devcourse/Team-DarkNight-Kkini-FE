@@ -1,6 +1,6 @@
-import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
-import { foodPartyCategory } from 'utils/constants/foodparty';
+import { foodPartyCategory } from 'utils/constants/foodParty';
 
 type FoodPartyCategoryItemProps = {
   onClick: (value: string) => void;
