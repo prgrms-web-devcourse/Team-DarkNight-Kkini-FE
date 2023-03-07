@@ -8,12 +8,14 @@ import { RandomRestaurantType } from 'types/kakaoMap';
 type RandomRestaurantDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
+  onClickJoinButton: () => void;
   randomRestaurant: RandomRestaurantType;
 };
 
 const RandomRestaurantDrawer = ({
   isOpen,
   onClose,
+  onClickJoinButton,
   randomRestaurant,
 }: RandomRestaurantDrawerProps) => {
   return (
@@ -55,7 +57,17 @@ const RandomRestaurantDrawer = ({
         <>
           <Box>{randomRestaurant.roadAddressName}</Box>
           <Box>{randomRestaurant.phoneNumber}</Box>
-          <Button width='100%'>밥모임 참여하기</Button>
+          <Button
+            onClick={onClickJoinButton}
+            width='100%'
+            style={{
+              backgroundColor: 'primary',
+              marginTop: '1rem',
+              color: 'white',
+              fontWeight: 700,
+            }}>
+            밥모임 참여하기
+          </Button>
         </>
       }
     />

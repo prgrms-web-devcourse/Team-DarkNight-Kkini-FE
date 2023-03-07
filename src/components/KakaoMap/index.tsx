@@ -21,7 +21,8 @@ const KakaoMap = () => {
   const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
-  const { randomRestaurant } = useRandomRestaurantContext();
+  const { randomRestaurant, handleClickJoinToFoodPartyButton } =
+    useRandomRestaurantContext();
   const currentPositionCustomOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
 
   // 랜덤 맛집 드로어
@@ -155,6 +156,7 @@ const KakaoMap = () => {
       <RandomRestaurantDrawer
         isOpen={isOpen}
         onClose={onClose}
+        onClickJoinButton={handleClickJoinToFoodPartyButton}
         randomRestaurant={randomRestaurant}
       />
     </Box>

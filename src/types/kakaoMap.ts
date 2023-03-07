@@ -7,14 +7,14 @@ export type KakaoMapOptions = {
 };
 
 export type RandomRestaurantType = {
-  placeName?: string;
-  categories?: string[];
-  roadAddressName?: string;
-  kakaoPlaceUrl?: string;
-  phoneNumber?: string;
-  distance?: number;
-  // To Do: 해당 속성 추가하기(setState 할 때에도 추가 필요) by 승준
-  // x, y 추가
-  // 구글 place_id
+  placeId: number;
+  placeName: string;
+  categories: string[];
+  roadAddressName: string;
+  kakaoPlaceUrl: string;
+  phoneNumber: string;
+  distance: number;
+  latitude: number;
+  longitude: number;
   customOverlay?: kakao.maps.CustomOverlay | null;
 };
