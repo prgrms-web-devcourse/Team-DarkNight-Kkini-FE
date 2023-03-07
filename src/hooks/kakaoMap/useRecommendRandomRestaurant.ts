@@ -40,12 +40,15 @@ const useRecommendRandomRestaurant = () => {
       const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
       const randomRestaurant = nearbyRestaurants[randomIndex];
       const {
+        id: placeId,
         place_name: placeName,
         category_name: categoryName,
         road_address_name: roadAddressName,
         place_url: kakaoPlaceUrl,
         phone: phoneNumber,
         distance,
+        x: longitude,
+        y: latitude,
       } = randomRestaurant;
       const categories = categoryName.split('>').map((category) => category.trim());
 
@@ -71,12 +74,15 @@ const useRecommendRandomRestaurant = () => {
       );
 
       setRandomRestaurant({
+        placeId: Number(placeId),
         placeName,
         categories,
         roadAddressName,
         kakaoPlaceUrl,
         phoneNumber,
         distance: Number(distance),
+        latitude: Number(latitude),
+        longitude: Number(longitude),
         customOverlay: createdRandomRestaurantCustomOverlay,
       });
       setKakaoMapOptions((previousKakaoMapOptions) => ({
