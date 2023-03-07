@@ -1,6 +1,6 @@
 import { Flex, Heading } from '@chakra-ui/react';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const SearchedFoodPartyList = () => {
   return (
@@ -13,4 +13,4 @@ const SearchedFoodPartyList = () => {
 
 export default SearchedFoodPartyList;
 
-export const getServerSideProps = (context: GetServerSidePropsContext) => {};
+export const getServerSideProps: GetServerSideProps = async () => {};

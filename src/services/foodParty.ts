@@ -31,12 +31,16 @@ type FetchMyFoodPartyListResponse = {
   };
 };
 
+type FetchFoodPartyDetailResponse = {
+  data: FoodParty;
+};
+
 export const createFoodParty = async (
   body: FoodPartyCreateBody
 ): Promise<responseBodyType> => {
   const response = await axiosAuthApi.post<responseBodyType>('/api/v1/crews', body);
   return response.data;
-};
+}
 
 export const fetchMyFoodPartyList = async () => {
   const {
@@ -48,10 +52,12 @@ export const fetchMyFoodPartyList = async () => {
   return myFoodPartyList;
 };
 
-export const fetchFoodPartyDetail = (partyId: number) => {
-  return new Promise<FoodPartyDetail>((resolve, reject) => {
-    resolve(DUMMY_PARTY_DETAIL);
-  });
+export const fetchFoodPartyDetail = async (partyId: string) => {
+  const {
+    data: { data: foodPartyDetail },
+  } = await axiosAuthApi<FetchFoodPartyDetailResponse>(`/api/v1/crews/${partyId}`);
+
+  return foodPartyDetail;
 };
 
 export const fetchFoodPartyList = (placeId: number) => {

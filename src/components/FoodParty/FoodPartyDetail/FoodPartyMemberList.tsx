@@ -1,4 +1,4 @@
-import { Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
 import { Member } from 'types/foodParty';
 
 import FoodPartyMemberItem from './FoodPartyMemberItem';
@@ -17,7 +17,7 @@ const FoodPartyMemberList = ({
           끼니원들
         </Heading>
         <Text fontSize='sm'>
-          {capacity} / {memberList.length}
+          {memberList.length} / {capacity}
         </Text>
       </Flex>
       <Flex flexDirection='column' gap='0.5rem'>

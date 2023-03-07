@@ -35,7 +35,7 @@ export const useGetMyFoodPartyList = () => {
   });
 };
 
-export const useGetFoodPartyDetail = (partyId: number) => {
+export const useGetFoodPartyDetail = (partyId: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
     queryFn: () => fetchFoodPartyDetail(partyId),

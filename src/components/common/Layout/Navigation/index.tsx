@@ -24,6 +24,10 @@ const Navigation = ({ onOpen }: LoginModal) => {
     return isLogin;
   };
 
+  const handleClickAroundFoodPartyList = () => {
+    router.push('/food-party/detail/1');
+  };
+
   const handleClickCommunity = () => {
     if (checkLoginUser()) {
       isDrawerOpened ? setIsDrawerOpened(false) : setIsDrawerOpened(true);
@@ -42,6 +46,7 @@ const Navigation = ({ onOpen }: LoginModal) => {
     {
       Icon: <MapIcon />,
       label: '주변밥모임',
+      onClick: handleClickAroundFoodPartyList,
     },
     {
       Icon: <PlusIcon />,

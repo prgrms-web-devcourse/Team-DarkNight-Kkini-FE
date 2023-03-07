@@ -2,8 +2,9 @@ import { RestaurantType } from './kakaoSearch';
 
 export type Member = {
   userId: number;
-  userName?: string;
+  userName: string;
   avatarUrl: string;
+  role: string;
 };
 
 export type FoodParty = {

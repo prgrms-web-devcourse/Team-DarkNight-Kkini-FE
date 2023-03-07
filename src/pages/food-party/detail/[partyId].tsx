@@ -1,18 +1,22 @@
 import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
-import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
+import { fetchFoodPartyDetail } from 'services/foodParty';
+import QUERY_KEYS from 'utils/constants/queryKeys';
 
 // To Do: 404 처리 by 승준
 // partyId로 조회하는 페이지
 // 조회가 안되면 404 처리
-const FoodPartyDetail = () => {
-  const router = useRouter();
-  // To Do: partyId를 서버 사이드 렌더링으로 넣어줘서 undefined를 없애주자. by 승준
-  const partyId = router.query.partyId;
-  const { data: foodPartyDetail, isLoading, error } = useGetFoodPartyDetail(partyId);
+const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
+  const {
+    data: foodPartyDetail,
+    isLoading,
+    isSuccess,
+    error,
+  } = useGetFoodPartyDetail(partyId);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.toString()}</div>;
@@ -22,9 +26,7 @@ const FoodPartyDetail = () => {
   return (
     <Flex flexDirection='column' padding='1rem' gap='0.5rem'>
       <Stack direction='row'>
-        {foodPartyDetail?.categories.map((category) => (
-          <Category key={category}>{category}</Category>
-        ))}
+        <Category>{isSuccess ? foodPartyDetail.category : ''}</Category>
       </Stack>
       <Heading as='h1'>{foodPartyDetail?.name}</Heading>
       <Divider />
@@ -37,18 +39,32 @@ const FoodPartyDetail = () => {
       <Flex alignItems='center' gap='0.5rem'>
         <AiOutlineClockCircle />
         <Text>
-          {hour}:{minute}
+          {hour}:{String(minute).padStart(2, '0')}
         </Text>
       </Flex>
-      <FoodPartyMemberList
-        memberList={foodPartyDetail!.members}
-        capacity={foodPartyDetail!.capacity}
-      />
+      {/* To Do: 아직 백엔드 API에서 memberList를 못 던짐. */}
+      {/* <FoodPartyMemberList
+        memberList={isSuccess ? foodPartyDetail.members : []}
+        capacity={isSuccess ? foodPartyDetail.capacity : 0}
+      /> */}
     </Flex>
   );
 };
 
 export default FoodPartyDetail;
 
-// To Do: 스켈레톤 UI by 승준
-// To Do: Server-Side Rendering
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const partyId = context.params?.partyId || '';
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
+    queryFn: () => fetchFoodPartyDetail(partyId as string),
+  });
+
+  return {
+    props: {
+      partyId,
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
