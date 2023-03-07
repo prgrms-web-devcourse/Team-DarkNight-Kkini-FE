@@ -16,7 +16,17 @@ type RandomRestaurantContextType = {
 };
 
 const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
-  randomRestaurant: {},
+  randomRestaurant: {
+    placeId: -1,
+    placeName: '',
+    categories: [''],
+    roadAddressName: '',
+    kakaoPlaceUrl: '',
+    phoneNumber: '',
+    distance: -1,
+    latitude: -1,
+    longitude: -1,
+  },
   setRandomRestaurant: () => {},
   handleClickJoinToFoodPartyButton: () => {},
 });
@@ -24,7 +34,17 @@ const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
 const useRandomRestaurantContext = () => useContext(RandomRestaurantContext);
 
 export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) => {
-  const [randomRestaurant, setRandomRestaurant] = useState<RandomRestaurantType>({});
+  const [randomRestaurant, setRandomRestaurant] = useState<RandomRestaurantType>({
+    placeId: -1,
+    placeName: '',
+    categories: [''],
+    roadAddressName: '',
+    kakaoPlaceUrl: '',
+    phoneNumber: '',
+    distance: -1,
+    latitude: -1,
+    longitude: -1,
+  });
   const router = useRouter();
 
   const handleClickJoinToFoodPartyButton = () => {

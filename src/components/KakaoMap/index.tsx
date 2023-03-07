@@ -156,7 +156,7 @@ const KakaoMap = () => {
       <RandomRestaurantDrawer
         isOpen={isOpen}
         onClose={onClose}
-        onClick={handleClickJoinToFoodPartyButton}
+        onClickJoinButton={handleClickJoinToFoodPartyButton}
         randomRestaurant={randomRestaurant}
       />
     </Box>
