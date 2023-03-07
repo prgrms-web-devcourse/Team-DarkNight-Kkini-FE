@@ -31,8 +31,8 @@ const Navigation = ({ onOpen }: LoginModal) => {
     if (!checkLoginUser()) {
       return;
     }
-    /* To Do: userId를 가져와서 라우팅시켜줘야 함. 123은 테스트용 userId */
-    router.push('/food-party/123');
+
+    router.push('/food-party/list/my');
   };
 
   const NavigationItem: NavigationButtonProps[] = [
