@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import {
   createFoodParty,
   fetchFoodPartyDetail,
+  fetchFoodPartyList,
   fetchMyFoodPartyList,
 } from 'services/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
@@ -42,9 +43,9 @@ export const useGetFoodPartyDetail = (partyId: string) => {
   });
 };
 
-// export const useGetSearchedFoodPartyList = () => {
-//   return useQuery({
-//     queryKey: [],
-//     queryFn:
-//   })
-// }
+export const useGetSearchedFoodPartyList = (placeId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.SEARCHED_FOOD_PARTY_LIST, placeId],
+    queryFn: () => fetchFoodPartyList(placeId),
+  });
+};

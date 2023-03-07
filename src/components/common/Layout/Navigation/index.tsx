@@ -1,7 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import NavigationButton from 'components/common/Layout/Navigation/NavigationButton';
-import { useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
@@ -25,7 +24,7 @@ const Navigation = ({ onOpen }: LoginModal) => {
   };
 
   const handleClickAroundFoodPartyList = () => {
-    router.push('/food-party/detail/1');
+    router.push('/food-party/list/restaurant/1?page=1&size=10');
   };
 
   const handleClickCommunity = () => {

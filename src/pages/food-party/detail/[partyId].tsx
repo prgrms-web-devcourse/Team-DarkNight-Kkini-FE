@@ -54,7 +54,8 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 export default FoodPartyDetail;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const partyId = context.params?.partyId || '';
+  const { partyId } = context.query;
+
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],

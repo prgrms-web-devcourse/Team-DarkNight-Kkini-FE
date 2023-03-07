@@ -5,6 +5,7 @@ const QUERY_KEYS = {
   FOOD_PARTY: {
     MY_FOOD_PARTY_LIST: 'myFoodPartyList',
     FOOD_PARTY_DETAIL: 'foodPartyDetail',
+    SEARCHED_FOOD_PARTY_LIST: 'searchedFoodPartyList',
   },
 } as const;
 
