@@ -8,8 +8,6 @@ import theme from 'styles/chakra-theme';
 import { BaseFont } from 'styles/fonts';
 import globalStyle from 'styles/global';
 
-// import DraggableDrawer from '../../DraggableDrawer/index';
-
 const Layout = ({ children }: { children: ReactNode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 로그인 모달
 
