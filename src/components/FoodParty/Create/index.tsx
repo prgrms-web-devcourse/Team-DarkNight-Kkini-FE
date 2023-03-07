@@ -78,7 +78,7 @@ const FoodPartyCreateForm = () => {
   const onSubmit = () => {
     setPartyTime(date, time);
     const body = {
-      restaurant: { ...selectedRestaurant },
+      createStoreRequest: { ...selectedRestaurant },
       ...getValues(),
     };
   };

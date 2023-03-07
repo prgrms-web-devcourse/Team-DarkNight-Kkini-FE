@@ -16,7 +16,7 @@ export const selectedRestaurantState = atom<RestaurantFromKeywordSearchProps>({
     photoUrls: [],
     kakaoPlaceUrl: '',
     phoneNumber: '',
-    x: 0,
-    y: 0,
+    longitude: 0,
+    latitude: 0,
   },
 });

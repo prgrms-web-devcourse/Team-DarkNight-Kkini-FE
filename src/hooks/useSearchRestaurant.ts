@@ -63,8 +63,8 @@ const useSearchRestaurant = () => {
         photoUrls: photos[i],
         kakaoPlaceUrl,
         phoneNumber,
-        x: parseFloat(x),
-        y: parseFloat(y),
+        longitude: parseFloat(x),
+        latitude: parseFloat(y),
       };
     });
 

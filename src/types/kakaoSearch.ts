@@ -26,6 +26,6 @@ export type RestaurantFromKeywordSearchProps = {
   photoUrls: string[]; // ex. ['https://~', 'https://~', 'https://~', ...] - google api
   kakaoPlaceUrl: string; // ex. "http://place.map.kakao.com/24199893" - kakao api
   phoneNumber: string; // 전화번호 ex. '02-017-3495' - kakao api
-  x: number; // ex. 129.0868070386026 - kakao api
-  y: number; // ex. 35.22008482785265 - kakao api
+  longitude: number; // ex. 129.0868070386026 - kakao api
+  latitude: number; // ex. 35.22008482785265 - kakao api
 };
