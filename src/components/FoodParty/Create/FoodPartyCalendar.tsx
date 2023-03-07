@@ -2,7 +2,6 @@ import 'react-calendar/dist/Calendar.css';
 
 import styled from '@emotion/styled';
 import moment from 'moment';
-import { Dispatch, SetStateAction } from 'react';
 import Calendar from 'react-calendar';
 
 type FoodPartyCalendarProps = {

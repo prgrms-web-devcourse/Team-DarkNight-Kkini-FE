@@ -12,7 +12,7 @@ import { LoginModal } from 'types/modal';
 import { NavigationButtonProps } from 'types/navigation';
 
 const Navigation = ({ onOpen }: LoginModal) => {
-  const [isDrawerOpend, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
+  const [isDrawerOpened, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
   const isLogin = useRecoilValue(isLoginState);
   const router = useRouter();
 
@@ -25,7 +25,7 @@ const Navigation = ({ onOpen }: LoginModal) => {
 
   const handleClickCommunity = () => {
     if (checkLoginUser()) {
-      isDrawerOpend ? setIsDrawerOpened(false) : setIsDrawerOpened(true);
+      isDrawerOpened ? setIsDrawerOpened(false) : setIsDrawerOpened(true);
     }
   };
 
