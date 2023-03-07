@@ -25,6 +25,12 @@ type FoodPartyDetail = {
   comments: Comment[];
 };
 
+type FetchMyFoodPartyListResponse = {
+  data: {
+    responses: FoodParty[];
+  };
+};
+
 export const createFoodParty = async (
   body: FoodPartyCreateBody
 ): Promise<responseBodyType> => {
@@ -33,8 +39,13 @@ export const createFoodParty = async (
 };
 
 export const fetchMyFoodPartyList = async () => {
-  const { data } = await axiosAuthApi<{ data: FoodParty[] }>('/api/v1/crews/me');
-  return data.data;
+  const {
+    data: {
+      data: { responses: myFoodPartyList },
+    },
+  } = await axiosAuthApi<FetchMyFoodPartyListResponse>('/api/v1/crews/me');
+
+  return myFoodPartyList;
 };
 
 export const fetchFoodPartyDetail = (partyId: number) => {
