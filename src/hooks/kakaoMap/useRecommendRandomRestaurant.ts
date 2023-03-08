@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
+import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
 import { getNearbyRestaurants } from '../../utils/helpers/kakaoMap';
 
@@ -43,6 +44,7 @@ const useRecommendRandomRestaurant = () => {
         id: placeId,
         place_name: placeName,
         category_name: categoryName,
+        address_name: addressName,
         road_address_name: roadAddressName,
         place_url: kakaoPlaceUrl,
         phone: phoneNumber,
@@ -50,6 +52,8 @@ const useRecommendRandomRestaurant = () => {
         x: longitude,
         y: latitude,
       } = randomRestaurant;
+      const result = await getKeywordPhotos(addressName, placeName);
+      const photoUrls = result.documents.map(({ image_url: imageUrl }) => imageUrl);
       const categories = categoryName.split('>').map((category) => category.trim());
 
       // To Do: placeName 나오는 부분 스타일링 필요 by 승준
