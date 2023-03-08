@@ -36,11 +36,23 @@ export const useGetMyFoodPartyList = () => {
   });
 };
 
-export const useGetFoodPartyDetail = (partyId: string) => {
-  return useQuery({
+export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
+  const result = useQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
     queryFn: () => fetchFoodPartyDetail(partyId),
   });
+  const isLeader = !!result.data?.members.find(
+    ({ userId: memberUserId, role }) => memberUserId === userId && role === 'LEADER'
+  );
+  const isMember = !!result.data?.members.find(
+    ({ userId: memberUserId, role }) => memberUserId === userId && role === 'MEMBER'
+  );
+
+  return {
+    ...result,
+    isLeader,
+    isMember,
+  };
 };
 
 export const useGetSearchedFoodPartyList = (placeId: string) => {
