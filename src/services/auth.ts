@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios';
 import { Token } from 'types/auth';
 
-import { axiosApi, axiosAuthApi, setAccessToken } from './../apis/axios';
+import { axiosApi, removeAccessToken, setAccessToken } from './../apis/axios';
 
 type SilentLoginError = {
   code: string;
@@ -26,5 +26,13 @@ export const silentLogin = async () => {
 };
 
 export const logout = async () => {
-  return await axiosAuthApi.delete('api/v1/tokens');
+  try {
+    const { status } = await axiosApi.delete('api/v1/tokens');
+    if (status === 204) {
+      removeAccessToken();
+      return true;
+    }
+  } catch (error) {
+    return false;
+  }
 };
