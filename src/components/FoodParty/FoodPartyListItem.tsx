@@ -47,7 +47,7 @@ const FoodPartyListItem = ({
       <Flex justifyContent='space-between' alignItems='center'>
         <AvatarGroup size='sm' max={DEFAULT_AVATAR_GROUP_MAX_VALUE}>
           {party.members.map((member) => (
-            <Avatar key={member.userId} src={member.avatarUrl} />
+            <Avatar key={member.userId} src={member.profileImgUrl} />
           ))}
         </AvatarGroup>
         <Button

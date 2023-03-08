@@ -7,7 +7,7 @@ type FoodPartyDetailMainButtonProps = {
   isMember: boolean;
   isFull: boolean;
   status: FoodPartyStatus;
-  onClick: () => void;
+  // onClick: () => void;
 };
 
 const FoodPartyDetailMainButton = ({
@@ -15,18 +15,16 @@ const FoodPartyDetailMainButton = ({
   isMember,
   isFull,
   status,
-  onClick,
-}: FoodPartyDetailMainButtonProps) => {
+}: // onClick,
+FoodPartyDetailMainButtonProps) => {
   const buttonText = getText(isLeader, isMember, isFull, status);
   const isDisabled = checkButtonTextIsDisabled(buttonText);
-  // To Do: text에 따라
-  // const handleClickButton = () => {}
 
   return (
     <>
       {buttonText !== '' && (
         <Button
-          onClick={onClick}
+          // onClick={onClick}
           disabled={isDisabled}
           position='absolute'
           left='50%'

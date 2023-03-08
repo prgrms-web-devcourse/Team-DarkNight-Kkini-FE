@@ -42,10 +42,12 @@ export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
     queryFn: () => fetchFoodPartyDetail(partyId),
   });
   const isLeader = !!result.data?.members.find(
-    ({ userId: memberUserId, role }) => memberUserId === userId && role === 'LEADER'
+    ({ userId: memberUserId, crewMemberRole }) =>
+      memberUserId === userId && crewMemberRole === 'LEADER'
   );
   const isMember = !!result.data?.members.find(
-    ({ userId: memberUserId, role }) => memberUserId === userId && role === 'MEMBER'
+    ({ userId: memberUserId, crewMemberRole }) =>
+      memberUserId === userId && crewMemberRole === 'MEMBER'
   );
   const isFull = result.data?.currentMember === result.data?.capacity;
 

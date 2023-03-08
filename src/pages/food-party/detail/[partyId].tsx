@@ -1,4 +1,12 @@
-import { Divider, Flex, Heading, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
 import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';
@@ -72,7 +80,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         </Flex>
         <Flex alignItems='center' gap='0.5rem'>
           <AiOutlineSearch />
-          <Text onClick={onOpen}>맛집 정보</Text>
+          <Button onClick={onOpen} height='1.5rem'>
+            맛집 정보
+          </Button>
         </Flex>
       </Flex>
       {/* 내용 */}
@@ -83,12 +93,12 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         memberList={isSuccess ? foodPartyDetail.members : []}
         capacity={isSuccess ? foodPartyDetail.capacity : 0}
       />
-      {isSuccess && (
+      {/* {isSuccess && (
         <FoodPartyDetailMainButton
           isLeader={isLeader}
           isMember={isMember}
           isFull={isFull}
-          // onClick={handleClickButton}
+          onClick={handleClickButton}
           status={foodPartyDetail.status}></FoodPartyDetailMainButton>
       )}
       {isSuccess && (
@@ -97,7 +107,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           onClose={onClose}
           restaurant={foodPartyDetail.restaurant}
         />
-      )}
+      )} */}
     </Flex>
   );
 };

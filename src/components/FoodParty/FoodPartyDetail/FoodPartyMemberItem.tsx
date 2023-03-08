@@ -7,10 +7,10 @@ const FoodPartyMemberItem = ({ member }: { member: Member }) => {
     <Box position='relative' padding='0.5rem 0'>
       <Flex alignItems='center' justifyContent='space-between'>
         <Flex alignItems='center' gap='1rem'>
-          <Avatar src={member.avatarUrl} />
-          <Text>{member.userName}</Text>
+          <Avatar src={member.profileImgUrl} />
+          <Text>{member.nickname}</Text>
         </Flex>
-        {member.role === 'LEADER' && (
+        {member.crewMemberRole === 'LEADER' && (
           <Flex border='1px solid' borderRadius='50%' padding='0.25rem'>
             <AiOutlineCrown />
           </Flex>
