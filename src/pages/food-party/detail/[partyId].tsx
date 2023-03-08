@@ -76,16 +76,6 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         memberList={isSuccess ? foodPartyDetail.members : []}
         capacity={isSuccess ? foodPartyDetail.capacity : 0}
       />
-      {/* To Do */}
-      {/* Leader이면 -> 모집 중, 모집 완료, 식사 완료, 인원 다 찼을 때 */}
-      {/* member이면 -> 모집 중, 모집 완료, 식사 완료, 인원 다 찼을 때 */}
-      {/* 참여하지 않았으면 -> 모집중, 모집 완료, 식사 완료, 인원 다 찼을 때 */}
-
-      {/* 방장이라면 */}
-      {/* {isSuccess && } */}
-
-      {/* {isLeader && <Button>출발할 끼니?</Button>}
-      <Button>참여할 끼니?</Button> */}
       {isSuccess && (
         <FoodPartyDetailMainButton
           isLeader={isLeader}
