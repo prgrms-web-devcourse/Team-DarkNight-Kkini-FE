@@ -21,7 +21,7 @@ const FoodPartyApplicationDrawer = ({
 }: FoodPartyApplicationDrawerProps) => {
   const { register, handleSubmit } = useForm<FormType>();
   const onSubmit = (data: FormType) => {
-    console.log(data);
+    /**Todo: 신청서 Submit 동작 */
   };
 
   return (
@@ -33,7 +33,7 @@ const FoodPartyApplicationDrawer = ({
           <Text fontSize='1.2rem'>신청서</Text>
           <Image
             src='/images/delete-btn.svg'
-            alt='신청서 드로워 닫기'
+            alt='신청서 창닫기'
             onClick={onClose}
             width='25'
             height='25'
