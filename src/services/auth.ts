@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios';
 import { Token } from 'types/auth';
 
-import { axiosApi, setAccessToken } from './../apis/axios';
+import { axiosApi, axiosAuthApi, setAccessToken } from './../apis/axios';
 
 type SilentLoginError = {
   code: string;
@@ -12,7 +12,7 @@ export const silentLogin = async () => {
   try {
     const { data } = await axiosApi.post<Token>('api/v1/tokens');
     setAccessToken(data.accessToken);
-    return true;
+    return data.accessToken;
   } catch (error) {
     if (isAxiosError<SilentLoginError>(error)) {
       switch (error.response?.data.code) {
@@ -23,4 +23,8 @@ export const silentLogin = async () => {
       }
     }
   }
+};
+
+export const logout = async () => {
+  return await axiosAuthApi.delete('api/v1/tokens');
 };
