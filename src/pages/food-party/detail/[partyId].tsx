@@ -1,4 +1,4 @@
-import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
 import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';
@@ -32,25 +32,45 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   // To Do: Date 등 따로 컴포넌트를 빼자.
   const [year, month, day, hour, minute] = foodPartyDetail!.promiseTime;
 
+  // To Do: isLeader, isMember, isFull, status에 따라 다르게
+  // const router = useRouter();
+  // const handleClickButton = () => {
+  //  router.push
+  // }
+
   return (
-    <Flex flexDirection='column' padding='1rem' gap='0.5rem'>
-      <Stack direction='row'>
-        {isSuccess && <Category>{foodPartyDetail.category}</Category>}
-      </Stack>
-      {isSuccess && <Heading as='h1'>{foodPartyDetail.name}</Heading>}
-      <Divider />
-      <Flex alignItems='center' gap='0.5rem'>
-        <AiOutlineCalendar />
-        <Text>
-          {year}년 {month}월 {day}일
-        </Text>
+    <Flex
+      position='relative'
+      height='100%'
+      flexDirection='column'
+      padding='1rem'
+      gap='0.5rem'>
+      {/* 헤더 */}
+      <Flex flexDirection='column' gap='0.5rem'>
+        <Stack direction='row'>
+          {isSuccess && <Category>{foodPartyDetail.status}</Category>}
+          {isSuccess && <Category>{foodPartyDetail.category}</Category>}
+        </Stack>
+        {isSuccess && <Heading as='h1'>{foodPartyDetail.name}</Heading>}
+        <Divider />
       </Flex>
-      <Flex alignItems='center' gap='0.5rem'>
-        <AiOutlineClockCircle />
-        <Text>
-          {hour}:{String(minute).padStart(2, '0')}
-        </Text>
+      {/* 데이트 */}
+      <Flex flexDirection='column' gap='0.5rem'>
+        <Flex alignItems='center' gap='0.5rem'>
+          <AiOutlineCalendar />
+          <Text>
+            {year}년 {month}월 {day}일
+          </Text>
+        </Flex>
+        <Flex alignItems='center' gap='0.5rem'>
+          <AiOutlineClockCircle />
+          <Text>
+            {hour}:{String(minute).padStart(2, '0')}
+          </Text>
+        </Flex>
       </Flex>
+      {/* 내용 */}
+      {isSuccess && <Text>{foodPartyDetail.content}</Text>}
       {/* To Do: 아직 백엔드 API에서 memberList를 못 던짐. */}
       <FoodPartyMemberList
         memberList={isSuccess ? foodPartyDetail.members : []}
@@ -71,6 +91,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           isLeader={isLeader}
           isMember={isMember}
           isFull={isFull}
+          // onClick={handleClickButton}
           status={foodPartyDetail.status}></FoodPartyDetailMainButton>
       )}
     </Flex>
@@ -84,12 +105,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
-    queryFn: () => fetchFoodPartyDetail(partyId as string),
-  });
-  await queryClient.prefetchQuery({
     queryKey: [QUERY_KEYS.USER.MY_INFO],
     queryFn: () => fetchUser(),
+  });
+  await queryClient.prefetchQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
+    queryFn: () => fetchFoodPartyDetail(partyId as string),
   });
 
   return {
