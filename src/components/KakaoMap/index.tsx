@@ -10,8 +10,8 @@ import { getElement } from 'utils/helpers/elementHandler';
 import { kakaoMapAddEventListener, kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 import RecommendRandomRestaurantButton from '../common/Buttons/RecommendRandomRestaurantButton';
+import RestaurantBottomDrawer from '../Restaurant/RestaurantBottomDrawer';
 import CurrentLocationButton from './CurrentLocationButton';
-import RandomRestaurantDrawer from './RandomRestaurantDrawer';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
 
@@ -153,7 +153,7 @@ const KakaoMap = () => {
           recommendRandomRestaurant();
         }}
       />
-      <RandomRestaurantDrawer
+      <RestaurantBottomDrawer
         isOpen={isOpen}
         onClose={onClose}
         onClickJoinButton={handleClickJoinToFoodPartyButton}

@@ -7,6 +7,9 @@ const QUERY_KEYS = {
     FOOD_PARTY_DETAIL: 'foodPartyDetail',
     SEARCHED_FOOD_PARTY_LIST: 'searchedFoodPartyList',
   },
+  RESTAURANT: {
+    RESTAURANT_INFORMATION: 'restaurantInformation',
+  },
 } as const;
 
 export default QUERY_KEYS;

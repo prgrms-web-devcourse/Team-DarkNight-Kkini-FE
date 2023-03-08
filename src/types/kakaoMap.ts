@@ -7,6 +7,7 @@ export type KakaoMapOptions = {
 };
 
 export type RandomRestaurantType = {
+  id?: number;
   placeId: number;
   placeName: string;
   categories: string[];
@@ -16,5 +17,6 @@ export type RandomRestaurantType = {
   distance: number;
   latitude: number;
   longitude: number;
+  photoUrls?: string;
   customOverlay?: kakao.maps.CustomOverlay | null;
 };

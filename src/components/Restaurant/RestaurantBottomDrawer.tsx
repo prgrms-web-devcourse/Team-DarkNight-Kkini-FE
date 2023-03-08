@@ -5,19 +5,19 @@ import Category from 'components/common/Category';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { RandomRestaurantType } from 'types/kakaoMap';
 
-type RandomRestaurantDrawerProps = {
+type RestaurantBottomDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
   onClickJoinButton: () => void;
   randomRestaurant: RandomRestaurantType;
 };
 
-const RandomRestaurantDrawer = ({
+const RestaurantBottomDrawer = ({
   isOpen,
   onClose,
   onClickJoinButton,
   randomRestaurant,
-}: RandomRestaurantDrawerProps) => {
+}: RestaurantBottomDrawerProps) => {
   return (
     <BottomDrawer
       isOpen={isOpen}
@@ -74,4 +74,4 @@ const RandomRestaurantDrawer = ({
   );
 };
 
-export default RandomRestaurantDrawer;
+export default RestaurantBottomDrawer;
