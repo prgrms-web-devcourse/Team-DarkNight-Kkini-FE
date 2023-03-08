@@ -12,13 +12,15 @@ import styled from '@emotion/styled';
 import AccordionBody from 'components/common/Accordion/AccordionBody';
 import AccordionHeader from 'components/common/Accordion/AccordionHeader';
 import Button from 'components/common/Button';
+import { useCreateFoodParty } from 'hooks/query/useFoodParty';
 import moment, { Moment } from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
 import { PartyFormType } from 'types/foodParty';
+import { getPhotoUrlsString } from 'utils/helpers/foodParty';
 
 import FoodPartyCalendar from './FoodPartyCalendar';
 import FoodPartyCapacity from './FoodPartyCapacity';
@@ -37,7 +39,7 @@ const FoodPartyCreateForm = () => {
 
   const { register, setValue, getValues, handleSubmit } = useForm<PartyFormType>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
-
+  const { mutate, isSuccess, data } = useCreateFoodParty();
   const handleClickCategory = (value: string) => {
     setValue('category', value);
     setCategoryState(value);
@@ -45,9 +47,7 @@ const FoodPartyCreateForm = () => {
 
   const handleClickDate = (date: Date) => {
     setDate(date);
-    setCurrentDate(
-      `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
-    );
+    setCurrentDate(moment(date).format('YYYY년 MM월 DD일'));
   };
 
   const handleClickTime = (time: Moment) => {
@@ -60,17 +60,24 @@ const FoodPartyCreateForm = () => {
   };
 
   const setPartyTime = (date: Date, time: Moment) => {
-    const promiseDate = `${moment(date).format('YY-MM-DD')}`;
+    const promiseDate = `${moment(date).format('YYYY-MM-DD')}`;
     const promiseTime = `${time.format('HH:mm:ss')}`;
     setValue('promiseTime', `${promiseDate}T${promiseTime}`);
   };
 
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<PartyFormType> = () => {
     setPartyTime(date, time);
     const body = {
-      createStoreRequest: { ...selectedRestaurant },
+      createStoreRequest: {
+        ...selectedRestaurant,
+        photoUrls: getPhotoUrlsString(selectedRestaurant.photoUrls),
+      },
       ...getValues(),
     };
+    mutate(body);
+    if (isSuccess) {
+      /** ToDo: 성공했을 때 동작 */
+    }
   };
 
   useEffect(() => {
@@ -88,7 +95,13 @@ const FoodPartyCreateForm = () => {
 
   return (
     <Flex align='center' justify='center' backgroundColor='subBackground' h='100%'>
-      <Box w='90%' h='95%' bgColor='white' borderRadius='8px' p='2rem'>
+      <Box
+        w='90%'
+        h='95%'
+        bgColor='white'
+        borderRadius='8px'
+        p='2rem'
+        position='relative'>
         <Text fontSize='xl' fontWeight={600}>
           어떤 밥모임을 만들까요?
         </Text>
@@ -178,7 +191,12 @@ const FoodPartyCreateForm = () => {
           </Accordion>
           <Button
             type='submit'
+            width='80%'
             style={{
+              position: 'absolute',
+              left: '2.4rem',
+              right: 0,
+              bottom: '2rem',
               backgroundColor: 'primary',
               color: 'white',
             }}>
