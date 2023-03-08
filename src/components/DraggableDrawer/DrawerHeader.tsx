@@ -14,7 +14,7 @@ const DrawerHeader = () => {
       pt={4}>
       <Box w={16} h={2} borderRadius={2} bg='#d0d0d0' margin='auto'></Box>
       <Text fontSize='lg' className={GangwonEduFont.className} pl={5}>
-        맛모임 가게 검색
+        밥모임 가게 검색
       </Text>
       <SearchRestaurant />
     </Box>
