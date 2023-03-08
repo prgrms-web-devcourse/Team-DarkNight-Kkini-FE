@@ -22,7 +22,7 @@ const FoodPartyListItem = ({
   const [year, month, day, hour, minute] = party.promiseTime;
 
   return (
-    // ellipsis 처리 by 승준
+    // To Do: ellipsis 처리 by 승준
     <Flex
       flexDirection='column'
       padding='1.5rem'

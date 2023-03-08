@@ -1,4 +1,3 @@
-Button;
 import { Button } from '@chakra-ui/react';
 import { FoodPartyStatus } from 'types/foodParty';
 
