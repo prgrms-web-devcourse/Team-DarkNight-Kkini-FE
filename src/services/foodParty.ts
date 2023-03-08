@@ -1,8 +1,11 @@
 import { axiosAuthApi } from 'apis/axios';
 import { CreateFoodPartyBody } from 'types/foodParty';
+type responseBodyType = {
+  id: number;
+};
 export const createFoodParty = async (
   body: CreateFoodPartyBody
-): Promise<CreateFoodPartyBody> => {
-  const { data } = await axiosAuthApi.post<CreateFoodPartyBody>('/api/v1/crews', body);
-  return data;
+): Promise<responseBodyType> => {
+  const response = await axiosAuthApi.post<responseBodyType>('/api/v1/crews', body);
+  return response.data;
 };

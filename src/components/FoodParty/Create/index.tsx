@@ -39,7 +39,7 @@ const FoodPartyCreateForm = () => {
 
   const { register, setValue, getValues, handleSubmit } = useForm<PartyFormType>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
-  const { mutate, isSuccess, data } = useCreateFoodParty();
+  const { mutate } = useCreateFoodParty();
   const handleClickCategory = (value: string) => {
     setValue('category', value);
     setCategoryState(value);
@@ -74,10 +74,19 @@ const FoodPartyCreateForm = () => {
       },
       ...getValues(),
     };
-    mutate(body);
-    if (isSuccess) {
-      /** ToDo: 성공했을 때 동작 */
-    }
+    mutate(body, {
+      onSuccess: (data) => {
+        const partyId = data.id;
+        router.push(`/food-party/detail/${partyId}`);
+        toast({
+          title: '밥모임이 생성되었습니다!',
+          description: '생성된 밥모임 정보를 확인하세요',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+    });
   };
 
   useEffect(() => {
