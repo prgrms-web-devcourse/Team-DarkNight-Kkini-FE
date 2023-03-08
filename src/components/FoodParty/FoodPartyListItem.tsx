@@ -1,4 +1,13 @@
-import { Avatar, AvatarGroup, Button, Divider, Flex, Text } from '@chakra-ui/react';
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  Divider,
+  Flex,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
+import Category from 'components/common/Category';
 import { FoodParty } from 'types/foodParty';
 
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
@@ -20,7 +29,10 @@ const FoodPartyListItem = ({
       borderRadius='1rem'
       border='1px solid #e2e5e6'
       marginBottom='1rem'>
-      <Flex flexDirection='column'>
+      <Flex flexDirection='column' gap='0.5rem'>
+        <Stack direction='row'>
+          <Category>{party.status}</Category>
+        </Stack>
         <Text>{party.name}</Text>
         <Flex justifyContent='space-between'>
           <Text>

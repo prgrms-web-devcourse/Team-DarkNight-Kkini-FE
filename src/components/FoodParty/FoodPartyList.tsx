@@ -1,15 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { FoodParty } from 'types/foodParty';
+import { FoodParty, FoodPartyStatus } from 'types/foodParty';
 
 import FoodPartyListItem from './FoodPartyListItem';
 
-const FoodPartyList = ({
-  foodPartyList,
-  onClick,
-}: {
+type FoodPartyListProps = {
   foodPartyList: FoodParty[];
   onClick: (partyId: number) => void;
-}) => {
+};
+
+const FoodPartyList = ({ foodPartyList, onClick }: FoodPartyListProps) => {
   return (
     <>
       {foodPartyList.length === 0 ? (

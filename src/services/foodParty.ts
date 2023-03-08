@@ -95,7 +95,7 @@ const DUMMY_PARTY_LIST = [
     currentMember: 2,
     capacity: 5,
     promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
-    status: '모집 중',
+    status: '모집 완료',
     content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
     category: 'QUIET',
     members: [
