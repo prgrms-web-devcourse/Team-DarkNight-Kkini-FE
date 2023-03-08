@@ -52,7 +52,7 @@ const useRecommendRandomRestaurant = () => {
         x: longitude,
         y: latitude,
       } = randomRestaurant;
-      const result = await getKeywordPhotos(addressName, placeName);
+      const result = await getKeywordPhotos(addressName, placeName, 5);
       const photoUrls = result.documents.map(({ image_url: imageUrl }) => imageUrl);
       const categories = categoryName.split('>').map((category) => category.trim());
 
@@ -84,6 +84,7 @@ const useRecommendRandomRestaurant = () => {
         roadAddressName,
         kakaoPlaceUrl,
         phoneNumber,
+        photoUrls,
         distance: Number(distance),
         latitude: Number(latitude),
         longitude: Number(longitude),

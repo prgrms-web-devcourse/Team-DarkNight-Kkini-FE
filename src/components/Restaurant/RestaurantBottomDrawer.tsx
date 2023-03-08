@@ -1,4 +1,4 @@
-import { Box, CloseButton, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Box, CloseButton, Flex, Heading, Image, Stack } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Category from 'components/common/Category';
@@ -57,6 +57,22 @@ const RestaurantBottomDrawer = ({
         <>
           <Box>{restaurant.roadAddressName}</Box>
           <Box>{restaurant.phoneNumber}</Box>
+          {restaurant.photoUrls && (
+            // To Do: 스크롤 디자인 필요 by 승준
+            <Flex gap='1rem' marginTop='0.5rem' overflowX='auto'>
+              {restaurant.photoUrls.map((photoUrl) => (
+                <Image
+                  key={photoUrl}
+                  referrerPolicy='no-referrer'
+                  borderRadius={8}
+                  boxSize='7rem'
+                  objectFit='cover'
+                  src={photoUrl}
+                  alt={restaurant.placeName + '사진'}
+                />
+              ))}
+            </Flex>
+          )}
           {onClickJoinButton && (
             <Button
               onClick={onClickJoinButton}
