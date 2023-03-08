@@ -47,11 +47,13 @@ export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
   const isMember = !!result.data?.members.find(
     ({ userId: memberUserId, role }) => memberUserId === userId && role === 'MEMBER'
   );
+  const isFull = result.data?.currentMember === result.data?.capacity;
 
   return {
     ...result,
     isLeader,
     isMember,
+    isFull,
   };
 };
 

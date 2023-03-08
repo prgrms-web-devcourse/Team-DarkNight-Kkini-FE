@@ -1,7 +1,7 @@
 import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import Button from 'components/common/Button';
 import Category from 'components/common/Category';
+import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
@@ -22,12 +22,14 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isSuccess,
     isLeader,
     isMember,
+    isFull,
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.toString()}</div>;
 
+  // To Do: Date 등 따로 컴포넌트를 빼자.
   const [year, month, day, hour, minute] = foodPartyDetail!.promiseTime;
 
   return (
@@ -64,6 +66,13 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 
       {/* {isLeader && <Button>출발할 끼니?</Button>}
       <Button>참여할 끼니?</Button> */}
+      {isSuccess && (
+        <FoodPartyDetailMainButton
+          isLeader={isLeader}
+          isMember={isMember}
+          isFull={isFull}
+          status={foodPartyDetail.status}></FoodPartyDetailMainButton>
+      )}
     </Flex>
   );
 };

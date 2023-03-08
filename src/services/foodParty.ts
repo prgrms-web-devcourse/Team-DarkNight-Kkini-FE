@@ -139,14 +139,14 @@ const DUMMY_PARTY_DETAIL = {
   id: 2,
   name: '라멘 뇸뇸뇸, 나가면 지상렬',
   currentMember: 3,
-  capacity: 5,
+  capacity: 3,
   status: '모집 중', // 모집 중, 모집 완료, 식사 완료
   promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
   category: 'MANNERS MAKETH MAN',
   content: '쩝쩝이 사절',
   members: [
     {
-      userId: 1,
+      userId: 12,
       userName: 'hello',
       avatarUrl: 'https://bit.ly/kent-c-dodds',
       role: 'LEADER',
