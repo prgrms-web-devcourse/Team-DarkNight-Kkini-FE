@@ -36,7 +36,7 @@ const FoodPartyListItem = ({
         <Text>{party.name}</Text>
         <Flex justifyContent='space-between'>
           <Text>
-            {year}-{month}-{day} {hour}:{minute}
+            {year}-{month}-{day} {hour}:{String(minute).padStart(2, '0')}
           </Text>
           <Text>
             {party.currentMember} / {party.capacity}
