@@ -1,4 +1,4 @@
-import { RestaurantFromKeywordSearchProps } from './kakaoSearch';
+import { RestaurantType } from './kakaoSearch';
 
 type Member = {
   userId: number;
@@ -25,6 +25,8 @@ export type PartyFormType = {
   content: string;
 };
 
-export type CreateFoodPartyBody = {
-  createStoreRequest: RestaurantFromKeywordSearchProps;
+export type FoodPartyCreateBody = {
+  createStoreRequest: {
+    photoUrls: string;
+  } & RestaurantType;
 } & PartyFormType;

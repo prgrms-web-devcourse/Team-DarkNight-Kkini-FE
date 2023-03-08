@@ -32,6 +32,7 @@ const SearchRestaurantContent = () => {
                 placeName,
                 categories,
                 roadAddressName,
+                placeId,
                 photoUrls,
                 kakaoPlaceUrl,
                 phoneNumber,
@@ -39,7 +40,7 @@ const SearchRestaurantContent = () => {
               index
             ) => (
               <RestaurantItem
-                key={roadAddressName}
+                key={placeId}
                 index={index}
                 name={placeName}
                 address={roadAddressName}

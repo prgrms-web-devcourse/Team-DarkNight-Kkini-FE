@@ -45,15 +45,13 @@ const useSearchRestaurant = () => {
       const {
         id: placeId,
         place_name: placeName,
-        category_name: categoryName,
+        category_name: categories,
         road_address_name: roadAddressName,
         place_url: kakaoPlaceUrl,
         phone: phoneNumber,
         x,
         y,
       } = item;
-
-      const categories = categoryName.split('>').map((category) => category.trim());
 
       return {
         placeId,

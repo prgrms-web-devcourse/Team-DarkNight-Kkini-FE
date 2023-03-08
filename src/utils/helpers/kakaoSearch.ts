@@ -8,7 +8,7 @@ export const getKeywordPhotos = async (address_name: string, keyword: string) =>
     .get<AxiosPhotoResponseValue>(URL, {
       params: {
         query: `${address_name.split(' ')[2]} ${keyword}`,
-        size: 10,
+        size: 3,
       },
       headers: {
         Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_SEARCH_API_KEY}`,

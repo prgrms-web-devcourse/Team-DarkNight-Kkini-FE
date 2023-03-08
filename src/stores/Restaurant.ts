@@ -11,7 +11,7 @@ export const selectedRestaurantState = atom<RestaurantFromKeywordSearchProps>({
   default: {
     placeId: '',
     placeName: '',
-    categories: [],
+    categories: '',
     roadAddressName: '',
     photoUrls: [],
     kakaoPlaceUrl: '',

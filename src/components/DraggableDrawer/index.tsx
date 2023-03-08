@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import React, { ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
 import { isDrawerOpenedState } from 'stores/drawer';
