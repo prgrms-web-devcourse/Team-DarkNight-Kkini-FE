@@ -3,20 +3,20 @@ import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Category from 'components/common/Category';
 import { BiRightArrowCircle } from 'react-icons/bi';
-import { RandomRestaurantType } from 'types/kakaoMap';
+import { Restaurant } from 'types/restaurant';
 
 type RestaurantBottomDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
-  onClickJoinButton: () => void;
-  randomRestaurant: RandomRestaurantType;
+  onClickJoinButton?: () => void;
+  restaurant: Restaurant;
 };
 
 const RestaurantBottomDrawer = ({
   isOpen,
   onClose,
   onClickJoinButton,
-  randomRestaurant,
+  restaurant,
 }: RestaurantBottomDrawerProps) => {
   return (
     <BottomDrawer
@@ -25,7 +25,7 @@ const RestaurantBottomDrawer = ({
       header={
         <>
           <Stack direction='row' paddingBottom='0.5rem'>
-            {randomRestaurant.categories?.map((category) => (
+            {restaurant.categories?.map((category) => (
               <Category key={category}>{category}</Category>
             ))}
           </Stack>
@@ -39,10 +39,10 @@ const RestaurantBottomDrawer = ({
                 }}>
                 {/* To Do: 특정 아이콘 클릭 시 가게 이름 복사되도록 clipboard api 이용해서 구현 by 승준 */}
                 <a
-                  href={randomRestaurant.kakaoPlaceUrl}
+                  href={restaurant.kakaoPlaceUrl}
                   target='_blank'
                   rel='noreferrer noopener'>
-                  {randomRestaurant.placeName}
+                  {restaurant.placeName}
                 </a>
               </Heading>
               <BiRightArrowCircle size='1.1rem' cursor='pointer' />
@@ -55,19 +55,21 @@ const RestaurantBottomDrawer = ({
       }
       body={
         <>
-          <Box>{randomRestaurant.roadAddressName}</Box>
-          <Box>{randomRestaurant.phoneNumber}</Box>
-          <Button
-            onClick={onClickJoinButton}
-            width='100%'
-            style={{
-              backgroundColor: 'primary',
-              marginTop: '1rem',
-              color: 'white',
-              fontWeight: 700,
-            }}>
-            밥모임 참여하기
-          </Button>
+          <Box>{restaurant.roadAddressName}</Box>
+          <Box>{restaurant.phoneNumber}</Box>
+          {onClickJoinButton && (
+            <Button
+              onClick={onClickJoinButton}
+              width='100%'
+              style={{
+                backgroundColor: 'primary',
+                marginTop: '1rem',
+                color: 'white',
+                fontWeight: 700,
+              }}>
+              밥모임 참여하기
+            </Button>
+          )}
         </>
       }
     />

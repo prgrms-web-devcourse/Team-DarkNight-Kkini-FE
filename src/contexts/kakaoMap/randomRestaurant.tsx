@@ -7,11 +7,11 @@ import {
   useContext,
   useState,
 } from 'react';
-import { RandomRestaurantType } from 'types/kakaoMap';
+import { Restaurant } from 'types/restaurant';
 
 type RandomRestaurantContextType = {
-  randomRestaurant: RandomRestaurantType;
-  setRandomRestaurant: Dispatch<SetStateAction<RandomRestaurantType>>;
+  randomRestaurant: Restaurant;
+  setRandomRestaurant: Dispatch<SetStateAction<Restaurant>>;
   handleClickJoinToFoodPartyButton: () => void;
 };
 
@@ -34,7 +34,7 @@ const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
 const useRandomRestaurantContext = () => useContext(RandomRestaurantContext);
 
 export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) => {
-  const [randomRestaurant, setRandomRestaurant] = useState<RandomRestaurantType>({
+  const [randomRestaurant, setRandomRestaurant] = useState<Restaurant>({
     placeId: -1,
     placeName: '',
     categories: [''],

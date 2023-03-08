@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
 import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';

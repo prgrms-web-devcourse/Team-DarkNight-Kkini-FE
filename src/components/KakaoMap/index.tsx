@@ -157,7 +157,7 @@ const KakaoMap = () => {
         isOpen={isOpen}
         onClose={onClose}
         onClickJoinButton={handleClickJoinToFoodPartyButton}
-        randomRestaurant={randomRestaurant}
+        restaurant={randomRestaurant}
       />
     </Box>
   );
