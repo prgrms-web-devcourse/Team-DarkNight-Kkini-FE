@@ -3,12 +3,21 @@ import { Global } from '@emotion/react';
 import Header from 'components/common/Layout/Header';
 import Navigation from 'components/common/Layout/Navigation';
 import CreateCommunityDrawer from 'components/DraggableDrawer/CreateCommunityDrawer';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { silentLogin } from 'services/auth';
+import { isLoginState } from 'stores/auth';
 import theme from 'styles/chakra-theme';
 import { BaseFont } from 'styles/fonts';
 import globalStyle from 'styles/global';
 
 const Layout = ({ children }: { children: ReactNode }) => {
+  const setLoginState = useSetRecoilState(isLoginState);
+
+  useEffect(() => {
+    silentLogin().then((res) => res && setLoginState(true));
+  }, []);
+
   const { isOpen, onOpen, onClose } = useDisclosure(); // 로그인 모달
 
   return (
