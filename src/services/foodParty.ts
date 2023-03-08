@@ -57,7 +57,8 @@ export const fetchMyFoodPartyList = async () => {
     },
   } = await axiosAuthApi<FetchMyFoodPartyListResponse>('/api/v1/crews/me');
 
-  return myFoodPartyList;
+  // return myFoodPartyList;
+  return DUMMY_PARTY_LIST;
 };
 
 export const fetchFoodPartyDetail = async (partyId: string) => {
@@ -87,59 +88,59 @@ export const fetchFoodPartyList = async (placeId: string) => {
 };
 
 // 아직 제대로 백엔드 API가 연결되지 않아 남겨둠.
-// const DUMMY_PARTY_LIST = [
-//   {
-//     id: 1,
-//     name: '햄최삼 모여라',
-//     currentMember: 2,
-//     capacity: 5,
-//     promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
-//     status: 'RECRUITING',
-//     content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
-//     category: ['QUIET'],
-//     members: [
-//       {
-//         userId: 1,
-//         avatarUrl: 'https://bit.ly/ryan-florence',
-//       },
-//       {
-//         userId: 2,
-//         avatarUrl: 'https://bit.ly/sage-adebayo',
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     name: '라멘 뇸뇸뇸, 나가면 지상렬',
-//     currentMember: 3,
-//     capacity: 3,
-//     promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
-//     status: 'RECRUITING',
-//     content: '식사 예절 좋으신 분만',
-//     category: ['MANNERS MAKETH MAN'],
-//     members: [
-//       {
-//         userId: 1,
-//         avatarUrl: 'https://bit.ly/kent-c-dodds',
-//       },
-//       {
-//         userId: 2,
-//         avatarUrl: 'https://bit.ly/prosper-baba',
-//       },
-//       {
-//         userId: 3,
-//         avatarUrl: 'https://bit.ly/code-beast',
-//       },
-//     ],
-//   },
-// ];
+const DUMMY_PARTY_LIST = [
+  {
+    id: 1,
+    name: '햄최삼 모여라',
+    currentMember: 2,
+    capacity: 5,
+    promiseTime: [2023, 3, 14, 17, 50, 59, 893316700],
+    status: '모집 중',
+    content: '맥도날드 더쿼파치 뿌수러 갈 사람!',
+    category: 'QUIET',
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/ryan-florence',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/sage-adebayo',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: '라멘 뇸뇸뇸, 나가면 지상렬',
+    currentMember: 3,
+    capacity: 3,
+    promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
+    status: '모집 중',
+    content: '식사 예절 좋으신 분만',
+    category: 'MANNERS MAKETH MAN',
+    members: [
+      {
+        userId: 1,
+        avatarUrl: 'https://bit.ly/kent-c-dodds',
+      },
+      {
+        userId: 2,
+        avatarUrl: 'https://bit.ly/prosper-baba',
+      },
+      {
+        userId: 3,
+        avatarUrl: 'https://bit.ly/code-beast',
+      },
+    ],
+  },
+];
 
 const DUMMY_PARTY_DETAIL = {
   id: 2,
   name: '라멘 뇸뇸뇸, 나가면 지상렬',
   currentMember: 3,
   capacity: 5,
-  status: 'RECRUITING',
+  status: '모집 중', // 모집 중, 모집 완료, 식사 완료
   promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
   category: 'MANNERS MAKETH MAN',
   content: '쩝쩝이 사절',

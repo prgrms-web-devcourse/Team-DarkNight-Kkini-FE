@@ -4,7 +4,7 @@ export type Member = {
   userId: number;
   userName: string;
   avatarUrl: string;
-  role: string;
+  role: 'LEADER' | 'MEMBER' | 'BLOCKED';
 };
 
 export type FoodParty = {
@@ -13,7 +13,7 @@ export type FoodParty = {
   currentMember: number;
   capacity: number;
   promiseTime: number[];
-  status: string;
+  status: '모집 중' | '모집 완료' | '식사 완료';
   content: string;
   category: string;
   members: Member[];
