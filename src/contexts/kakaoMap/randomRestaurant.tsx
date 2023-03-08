@@ -50,7 +50,7 @@ export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) 
   const handleClickJoinToFoodPartyButton = () => {
     if (!randomRestaurant.placeId) return;
 
-    router.push(`/food-party/place/${randomRestaurant.placeId}`);
+    router.push(`/food-party/list/restaurant/${randomRestaurant.placeId}`);
   };
 
   return (
