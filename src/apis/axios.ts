@@ -26,7 +26,7 @@ const checkToken = async (request: InternalAxiosRequestConfig) => {
       request.headers.Authorization = `${type} ${token}`;
     } else {
       await logout();
-      throw new axios.Cancel('Token is not available. Do login!');
+      window.location.replace('/');
     }
   }
   return request;
