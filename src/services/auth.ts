@@ -1,7 +1,8 @@
 import { isAxiosError } from 'axios';
 import { Token } from 'types/auth';
+import { ERROR_CODE } from 'utils/constants/errorCode';
 
-import { axiosApi, removeAccessToken, setAccessToken } from './../apis/axios';
+import { axiosApi, removeAccessToken, setAccessToken } from '../apis/axios';
 
 type SilentLoginError = {
   code: string;
@@ -16,7 +17,7 @@ export const silentLogin = async () => {
   } catch (error) {
     if (isAxiosError<SilentLoginError>(error)) {
       switch (error.response?.data.code) {
-        case 'A004':
+        case ERROR_CODE.INVALID_REFRESH_TOKEN:
           return false;
         default:
           return false;
