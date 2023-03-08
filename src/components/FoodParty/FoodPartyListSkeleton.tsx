@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
+import { Button, Divider, Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
 import AvatarGroupSkeleton from 'components/common/AvatarGroupSkeleton';
 
 const FoodPartyListSkeleton = ({ foodPartyCount }: { foodPartyCount: number }) => {
@@ -14,17 +14,20 @@ const FoodPartyListSkeleton = ({ foodPartyCount }: { foodPartyCount: number }) =
         {foodPartySkeletons.map((foodPartySkeletonKey) => (
           <Flex
             key={foodPartySkeletonKey}
-            alignItems='center'
-            justifyContent='space-between'
-            boxShadow='button'
+            flexDirection='column'
+            border='1px solid #e2e5e6'
             borderRadius='1rem'
             padding='1rem'
-            marginBottom='1rem'
-            border='1px solid #e2e5e6'>
-            <Box width='60%'>
-              <SkeletonText noOfLines={2} spacing='4' skeletonHeight='3' />
-            </Box>
-            <AvatarGroupSkeleton avatarCount={3} />
+            gap='1rem'
+            marginBottom='1rem'>
+            <SkeletonText noOfLines={2} spacing='4' skeletonHeight='3' />
+            <Divider />
+            <Flex justifyContent='space-between'>
+              <AvatarGroupSkeleton avatarCount={3} />
+              <Skeleton borderRadius='0.5rem'>
+                <Button>View</Button>
+              </Skeleton>
+            </Flex>
           </Flex>
         ))}
       </Flex>

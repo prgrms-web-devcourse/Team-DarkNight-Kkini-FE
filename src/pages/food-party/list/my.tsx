@@ -12,7 +12,7 @@ const MyFoodPartyList = () => {
     router.push(`/food-party/detail/${partyId}`);
   };
 
-  if (isLoading) return <FoodPartyListSkeleton foodPartyCount={4} />;
+  if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
   if (error) return <div>{error.toString()}</div>;
 
   return (
