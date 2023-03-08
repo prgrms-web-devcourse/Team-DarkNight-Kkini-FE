@@ -25,7 +25,7 @@ export type PartyFormType = {
   content: string;
 };
 
-export type CreateFoodPartyBody = {
+export type FoodPartyCreateBody = {
   createStoreRequest: {
     photoUrls: string;
   } & RestaurantType;
