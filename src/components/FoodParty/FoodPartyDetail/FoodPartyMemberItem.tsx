@@ -10,7 +10,11 @@ const FoodPartyMemberItem = ({ member }: { member: Member }) => {
           <Avatar src={member.avatarUrl} />
           <Text>{member.userName}</Text>
         </Flex>
-        {member.role === 'LEADER' && <AiOutlineCrown />}
+        {member.role === 'LEADER' && (
+          <Flex border='1px solid' borderRadius='50%' padding='0.25rem'>
+            <AiOutlineCrown />
+          </Flex>
+        )}
       </Flex>
     </Box>
   );
