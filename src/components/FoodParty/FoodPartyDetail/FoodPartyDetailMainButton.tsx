@@ -1,3 +1,4 @@
+Button;
 import { Button } from '@chakra-ui/react';
 import { FoodPartyStatus } from 'types/foodParty';
 
@@ -6,6 +7,7 @@ type FoodPartyDetailMainButtonProps = {
   isMember: boolean;
   isFull: boolean;
   status: FoodPartyStatus;
+  onClick: () => void;
 };
 
 const FoodPartyDetailMainButton = ({
@@ -13,11 +15,35 @@ const FoodPartyDetailMainButton = ({
   isMember,
   isFull,
   status,
+  onClick,
 }: FoodPartyDetailMainButtonProps) => {
   const buttonText = getText(isLeader, isMember, isFull, status);
   const isDisabled = checkButtonTextIsDisabled(buttonText);
+  // To Do: text에 따라
+  // const handleClickButton = () => {}
 
-  return <>{buttonText !== '' && <Button disabled={isDisabled}>{buttonText}</Button>}</>;
+  return (
+    <>
+      {buttonText !== '' && (
+        <Button
+          onClick={onClick}
+          disabled={isDisabled}
+          position='absolute'
+          left='50%'
+          transform='translateX(-50%)'
+          bottom='1rem'
+          height='3rem'
+          width='20rem'
+          cursor={isDisabled ? 'not-allowed' : 'pointer'}
+          opacity={isDisabled ? 0.5 : 1}
+          backgroundColor='primary'
+          color='white'
+          _hover={{ backgroundColor: 'primary' }}>
+          {buttonText}
+        </Button>
+      )}
+    </>
+  );
 };
 
 export default FoodPartyDetailMainButton;
