@@ -24,7 +24,8 @@ const Navigation = ({ onOpen }: LoginModal) => {
   };
 
   const handleClickAroundFoodPartyList = () => {
-    router.push('/food-party/list/restaurant/1?page=1&size=10');
+    // To Do: Home으로 리다이렉팅 필요. 현재는 실험을 위해 임시로 이렇게 사용 중.
+    router.push('/food-party/detail/1');
   };
 
   const handleClickCommunity = () => {

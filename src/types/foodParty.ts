@@ -15,7 +15,7 @@ export type FoodParty = {
   promiseTime: number[];
   status: string;
   content: string;
-  category: string[];
+  category: string;
   members: Member[];
 };
 
