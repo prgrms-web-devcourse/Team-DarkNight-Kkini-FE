@@ -7,8 +7,9 @@ import { useForm } from 'react-hook-form';
 type FoodPartyApplicationDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
-  onClickSendButton: () => void;
+  onClickSubmitButton: () => void;
 };
+
 type FormType = {
   text: string;
 };
@@ -16,7 +17,7 @@ type FormType = {
 const FoodPartyApplicationDrawer = ({
   isOpen,
   onClose,
-  onClickSendButton,
+  onClickSubmitButton,
 }: FoodPartyApplicationDrawerProps) => {
   const { register, handleSubmit } = useForm<FormType>();
   const onSubmit = (data: FormType) => {
@@ -32,7 +33,7 @@ const FoodPartyApplicationDrawer = ({
           <Text fontSize='1.2rem'>신청서</Text>
           <Image
             src='/images/delete-btn.svg'
-            alt='modal-close-button'
+            alt='신청서 드로워 닫기'
             onClick={onClose}
             width='25'
             height='25'
@@ -52,7 +53,7 @@ const FoodPartyApplicationDrawer = ({
           />
           <Button
             type='submit'
-            onClick={onClickSendButton}
+            onClick={onClickSubmitButton}
             style={{
               background: 'primary',
               marginTop: '1rem',
