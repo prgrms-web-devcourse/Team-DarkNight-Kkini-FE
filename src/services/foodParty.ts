@@ -44,7 +44,6 @@ export const fetchFoodPartyDetail = async (partyId: string) => {
   const {
     data: { data: foodPartyDetail },
   } = await axiosAuthApi<FetchFoodPartyDetailResponse>(`/api/v1/crews/${partyId}`);
-  console.log(foodPartyDetail);
 
   return foodPartyDetail;
 };
