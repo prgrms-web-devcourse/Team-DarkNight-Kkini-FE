@@ -1,4 +1,5 @@
 import { RestaurantType } from './kakaoSearch';
+import { Restaurant } from './restaurant';
 
 type MemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
 
@@ -22,6 +23,8 @@ export type FoodParty = {
   category: string;
   members: Member[];
 };
+
+export type FoodPartyDetail = { restaurant: Restaurant } & FoodParty;
 
 export type PartyFormType = {
   name: string;

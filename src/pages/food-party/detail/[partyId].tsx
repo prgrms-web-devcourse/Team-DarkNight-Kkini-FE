@@ -1,12 +1,13 @@
-import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Divider, Flex, Heading, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
 import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
+import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
-import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai';
+import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineSearch } from 'react-icons/ai';
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import QUERY_KEYS from 'utils/constants/queryKeys';
@@ -25,6 +26,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isFull,
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.toString()}</div>;
@@ -54,7 +56,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         {isSuccess && <Heading as='h1'>{foodPartyDetail.name}</Heading>}
         <Divider />
       </Flex>
-      {/* 데이트 */}
+      {/* 데이터 & 가게 정보 */}
       <Flex flexDirection='column' gap='0.5rem'>
         <Flex alignItems='center' gap='0.5rem'>
           <AiOutlineCalendar />
@@ -68,9 +70,14 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             {hour}:{String(minute).padStart(2, '0')}
           </Text>
         </Flex>
+        <Flex alignItems='center' gap='0.5rem'>
+          <AiOutlineSearch />
+          <Text onClick={onOpen}>맛집 정보</Text>
+        </Flex>
       </Flex>
       {/* 내용 */}
-      {isSuccess && <Text>{foodPartyDetail.content}</Text>}
+      {isSuccess && <Text margin='1rem 0'>{foodPartyDetail.content}</Text>}
+      {/* 멤버 리스트 */}
       {/* To Do: 아직 백엔드 API에서 memberList를 못 던짐. */}
       <FoodPartyMemberList
         memberList={isSuccess ? foodPartyDetail.members : []}
@@ -83,6 +90,13 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           isFull={isFull}
           // onClick={handleClickButton}
           status={foodPartyDetail.status}></FoodPartyDetailMainButton>
+      )}
+      {isSuccess && (
+        <RestaurantBottomDrawer
+          isOpen={isOpen}
+          onClose={onClose}
+          restaurant={foodPartyDetail.restaurant}
+        />
       )}
     </Flex>
   );
@@ -106,6 +120,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       partyId,
+      storeId: '1',
       dehydratedState: dehydrate(queryClient),
     },
   };
