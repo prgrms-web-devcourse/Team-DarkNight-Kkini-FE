@@ -6,6 +6,7 @@ import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomResta
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
+import { DEFAULT_MAX_LEVEL, DEFAULT_MIN_LEVEL } from 'utils/constants/kakaoMap';
 import { getElement } from 'utils/helpers/elementHandler';
 import { kakaoMapAddEventListener, kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
@@ -52,6 +53,11 @@ const KakaoMap = () => {
           <div class="circle"></div>
         </div>`
       );
+
+      // 스크롤 줌/아웃 제한
+      createdKakaoMap.setMinLevel(DEFAULT_MIN_LEVEL);
+      createdKakaoMap.setMaxLevel(DEFAULT_MAX_LEVEL);
+
       currentPositionCustomOverlay.current.setMap(createdKakaoMap);
       setKakaoMap(createdKakaoMap);
     });
