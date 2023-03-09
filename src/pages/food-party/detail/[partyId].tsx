@@ -36,7 +36,6 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
   const { isOpen, onClose, onOpen } = useDisclosure();
-  console.log(foodPartyDetail);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.toString()}</div>;

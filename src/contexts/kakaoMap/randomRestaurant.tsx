@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 import { Restaurant } from 'types/restaurant';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 type RandomRestaurantContextType = {
   randomRestaurant: Restaurant;
@@ -50,7 +51,7 @@ export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) 
   const handleClickJoinToFoodPartyButton = () => {
     if (!randomRestaurant.placeId) return;
 
-    router.push(`/food-party/list/restaurant/${randomRestaurant.placeId}`);
+    router.push(ROUTING_PATHS.FOOD_PARTY.LIST.RESTAURANT(randomRestaurant.placeId));
   };
 
   return (

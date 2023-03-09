@@ -18,6 +18,7 @@ import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isDrawerOpenedState } from 'stores/drawer';
 import { searchRestaurantListState, selectedRestaurantState } from 'stores/Restaurant';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getCategoryArray } from 'utils/helpers/foodParty';
 
 type RestaurantItemProps = {
@@ -47,7 +48,7 @@ const RestaurantItem = ({
   const handleClickCreateFoodParty = () => {
     setSelectedRestaurantList({ ...searchRestaurantList[index] });
     isDrawerOpened(false);
-    router.push('/food-party/create');
+    router.push(ROUTING_PATHS.FOOD_PARTY.CREATE);
   };
 
   return (

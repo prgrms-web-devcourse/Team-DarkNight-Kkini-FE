@@ -20,6 +20,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
 import { PartyFormType } from 'types/foodParty';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getPhotoUrlsString } from 'utils/helpers/foodParty';
 
 import FoodPartyCalendar from './FoodPartyCalendar';
@@ -79,7 +80,7 @@ const FoodPartyCreateForm = () => {
 
   useEffect(() => {
     if (selectedRestaurant.placeName === '') {
-      router.push('/');
+      router.push(ROUTING_PATHS.HOME);
       toast({
         title: '가게를 선택하지 않았습니다.',
         description: '밥모임 생성 버튼을 통해 가게를 선택해주세요!',

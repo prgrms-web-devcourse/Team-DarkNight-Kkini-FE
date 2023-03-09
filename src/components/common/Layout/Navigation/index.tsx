@@ -10,6 +10,7 @@ import { isLoginState } from 'stores/auth';
 import { isDrawerOpenedState } from 'stores/drawer';
 import { LoginModal } from 'types/modal';
 import { NavigationButtonProps } from 'types/navigation';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const Navigation = ({ onOpen }: LoginModal) => {
   const [isDrawerOpened, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
@@ -24,7 +25,7 @@ const Navigation = ({ onOpen }: LoginModal) => {
   };
 
   const handleClickAroundFoodPartyList = () => {
-    router.push('/');
+    router.push(ROUTING_PATHS.HOME);
   };
 
   const handleClickCommunity = () => {
@@ -38,7 +39,7 @@ const Navigation = ({ onOpen }: LoginModal) => {
       return;
     }
 
-    router.push('/food-party/list/my');
+    router.push(ROUTING_PATHS.FOOD_PARTY.LIST.MY);
   };
 
   const NavigationItem: NavigationButtonProps[] = [

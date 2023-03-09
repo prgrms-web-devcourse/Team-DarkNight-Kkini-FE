@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { InternalAxiosRequestConfig } from 'axios';
 import * as jwt from 'jsonwebtoken';
 import { logout, silentLogin } from 'services/auth';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 export const axiosApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_END_POINT,
@@ -26,7 +27,7 @@ const checkToken = async (request: InternalAxiosRequestConfig) => {
       request.headers.Authorization = `${type} ${token}`;
     } else {
       await logout();
-      window.location.replace('/');
+      window.location.replace(ROUTING_PATHS.HOME);
     }
   }
   return request;

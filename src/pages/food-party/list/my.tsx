@@ -3,13 +3,14 @@ import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useGetMyFoodPartyList } from 'hooks/query/useFoodParty';
 import { useRouter } from 'next/router';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const MyFoodPartyList = () => {
   const router = useRouter();
   // To Do: 현재 인원 실시간 업데이트를 위한 refetch 필요 by 승준
   const { data: myFoodPartyList, isLoading, error, isSuccess } = useGetMyFoodPartyList();
   const handleClickFoodPartyItem = (partyId: number) => {
-    router.push(`/food-party/detail/${partyId}`);
+    router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
   };
 
   if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
