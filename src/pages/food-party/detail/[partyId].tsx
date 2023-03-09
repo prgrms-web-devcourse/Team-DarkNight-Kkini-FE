@@ -35,6 +35,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
   const { isOpen, onClose, onOpen } = useDisclosure();
+  console.log(foodPartyDetail);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.toString()}</div>;
@@ -93,21 +94,21 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         memberList={isSuccess ? foodPartyDetail.members : []}
         capacity={isSuccess ? foodPartyDetail.capacity : 0}
       />
-      {/* {isSuccess && (
+      {isSuccess && (
         <FoodPartyDetailMainButton
           isLeader={isLeader}
           isMember={isMember}
           isFull={isFull}
-          onClick={handleClickButton}
+          // onClick={handleClickButton}
           status={foodPartyDetail.status}></FoodPartyDetailMainButton>
       )}
       {isSuccess && (
         <RestaurantBottomDrawer
           isOpen={isOpen}
           onClose={onClose}
-          restaurant={foodPartyDetail.restaurant}
+          restaurant={foodPartyDetail.response}
         />
-      )} */}
+      )}
     </Flex>
   );
 };

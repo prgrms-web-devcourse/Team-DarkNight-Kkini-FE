@@ -19,7 +19,7 @@ const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
   randomRestaurant: {
     placeId: -1,
     placeName: '',
-    categories: [''],
+    categories: '',
     roadAddressName: '',
     kakaoPlaceUrl: '',
     phoneNumber: '',
@@ -37,7 +37,7 @@ export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) 
   const [randomRestaurant, setRandomRestaurant] = useState<Restaurant>({
     placeId: -1,
     placeName: '',
-    categories: [''],
+    categories: '',
     roadAddressName: '',
     kakaoPlaceUrl: '',
     phoneNumber: '',

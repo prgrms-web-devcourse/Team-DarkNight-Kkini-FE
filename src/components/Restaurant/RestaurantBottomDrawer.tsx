@@ -18,17 +18,22 @@ const RestaurantBottomDrawer = ({
   onClickJoinButton,
   restaurant,
 }: RestaurantBottomDrawerProps) => {
+  const categories = restaurant.categories.split('>').map((category) => category.trim());
+  const photoUrls = restaurant.photoUrls?.split(',');
+
   return (
     <BottomDrawer
       isOpen={isOpen}
       onClose={onClose}
       header={
         <>
-          <Stack direction='row' paddingBottom='0.5rem'>
-            {restaurant.categories?.map((category) => (
-              <Category key={category}>{category}</Category>
-            ))}
-          </Stack>
+          {categories && (
+            <Stack direction='row' paddingBottom='0.5rem'>
+              {categories.map((category) => (
+                <Category key={category}>{category}</Category>
+              ))}
+            </Stack>
+          )}
           <Flex alignItems='center' justifyContent='space-between'>
             <Flex alignItems='end' gap='0.5rem'>
               <Heading
@@ -57,10 +62,10 @@ const RestaurantBottomDrawer = ({
         <>
           <Box>{restaurant.roadAddressName}</Box>
           <Box>{restaurant.phoneNumber}</Box>
-          {restaurant.photoUrls && (
+          {photoUrls && (
             // To Do: 스크롤 디자인 필요 by 승준
             <Flex gap='1rem' marginTop='0.5rem' overflowX='auto'>
-              {restaurant.photoUrls.map((photoUrl) => (
+              {photoUrls.map((photoUrl) => (
                 <Image
                   key={photoUrl}
                   referrerPolicy='no-referrer'

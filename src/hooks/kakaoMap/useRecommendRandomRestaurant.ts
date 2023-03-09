@@ -53,8 +53,9 @@ const useRecommendRandomRestaurant = () => {
         y: latitude,
       } = randomRestaurant;
       const result = await getKeywordPhotos(addressName, placeName, 5);
-      const photoUrls = result.documents.map(({ image_url: imageUrl }) => imageUrl);
-      const categories = categoryName.split('>').map((category) => category.trim());
+      const photoUrls = result.documents
+        .map(({ image_url: imageUrl }) => imageUrl)
+        .join(',');
 
       // To Do: placeName 나오는 부분 스타일링 필요 by 승준
       const createdRandomRestaurantCustomOverlay = kakaoMapHelpers.makeCustomOverlay(
@@ -80,7 +81,7 @@ const useRecommendRandomRestaurant = () => {
       setRandomRestaurant({
         placeId: Number(placeId),
         placeName,
-        categories,
+        categories: categoryName,
         roadAddressName,
         kakaoPlaceUrl,
         phoneNumber,

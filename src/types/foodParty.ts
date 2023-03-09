@@ -24,7 +24,7 @@ export type FoodParty = {
   members: Member[];
 };
 
-export type FoodPartyDetail = { restaurant: Restaurant } & FoodParty;
+export type FoodPartyDetail = { response: Restaurant } & FoodParty;
 
 export type PartyFormType = {
   name: string;
