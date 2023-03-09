@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
@@ -16,10 +17,12 @@ import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineSearch } from 'react-icons/ai';
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import QUERY_KEYS from 'utils/constants/queryKeys';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
 // To Do: 404 처리 by 승준
@@ -107,7 +110,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         </Flex>
       ) : (
         // To Do: 스타일링 필요 by 승준
-        <Text>서버에 문제가 발생했습니다.</Text>
+        <GoHomeWhenErrorInvoked />
       )}
     </>
   );
