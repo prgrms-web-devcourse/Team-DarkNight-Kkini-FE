@@ -1,28 +1,18 @@
-import {
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Stack,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import Category from 'components/common/Category';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
+import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailHeader';
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineSearch } from 'react-icons/ai';
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import QUERY_KEYS from 'utils/constants/queryKeys';
-import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
 // To Do: 404 처리 by 승준
@@ -63,14 +53,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           padding='1rem'
           gap='0.5rem'>
           {/* 헤더 */}
-          <Flex flexDirection='column' gap='0.5rem'>
-            <Stack direction='row'>
-              <Category>{foodPartyDetail.status}</Category>
-              <Category>{foodPartyDetail.category}</Category>
-            </Stack>
-            <Heading as='h1'>{foodPartyDetail.name}</Heading>
-            <Divider />
-          </Flex>
+          <FoodPartyDetailHeader
+            status={foodPartyDetail.status}
+            category={foodPartyDetail.category}
+            foodPartyName={foodPartyDetail.name}
+          />
           {/* 데이터 & 가게 정보 */}
           <Flex flexDirection='column' gap='0.5rem'>
             <Flex alignItems='center' gap='0.5rem'>
