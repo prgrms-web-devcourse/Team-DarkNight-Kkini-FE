@@ -50,62 +50,65 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   // }
 
   return (
-    <Flex
-      position='relative'
-      height='100%'
-      flexDirection='column'
-      padding='1rem'
-      gap='0.5rem'>
-      {/* 헤더 */}
-      <Flex flexDirection='column' gap='0.5rem'>
-        <Stack direction='row'>
-          {isSuccess && <Category>{foodPartyDetail.status}</Category>}
-          {isSuccess && <Category>{foodPartyDetail.category}</Category>}
-        </Stack>
-        {isSuccess && <Heading as='h1'>{foodPartyDetail.name}</Heading>}
-        <Divider />
-      </Flex>
-      {/* 데이터 & 가게 정보 */}
-      <Flex flexDirection='column' gap='0.5rem'>
-        <Flex alignItems='center' gap='0.5rem'>
-          <AiOutlineCalendar />
-          <Text>{templatePromiseDate(year, month, day)}</Text>
+    <>
+      {isSuccess ? (
+        <Flex
+          position='relative'
+          height='100%'
+          flexDirection='column'
+          padding='1rem'
+          gap='0.5rem'>
+          {/* 헤더 */}
+          <Flex flexDirection='column' gap='0.5rem'>
+            <Stack direction='row'>
+              <Category>{foodPartyDetail.status}</Category>
+              <Category>{foodPartyDetail.category}</Category>
+            </Stack>
+            <Heading as='h1'>{foodPartyDetail.name}</Heading>
+            <Divider />
+          </Flex>
+          {/* 데이터 & 가게 정보 */}
+          <Flex flexDirection='column' gap='0.5rem'>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineCalendar />
+              <Text>{templatePromiseDate(year, month, day)}</Text>
+            </Flex>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineClockCircle />
+              <Text>{templatePromiseTime(hour, minute)}</Text>
+            </Flex>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineSearch />
+              <Button onClick={onOpen} height='1.5rem'>
+                맛집 정보
+              </Button>
+            </Flex>
+          </Flex>
+          {/* 내용 */}
+          <Text margin='1rem 0'>{foodPartyDetail.content}</Text>
+          {/* 멤버 리스트 */}
+          <FoodPartyMemberList
+            memberList={foodPartyDetail.members}
+            capacity={foodPartyDetail.capacity}
+          />
+          <FoodPartyDetailChangeStatusButton
+            isLeader={isLeader}
+            isMember={isMember}
+            isFull={isFull}
+            // onClick={handleClickButton}
+            status={foodPartyDetail.status}
+          />
+          <RestaurantBottomDrawer
+            isOpen={isOpen}
+            onClose={onClose}
+            restaurant={foodPartyDetail.response}
+          />
         </Flex>
-        <Flex alignItems='center' gap='0.5rem'>
-          <AiOutlineClockCircle />
-          <Text>{templatePromiseTime(hour, minute)}</Text>
-        </Flex>
-        <Flex alignItems='center' gap='0.5rem'>
-          <AiOutlineSearch />
-          <Button onClick={onOpen} height='1.5rem'>
-            맛집 정보
-          </Button>
-        </Flex>
-      </Flex>
-      {/* 내용 */}
-      {isSuccess && <Text margin='1rem 0'>{foodPartyDetail.content}</Text>}
-      {/* 멤버 리스트 */}
-      <FoodPartyMemberList
-        memberList={isSuccess ? foodPartyDetail.members : []}
-        capacity={isSuccess ? foodPartyDetail.capacity : 0}
-      />
-      {isSuccess && (
-        <FoodPartyDetailChangeStatusButton
-          isLeader={isLeader}
-          isMember={isMember}
-          isFull={isFull}
-          // onClick={handleClickButton}
-          status={foodPartyDetail.status}
-        />
+      ) : (
+        // To Do: 스타일링 필요 by 승준
+        <Text>서버에 문제가 발생했습니다.</Text>
       )}
-      {isSuccess && (
-        <RestaurantBottomDrawer
-          isOpen={isOpen}
-          onClose={onClose}
-          restaurant={foodPartyDetail.response}
-        />
-      )}
-    </Flex>
+    </>
   );
 };
 
