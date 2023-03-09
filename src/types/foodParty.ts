@@ -11,6 +11,7 @@ export type FoodPartyDetailChangeStatusButtonText =
   | '리뷰 작성하러 갈끼니?'
   | '참여할 끼니?'
   | '모집이 완료되버렸끼니!'
+  | '인원이 꽉 차버렸끼니!'
   | '';
 
 export type Member = {

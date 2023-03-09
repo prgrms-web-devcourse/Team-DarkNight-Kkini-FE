@@ -12,6 +12,7 @@ import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
+import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 
 // To Do: 404 처리 by 승준
@@ -38,6 +39,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   // const handleClickButton = () => {
   //  router.push
   // }
+  const handleClickFoodPartyDetailChangeStatusButton = (
+    buttonText: FoodPartyDetailChangeStatusButtonText
+  ) => {};
 
   return (
     <>
@@ -66,7 +70,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             isLeader={isLeader}
             isMember={isMember}
             isFull={isFull}
-            // onClick={handleClickButton}
+            onClick={handleClickFoodPartyDetailChangeStatusButton}
             status={foodPartyDetail.status}
           />
           <RestaurantBottomDrawer
