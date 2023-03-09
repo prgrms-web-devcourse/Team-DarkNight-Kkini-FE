@@ -1,4 +1,4 @@
-type DocumentsType = {
+export type DocumentsType = {
   collection: string;
   thumbnail_url: string;
   image_url: string;

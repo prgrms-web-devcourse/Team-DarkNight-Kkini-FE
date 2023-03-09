@@ -1,4 +1,8 @@
-export const getImageUrlsFromDocuments = (documents: []) => {};
+import { DocumentsType } from 'types/kakaoSearch';
+
+export const getPhotoUrlsStringFromDocuments = (documents: DocumentsType[]) => {
+  return getPhotoUrlsString(documents.map(({ image_url: imageUrl }) => imageUrl));
+};
 
 export const getPhotoUrlsString = (photoUrls: string[]) => {
   return photoUrls.join(',');
