@@ -4,6 +4,7 @@ import Button from 'components/common/Button';
 import Category from 'components/common/Category';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { Restaurant } from 'types/restaurant';
+import { getCategoryArray, getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
 type RestaurantBottomDrawerProps = {
   isOpen: boolean;
@@ -18,8 +19,8 @@ const RestaurantBottomDrawer = ({
   onClickJoinButton,
   restaurant,
 }: RestaurantBottomDrawerProps) => {
-  const categories = restaurant.categories.split('>').map((category) => category.trim());
-  const photoUrls = restaurant.photoUrls?.split(',');
+  const categories = getCategoryArray(restaurant.categories);
+  const photoUrls = getPhotoUrlsArray(restaurant.photoUrls || '');
 
   return (
     <BottomDrawer
