@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const OAuthLogin = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const OAuthLogin = () => {
     if (token) {
       setAccessToken(token);
       setLoginState(true);
-      router.push('/', undefined, { shallow: true });
+      router.push(ROUTING_PATHS.HOME, undefined, { shallow: true });
     }
   }, [router]);
 

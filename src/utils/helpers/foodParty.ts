@@ -1,3 +1,9 @@
+import { DocumentsType } from 'types/kakaoSearch';
+
+export const getPhotoUrlsStringFromDocuments = (documents: DocumentsType[]) => {
+  return getPhotoUrlsString(documents.map(({ image_url: imageUrl }) => imageUrl));
+};
+
 export const getPhotoUrlsString = (photoUrls: string[]) => {
   return photoUrls.join(',');
 };
@@ -8,4 +14,12 @@ export const getPhotoUrlsArray = (photoUrls: string) => {
 
 export const getCategoryArray = (category: string) => {
   return category.split('>').map((category) => category.trim());
+};
+
+export const templatePromiseDate = (year: number, month: number, day: number) => {
+  return `${year}년 ${month}월 ${day}일`;
+};
+
+export const templatePromiseTime = (hour: number, minute: number) => {
+  return `${hour}:${String(minute).padStart(2, '0')}`;
 };

@@ -29,7 +29,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
         className={BaseFont.className}
         overflowY='hidden'>
         <Header isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
-        <Box as='main' flex={1} pos='relative'>
+        {/* To Do: 스크롤바 스타일링 필요 by 승준 */}
+        <Box as='main' flex={1} pos='relative' overflowY='auto'>
           {children}
           <CreateCommunityDrawer />
         </Box>

@@ -1,21 +1,30 @@
 import { RestaurantType } from './kakaoSearch';
+import { Restaurant } from './restaurant';
 
-type Member = {
+type CrewMemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
+
+export type FoodPartyStatus = '모집 중' | '모집 완료' | '식사 완료';
+
+export type Member = {
   userId: number;
-  avatarUrl: string;
+  nickname: string;
+  profileImgUrl: string;
+  crewMemberRole: CrewMemberRole;
 };
 
 export type FoodParty = {
   id: number;
   name: string;
-  currentStaff: number;
+  currentMember: number;
   capacity: number;
   promiseTime: number[];
-  status: string;
+  status: FoodPartyStatus;
   content: string;
-  category: string[];
+  category: string;
   members: Member[];
 };
+
+export type FoodPartyDetail = { response: Restaurant } & FoodParty;
 
 export type PartyFormType = {
   name: string;

@@ -25,7 +25,7 @@ const useSearchRestaurant = () => {
 
     const getPhotoPromises = keywordSearchResult.map(
       async ({ address_name, place_name }) => {
-        return await getKeywordPhotos(address_name, place_name);
+        return await getKeywordPhotos(address_name, place_name, 3);
       }
     );
 

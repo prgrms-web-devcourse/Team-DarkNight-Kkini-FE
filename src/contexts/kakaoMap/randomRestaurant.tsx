@@ -7,11 +7,12 @@ import {
   useContext,
   useState,
 } from 'react';
-import { RandomRestaurantType } from 'types/kakaoMap';
+import { Restaurant } from 'types/restaurant';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 type RandomRestaurantContextType = {
-  randomRestaurant: RandomRestaurantType;
-  setRandomRestaurant: Dispatch<SetStateAction<RandomRestaurantType>>;
+  randomRestaurant: Restaurant;
+  setRandomRestaurant: Dispatch<SetStateAction<Restaurant>>;
   handleClickJoinToFoodPartyButton: () => void;
 };
 
@@ -19,7 +20,7 @@ const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
   randomRestaurant: {
     placeId: -1,
     placeName: '',
-    categories: [''],
+    categories: '',
     roadAddressName: '',
     kakaoPlaceUrl: '',
     phoneNumber: '',
@@ -34,10 +35,10 @@ const RandomRestaurantContext = createContext<RandomRestaurantContextType>({
 const useRandomRestaurantContext = () => useContext(RandomRestaurantContext);
 
 export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) => {
-  const [randomRestaurant, setRandomRestaurant] = useState<RandomRestaurantType>({
+  const [randomRestaurant, setRandomRestaurant] = useState<Restaurant>({
     placeId: -1,
     placeName: '',
-    categories: [''],
+    categories: '',
     roadAddressName: '',
     kakaoPlaceUrl: '',
     phoneNumber: '',
@@ -50,7 +51,7 @@ export const RandomRestaurantProvider = ({ children }: { children: ReactNode }) 
   const handleClickJoinToFoodPartyButton = () => {
     if (!randomRestaurant.placeId) return;
 
-    router.push(`/food-party/place/${randomRestaurant.placeId}`);
+    router.push(ROUTING_PATHS.FOOD_PARTY.LIST.RESTAURANT(randomRestaurant.placeId));
   };
 
   return (

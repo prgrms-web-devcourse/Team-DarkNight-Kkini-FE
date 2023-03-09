@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { LoginModal } from 'types/modal';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const DynamicUserProfile = dynamic(() => import('../UserProfile'), {
   ssr: false,
@@ -18,7 +19,7 @@ const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
 
   return (
     <Container>
-      <Link href='/'>
+      <Link href={ROUTING_PATHS.HOME}>
         <Image
           src='/images/kkini-logo.svg'
           alt='kkini-logo'
@@ -40,8 +41,8 @@ export default Header;
 
 export const Container = styled.header`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   height: 2rem;
   margin: 0.75rem;
 `;

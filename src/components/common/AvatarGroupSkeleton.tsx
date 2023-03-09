@@ -12,6 +12,7 @@ const AvatarGroupSkeleton = ({ avatarCount }: { avatarCount: number }) => {
         <SkeletonCircle
           key={avatarSkeletonKey}
           marginLeft={index !== 0 ? '-0.5rem' : '0rem'}
+          size='7'
         />
       ))}
     </Flex>

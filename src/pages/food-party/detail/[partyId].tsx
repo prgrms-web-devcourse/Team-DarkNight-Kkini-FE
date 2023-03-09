@@ -1,72 +1,137 @@
-import { Box } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import {
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import Category from 'components/common/Category';
+import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
+import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
+import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
+import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
+import { useGetUser } from 'hooks/query/useUser';
+import { GetServerSideProps } from 'next';
+import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineSearch } from 'react-icons/ai';
+import { fetchFoodPartyDetail } from 'services/foodParty';
+import { fetchUser } from 'services/user';
+import QUERY_KEYS from 'utils/constants/queryKeys';
+import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
-const DUMMY_PARTY = {
-  name: '라멘 뇸뇸뇸, 나가면 지상렬',
-  capacity: 5,
-  promiseTime: [2023, 3, 3, 13, 30, 0, 893316700],
-  categories: ['QUIET', 'MANNERS MAKETH MAN'],
-  members: [
-    {
-      userId: 1,
-      userName: 'hello',
-      avatarUrl: 'amklgaerg',
-      isReady: true,
-    },
-    {
-      userId: 2,
-      userName: 'world',
-      avatarUrl: 'sdbfml',
-      isReady: true,
-    },
-    {
-      userId: 3,
-      userName: 'developer',
-      avatarUrl: 'gmklbia',
-      isReady: false,
-    },
-  ],
-  comments: [
-    {
-      commentId: 19273,
-      userId: 1,
-      userName: 'hello',
-      avatarUrl: 'amklgaerg',
-      createdAt: [2023, 3, 3, 12, 10, 0, 893316700],
-      updatedAt: [2023, 3, 3, 12, 10, 0, 893316700],
-      content: '안녕하세요',
-    },
-    {
-      commentId: 19274,
-      userId: 2,
-      userName: 'world',
-      avatarUrl: 'sdbfml',
-      createdAt: [2023, 3, 3, 12, 12, 0, 893316700],
-      updatedAt: [2023, 3, 3, 12, 12, 0, 893316700],
-      content: '네, 하이요',
-    },
-    {
-      commentId: 19275,
-      userId: 1,
-      userName: 'hello',
-      avatarUrl: 'amklgaerg',
-      createdAt: [2023, 3, 3, 12, 15, 0, 893316700],
-      updatedAt: [2023, 3, 3, 12, 17, 0, 893316700],
-      content: '반갑습니다!',
-    },
-  ],
-};
+// To Do: 404 처리 by 승준
+// partyId로 조회하는 페이지
+// 조회가 안되면 404 처리
+const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
+  const { data: userInformation } = useGetUser();
+  const {
+    data: foodPartyDetail,
+    isLoading,
+    isSuccess,
+    isLeader,
+    isMember,
+    isFull,
+    error,
+  } = useGetFoodPartyDetail(partyId, userInformation?.id);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
-const FoodPartyDetail = () => {
-  const router = useRouter();
-  const partyId = router.query.partyId;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.toString()}</div>;
 
-  // To Do: 404 처리 by 승준
-  // if (!partyId) router.push('')
+  // To Do: Date 등 따로 컴포넌트를 빼자.
+  const [year, month, day, hour, minute] = foodPartyDetail!.promiseTime;
 
-  return <Box padding='1rem'>{partyId}</Box>;
+  // To Do: isLeader, isMember, isFull, status에 따라 다르게
+  // const router = useRouter();
+  // const handleClickButton = () => {
+  //  router.push
+  // }
+
+  return (
+    <>
+      {isSuccess ? (
+        <Flex
+          position='relative'
+          height='100%'
+          flexDirection='column'
+          padding='1rem'
+          gap='0.5rem'>
+          {/* 헤더 */}
+          <Flex flexDirection='column' gap='0.5rem'>
+            <Stack direction='row'>
+              <Category>{foodPartyDetail.status}</Category>
+              <Category>{foodPartyDetail.category}</Category>
+            </Stack>
+            <Heading as='h1'>{foodPartyDetail.name}</Heading>
+            <Divider />
+          </Flex>
+          {/* 데이터 & 가게 정보 */}
+          <Flex flexDirection='column' gap='0.5rem'>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineCalendar />
+              <Text>{templatePromiseDate(year, month, day)}</Text>
+            </Flex>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineClockCircle />
+              <Text>{templatePromiseTime(hour, minute)}</Text>
+            </Flex>
+            <Flex alignItems='center' gap='0.5rem'>
+              <AiOutlineSearch />
+              <Button onClick={onOpen} height='1.5rem'>
+                맛집 정보
+              </Button>
+            </Flex>
+          </Flex>
+          {/* 내용 */}
+          <Text margin='1rem 0'>{foodPartyDetail.content}</Text>
+          {/* 멤버 리스트 */}
+          <FoodPartyMemberList
+            memberList={foodPartyDetail.members}
+            capacity={foodPartyDetail.capacity}
+          />
+          <FoodPartyDetailChangeStatusButton
+            isLeader={isLeader}
+            isMember={isMember}
+            isFull={isFull}
+            // onClick={handleClickButton}
+            status={foodPartyDetail.status}
+          />
+          <RestaurantBottomDrawer
+            isOpen={isOpen}
+            onClose={onClose}
+            restaurant={foodPartyDetail.response}
+          />
+        </Flex>
+      ) : (
+        // To Do: 스타일링 필요 by 승준
+        <Text>서버에 문제가 발생했습니다.</Text>
+      )}
+    </>
+  );
 };
 
 export default FoodPartyDetail;
 
-// To Do: 서버 사이드 렌더링, getServerSideProps by 승준
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { partyId } = context.query;
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: [QUERY_KEYS.USER.MY_INFO],
+    queryFn: () => fetchUser(),
+  });
+  await queryClient.prefetchQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
+    queryFn: () => fetchFoodPartyDetail(partyId as string),
+  });
+
+  return {
+    props: {
+      partyId,
+      storeId: '1',
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
