@@ -7,6 +7,7 @@ import {
   FoodPartyLeaderReviewBody,
   FoodPartyMemberReviewBody,
   FoodPartyRevieweeType,
+  FoodPartyStatus,
 } from 'types/foodParty';
 
 type responseBodyType = {
@@ -109,7 +110,7 @@ export const postFoodPartyMemberReview = async (
   return response;
 };
 
-export const updateFoodPartyStatus = async (partyId: string, status: string) => {
+export const updateFoodPartyStatus = async (partyId: string, status: FoodPartyStatus) => {
   await axiosAuthApi.patch('/api/v1/crews', {
     crewId: partyId,
     status,

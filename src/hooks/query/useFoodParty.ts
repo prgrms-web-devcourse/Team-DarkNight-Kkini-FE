@@ -10,7 +10,11 @@ import {
   postFoodPartyLeaderReview,
   postFoodPartyMemberReview,
 } from 'services/foodParty';
-import { FoodPartyLeaderReviewBody, FoodPartyMemberReviewBody } from 'types/foodParty';
+import {
+  FoodPartyLeaderReviewBody,
+  FoodPartyMemberReviewBody,
+  FoodPartyStatus,
+} from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
@@ -125,7 +129,7 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (status: string) => updateFoodPartyStatus(partyId, status),
+    mutationFn: (status: FoodPartyStatus) => updateFoodPartyStatus(partyId, status),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
