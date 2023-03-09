@@ -1,3 +1,5 @@
+export const getImageUrlsFromDocuments = (documents: []) => {};
+
 export const getPhotoUrlsString = (photoUrls: string[]) => {
   return photoUrls.join(',');
 };

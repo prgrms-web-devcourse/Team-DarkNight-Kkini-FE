@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
+import { getPhotoUrlsString } from 'utils/helpers/foodParty';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
@@ -52,10 +53,9 @@ const useRecommendRandomRestaurant = () => {
         x: longitude,
         y: latitude,
       } = randomRestaurant;
-      const result = await getKeywordPhotos(addressName, placeName, 5);
-      const photoUrls = result.documents
-        .map(({ image_url: imageUrl }) => imageUrl)
-        .join(',');
+      const { documents } = await getKeywordPhotos(addressName, placeName, 5);
+      const photoUrlsArray = documents.map(({ image_url: imageUrl }) => imageUrl);
+      const photoUrls = getPhotoUrlsString(photoUrlsArray);
 
       // To Do: placeName 나오는 부분 스타일링 필요 by 승준
       const createdRandomRestaurantCustomOverlay = kakaoMapHelpers.makeCustomOverlay(
