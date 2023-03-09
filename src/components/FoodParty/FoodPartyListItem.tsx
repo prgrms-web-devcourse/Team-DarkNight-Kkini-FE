@@ -32,6 +32,7 @@ const FoodPartyListItem = ({
       <Flex flexDirection='column' gap='0.5rem'>
         <Stack direction='row'>
           <Category>{party.status}</Category>
+          <Category>{party.category}</Category>
         </Stack>
         <Text>{party.name}</Text>
         <Flex justifyContent='space-between'>
