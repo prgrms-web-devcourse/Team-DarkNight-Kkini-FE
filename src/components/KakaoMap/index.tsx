@@ -109,7 +109,7 @@ const KakaoMap = () => {
 
     // makeRandomRestaurantOverlayContent에서 custom overlay의 content를 string으로 생성했습니다.
     // 그러다보니 이렇게 찾아서 직접 다시 이벤트를 연결해줘야 페이지가 변경된 후 다시 돌아와도 클릭 이벤트가 제대로 작동하네요.
-    const randomRetaurantCustomOverlayElement = getElement(
+    const randomRestaurantCustomOverlayElement = getElement(
       '#random-restaurant-custom-overlay-container'
     );
     const handleClickRandomRestaurantCustomOverlay = () => {
@@ -120,7 +120,7 @@ const KakaoMap = () => {
         longitude: randomRestaurant.customOverlay?.getPosition().getLng(),
       });
     };
-    randomRetaurantCustomOverlayElement?.addEventListener(
+    randomRestaurantCustomOverlayElement?.addEventListener(
       'click',
       handleClickRandomRestaurantCustomOverlay
     );
@@ -128,7 +128,7 @@ const KakaoMap = () => {
     return () => {
       if (randomRestaurant.customOverlay) {
         randomRestaurant.customOverlay.setMap(null);
-        randomRetaurantCustomOverlayElement?.removeEventListener(
+        randomRestaurantCustomOverlayElement?.removeEventListener(
           'click',
           handleClickRandomRestaurantCustomOverlay
         );
