@@ -55,7 +55,7 @@ export const fetchFoodPartyList = async (placeId: string) => {
         responses: { content: foodPartyList },
       },
     },
-  } = await axiosAuthApi<FetchFoodPartyListResponse>(`/api/v1/crews/${placeId}`, {
+  } = await axiosAuthApi<FetchFoodPartyListResponse>(`/api/v1/crews/page/${placeId}`, {
     params: {
       page: 1,
       size: 10,

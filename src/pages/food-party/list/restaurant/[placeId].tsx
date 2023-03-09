@@ -28,7 +28,7 @@ const SearchedFoodPartyList = ({ placeId, page, size }: SearchedFoodPartyListPro
 export default SearchedFoodPartyList;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { placeId, page, size } = context.query;
+  const { placeId } = context.query;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.SEARCHED_FOOD_PARTY_LIST, placeId],
@@ -38,8 +38,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       placeId,
-      page,
-      size,
     },
   };
 };
