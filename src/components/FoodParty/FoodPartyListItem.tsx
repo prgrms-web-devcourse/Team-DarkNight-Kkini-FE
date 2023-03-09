@@ -13,13 +13,17 @@ import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodPart
 
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 
+type FoodPartyListItemProps = {
+  party: FoodParty;
+  onClickViewButton: (partyId: number) => void;
+  onClickReviewButton: (partyId: number) => void;
+};
+
 const FoodPartyListItem = ({
   party,
-  onClick,
-}: {
-  party: FoodParty;
-  onClick: (partyId: number) => void;
-}) => {
+  onClickViewButton,
+  onClickReviewButton,
+}: FoodPartyListItemProps) => {
   const [year, month, day, hour, minute] = party.promiseTime;
 
   return (
@@ -52,12 +56,22 @@ const FoodPartyListItem = ({
             <Avatar key={member.userId} src={member.profileImgUrl} />
           ))}
         </AvatarGroup>
-        <Button
-          onClick={() => {
-            onClick(party.id);
-          }}>
-          View
-        </Button>
+        <Flex alignItems='center'>
+          {party.status === '식사 완료' && (
+            <Button
+              onClick={() => {
+                onClickReviewButton(party.id);
+              }}>
+              Review
+            </Button>
+          )}
+          <Button
+            onClick={() => {
+              onClickViewButton(party.id);
+            }}>
+            View
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   );

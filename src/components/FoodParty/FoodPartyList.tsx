@@ -1,14 +1,19 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { FoodParty, FoodPartyStatus } from 'types/foodParty';
+import { FoodParty } from 'types/foodParty';
 
 import FoodPartyListItem from './FoodPartyListItem';
 
 type FoodPartyListProps = {
   foodPartyList: FoodParty[];
-  onClick: (partyId: number) => void;
+  onClickViewButton: (partyId: number) => void;
+  onClickReviewButton: (partyId: number) => void;
 };
 
-const FoodPartyList = ({ foodPartyList, onClick }: FoodPartyListProps) => {
+const FoodPartyList = ({
+  foodPartyList,
+  onClickViewButton,
+  onClickReviewButton,
+}: FoodPartyListProps) => {
   return (
     <>
       {!foodPartyList.length ? (
@@ -18,7 +23,12 @@ const FoodPartyList = ({ foodPartyList, onClick }: FoodPartyListProps) => {
       ) : (
         <Flex flexDirection='column'>
           {foodPartyList?.map((party) => (
-            <FoodPartyListItem key={party.id} party={party} onClick={onClick} />
+            <FoodPartyListItem
+              key={party.id}
+              party={party}
+              onClickViewButton={onClickViewButton}
+              onClickReviewButton={onClickReviewButton}
+            />
           ))}
         </Flex>
       )}

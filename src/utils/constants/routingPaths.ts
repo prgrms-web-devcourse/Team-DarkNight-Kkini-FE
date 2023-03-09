@@ -8,6 +8,7 @@ const ROUTING_PATHS = {
         `/food-party/list/restaurant/${placeId}?name=${placeName}`,
     },
     DETAIL: (partyId: string | number) => `/food-party/detail/${partyId}`,
+    REVIEW: (partyId: string | number) => `/food-party/review/${partyId}`,
   },
 };
 

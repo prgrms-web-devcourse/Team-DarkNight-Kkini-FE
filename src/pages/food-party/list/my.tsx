@@ -9,8 +9,11 @@ const MyFoodPartyList = () => {
   const router = useRouter();
   // To Do: 현재 인원 실시간 업데이트를 위한 refetch 필요 by 승준
   const { data: myFoodPartyList, isLoading, error, isSuccess } = useGetMyFoodPartyList();
-  const handleClickFoodPartyItem = (partyId: number) => {
+  const handleClickViewFoodPartyButton = (partyId: number) => {
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
+  };
+  const handleClickReviewFoodPartyButton = (partyId: number) => {
+    router.push(ROUTING_PATHS.FOOD_PARTY.REVIEW(partyId));
   };
 
   if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
@@ -21,7 +24,8 @@ const MyFoodPartyList = () => {
       <Heading paddingBottom='1rem'>너님의 밥모임 목록</Heading>
       <FoodPartyList
         foodPartyList={isSuccess ? myFoodPartyList : []}
-        onClick={handleClickFoodPartyItem}
+        onClickViewButton={handleClickViewFoodPartyButton}
+        onClickReviewButton={handleClickReviewFoodPartyButton}
       />
     </Flex>
   );
