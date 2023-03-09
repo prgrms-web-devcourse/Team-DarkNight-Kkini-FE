@@ -19,6 +19,7 @@ import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineSearch } from 'react-
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import QUERY_KEYS from 'utils/constants/queryKeys';
+import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
 // To Do: 404 처리 by 승준
 // partyId로 조회하는 페이지
@@ -69,15 +70,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
       <Flex flexDirection='column' gap='0.5rem'>
         <Flex alignItems='center' gap='0.5rem'>
           <AiOutlineCalendar />
-          <Text>
-            {year}년 {month}월 {day}일
-          </Text>
+          <Text>{templatePromiseDate(year, month, day)}</Text>
         </Flex>
         <Flex alignItems='center' gap='0.5rem'>
           <AiOutlineClockCircle />
-          <Text>
-            {hour}:{String(minute).padStart(2, '0')}
-          </Text>
+          <Text>{templatePromiseTime(hour, minute)}</Text>
         </Flex>
         <Flex alignItems='center' gap='0.5rem'>
           <AiOutlineSearch />

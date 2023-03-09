@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import Category from 'components/common/Category';
 import { FoodParty } from 'types/foodParty';
+import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 
@@ -37,7 +38,7 @@ const FoodPartyListItem = ({
         <Text>{party.name}</Text>
         <Flex justifyContent='space-between'>
           <Text>
-            {year}-{month}-{day} {hour}:{String(minute).padStart(2, '0')}
+            {templatePromiseDate(year, month, day)} {templatePromiseTime(hour, minute)}
           </Text>
           <Text>
             {party.currentMember} / {party.capacity}

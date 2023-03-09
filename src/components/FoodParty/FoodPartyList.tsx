@@ -11,7 +11,7 @@ type FoodPartyListProps = {
 const FoodPartyList = ({ foodPartyList, onClick }: FoodPartyListProps) => {
   return (
     <>
-      {foodPartyList.length === 0 ? (
+      {!foodPartyList.length ? (
         <Text>
           아직 밥모임에 참여해보신 적이 없으시군요, 직접 밥모임을 생성해볼까요!?
         </Text>
