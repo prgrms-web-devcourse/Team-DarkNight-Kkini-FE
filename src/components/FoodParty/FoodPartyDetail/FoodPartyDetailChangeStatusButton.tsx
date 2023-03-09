@@ -46,19 +46,19 @@ FoodPartyDetailChangeStatusButtonProps) => {
 export default FoodPartyDetailChangeStatusButton;
 
 const LeaderText = {
-  '모집 중': '출발할 끼니?',
+  모집중: '모집 완료했끼니?',
   '모집 완료': '식사를 완료했끼니?',
   '식사 완료': '리뷰 작성하러 갈끼니?',
 };
 
 const MemberText = {
-  '모집 중': '',
+  모집중: '',
   '모집 완료': '',
   '식사 완료': '리뷰 작성하러 갈끼니?',
 };
 
 const NotMemberText = {
-  '모집 중': '참여할 끼니?',
+  모집중: '참여할 끼니?',
   '모집 완료': '모집이 완료되버렸끼니!',
   '식사 완료': '',
 };
