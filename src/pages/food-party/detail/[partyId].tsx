@@ -7,7 +7,10 @@ import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPart
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
-import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
+import {
+  useGetFoodPartyDetail,
+  useUpdateFoodPartyStatus,
+} from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { fetchFoodPartyDetail } from 'services/foodParty';
@@ -29,19 +32,31 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isFull,
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
+  const { mutate: updateFoodPartyStatus } = useUpdateFoodPartyStatus(partyId);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <div>{error.toString()}</div>;
 
-  // To Do: isLeader, isMember, isFull, status에 따라 다르게
-  // const router = useRouter();
-  // const handleClickButton = () => {
-  //  router.push
-  // }
   const handleClickFoodPartyDetailChangeStatusButton = (
     buttonText: FoodPartyDetailChangeStatusButtonText
-  ) => {};
+  ) => {
+    switch (buttonText) {
+      case '모집 완료할끼니?':
+        // alert
+        updateFoodPartyStatus('모집 완료');
+        return;
+      case '식사를 완료했끼니?':
+        // alert
+        updateFoodPartyStatus('식사 완료');
+        return;
+      case '참여할 끼니?':
+        // To Do: 신청서 드로어 띄우기 by 동우, 승준
+        return;
+      default:
+        return;
+    }
+  };
 
   return (
     <>

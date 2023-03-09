@@ -14,25 +14,7 @@ import { FoodPartyLeaderReviewBody, FoodPartyMemberReviewBody } from 'types/food
 import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
-export const useCreateFoodParty = () => {
-  const router = useRouter();
-  const toast = useToast();
-  return useMutation({
-    mutationFn: createFoodParty,
-    onSuccess: (data) => {
-      const partyId = data.id;
-      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
-      toast({
-        title: '밥모임이 생성되었습니다!',
-        description: '생성된 밥모임 정보를 확인하세요',
-        position: 'top',
-        status: 'success',
-        duration: 2000,
-        isClosable: true,
-      });
-    },
-  });
-};
+import { updateFoodPartyStatus } from './../../services/foodParty';
 
 export const useGetMyFoodPartyList = () => {
   return useQuery({
@@ -98,6 +80,27 @@ export const usePostLeaderReview = (crewId: string) => {
   });
 };
 
+export const useCreateFoodParty = () => {
+  const router = useRouter();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: createFoodParty,
+    onSuccess: (data) => {
+      const partyId = data.id;
+      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
+      toast({
+        title: '밥모임이 생성되었습니다!',
+        description: '생성된 밥모임 정보를 확인하세요',
+        position: 'top',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
 export const usePostMemberReview = (crewId: string) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -114,6 +117,21 @@ export const usePostMemberReview = (crewId: string) => {
         isClosable: true,
       });
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId]);
+    },
+  });
+};
+
+export const useUpdateFoodPartyStatus = (partyId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (status: string) => updateFoodPartyStatus(partyId, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
+      // To Do: 배포 전에 지우기 by 승준
+      console.error(error);
     },
   });
 };
