@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
-import FoodPartyDetailMainButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailMainButton';
+import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
@@ -89,18 +89,18 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
       {/* 내용 */}
       {isSuccess && <Text margin='1rem 0'>{foodPartyDetail.content}</Text>}
       {/* 멤버 리스트 */}
-      {/* To Do: 아직 백엔드 API에서 memberList를 못 던짐. */}
       <FoodPartyMemberList
         memberList={isSuccess ? foodPartyDetail.members : []}
         capacity={isSuccess ? foodPartyDetail.capacity : 0}
       />
       {isSuccess && (
-        <FoodPartyDetailMainButton
+        <FoodPartyDetailChangeStatusButton
           isLeader={isLeader}
           isMember={isMember}
           isFull={isFull}
           // onClick={handleClickButton}
-          status={foodPartyDetail.status}></FoodPartyDetailMainButton>
+          status={foodPartyDetail.status}
+        />
       )}
       {isSuccess && (
         <RestaurantBottomDrawer

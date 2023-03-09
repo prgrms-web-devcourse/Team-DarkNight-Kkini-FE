@@ -6,7 +6,7 @@ export type Restaurant = {
   roadAddressName: string;
   kakaoPlaceUrl: string;
   phoneNumber: string;
-  distance: number;
+  distance?: number;
   latitude: number;
   longitude: number;
   photoUrls?: string;

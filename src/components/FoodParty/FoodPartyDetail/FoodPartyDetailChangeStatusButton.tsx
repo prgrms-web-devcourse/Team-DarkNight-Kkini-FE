@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import { FoodPartyStatus } from 'types/foodParty';
 
-type FoodPartyDetailMainButtonProps = {
+type FoodPartyDetailChangeStatusButtonProps = {
   isLeader: boolean;
   isMember: boolean;
   isFull: boolean;
@@ -9,13 +9,13 @@ type FoodPartyDetailMainButtonProps = {
   // onClick: () => void;
 };
 
-const FoodPartyDetailMainButton = ({
+const FoodPartyDetailChangeStatusButton = ({
   isLeader,
   isMember,
   isFull,
   status,
 }: // onClick,
-FoodPartyDetailMainButtonProps) => {
+FoodPartyDetailChangeStatusButtonProps) => {
   const buttonText = getText(isLeader, isMember, isFull, status);
   const isDisabled = checkButtonTextIsDisabled(buttonText);
 
@@ -43,7 +43,7 @@ FoodPartyDetailMainButtonProps) => {
   );
 };
 
-export default FoodPartyDetailMainButton;
+export default FoodPartyDetailChangeStatusButton;
 
 const LeaderText = {
   '모집 중': '출발할 끼니?',
