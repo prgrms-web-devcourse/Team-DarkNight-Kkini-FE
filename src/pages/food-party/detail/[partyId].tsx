@@ -13,6 +13,7 @@ import {
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
@@ -34,6 +35,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
   const { mutate: updateFoodPartyStatus } = useUpdateFoodPartyStatus(partyId);
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const router = useRouter();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <div>{error.toString()}</div>;
@@ -58,6 +60,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     }
   };
 
+  const handleClickChatButton = () => {
+    // router;
+    console.log('chat button');
+  };
+
   return (
     <>
       {isSuccess ? (
@@ -78,6 +85,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             onClick={onOpen}
           />
           <FoodPartyMemberList
+            onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
             memberList={foodPartyDetail.members}
             capacity={foodPartyDetail.capacity}
           />
