@@ -3,7 +3,7 @@ import { Restaurant } from './restaurant';
 
 type CrewMemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
 
-export type FoodPartyStatus = '모집중' | '모집 완료' | '식사 완료';
+export type FoodPartyStatus = '모집 중' | '모집 완료' | '식사 완료';
 
 export type FoodPartyDetailChangeStatusButtonText =
   | '모집 완료할끼니?'

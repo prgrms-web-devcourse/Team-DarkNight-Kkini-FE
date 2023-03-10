@@ -54,7 +54,7 @@ export const checkButtonTextIsDisabled = (
 const LeaderText: {
   [key: string]: FoodPartyDetailChangeStatusButtonText;
 } = {
-  모집중: '모집 완료할끼니?',
+  '모집 중': '모집 완료할끼니?',
   '모집 완료': '식사를 완료했끼니?',
   '식사 완료': '',
 };
@@ -62,7 +62,7 @@ const LeaderText: {
 const MemberText: {
   [key: string]: FoodPartyDetailChangeStatusButtonText;
 } = {
-  모집중: '',
+  '모집 중': '',
   '모집 완료': '',
   '식사 완료': '',
 };
@@ -70,7 +70,7 @@ const MemberText: {
 const NotMemberText: {
   [key: string]: FoodPartyDetailChangeStatusButtonText;
 } = {
-  모집중: '참여할 끼니?',
+  '모집 중': '참여할 끼니?',
   '모집 완료': '모집이 완료되버렸끼니!',
   '식사 완료': '',
 };
