@@ -16,7 +16,7 @@ import {
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { createFoodPartyApplication, fetchFoodPartyDetail } from 'services/foodParty';
+import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
@@ -27,6 +27,7 @@ import ROUTING_PATHS from 'utils/constants/routingPaths';
 // 조회가 안되면 404 처리
 const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   const { data: userInformation } = useGetUser();
+  // To Do: 실시간 업데이트를 위한 refetch 필요 by 승준
   const {
     data: foodPartyDetail,
     isLoading,
@@ -52,7 +53,6 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     onClose: onCloseApplicationDrawer,
     onOpen: onOpenApplicationDrawer,
   } = useDisclosure();
-
   const router = useRouter();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
@@ -63,15 +63,14 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   ) => {
     switch (buttonText) {
       case '모집 완료할끼니?':
-        // alert
+        // To Do: alert 띄우기 by 승준
         updateFoodPartyStatus('모집 종료');
         return;
       case '식사를 완료했끼니?':
-        // alert
+        // To Do: alert 띄우기 by 승준
         updateFoodPartyStatus('식사 완료');
         return;
       case '참여할 끼니?':
-        // To Do: 신청서 드로어 띄우기 by 동우, 승준
         onOpenApplicationDrawer();
         return;
       default:
@@ -126,7 +125,6 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           />
         </Flex>
       ) : (
-        // To Do: 스타일링 필요 by 승준
         <GoHomeWhenErrorInvoked />
       )}
     </>

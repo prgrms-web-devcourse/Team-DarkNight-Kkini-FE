@@ -1,5 +1,6 @@
 import { Flex, Heading } from '@chakra-ui/react';
 import { QueryClient } from '@tanstack/react-query';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
@@ -33,7 +34,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
 
   return (
     <>
-      {isSuccess && (
+      {isSuccess ? (
         <Flex flexDirection='column' padding='1rem'>
           <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
           <FoodPartyList
@@ -41,6 +42,8 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
             onClickViewButton={handleClickFoodPartyItem}
           />
         </Flex>
+      ) : (
+        <GoHomeWhenErrorInvoked />
       )}
     </>
   );
