@@ -16,7 +16,7 @@ const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 type FoodPartyListItemProps = {
   party: FoodParty;
   onClickViewButton: (partyId: number) => void;
-  onClickReviewButton: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number) => void;
 };
 
 const FoodPartyListItem = ({
@@ -60,7 +60,7 @@ const FoodPartyListItem = ({
           {party.status === '식사 완료' && (
             <Button
               onClick={() => {
-                onClickReviewButton(party.id);
+                onClickReviewButton && onClickReviewButton(party.id);
               }}>
               Review
             </Button>

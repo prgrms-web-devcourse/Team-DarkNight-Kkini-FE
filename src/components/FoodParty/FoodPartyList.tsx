@@ -6,7 +6,7 @@ import FoodPartyListItem from './FoodPartyListItem';
 type FoodPartyListProps = {
   foodPartyList: FoodParty[];
   onClickViewButton: (partyId: number) => void;
-  onClickReviewButton: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number) => void;
 };
 
 const FoodPartyList = ({

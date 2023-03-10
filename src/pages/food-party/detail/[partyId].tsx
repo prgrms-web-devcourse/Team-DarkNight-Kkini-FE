@@ -18,6 +18,7 @@ import { fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 // To Do: 404 처리 by 승준
 // partyId로 조회하는 페이지
@@ -46,7 +47,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     switch (buttonText) {
       case '모집 완료할끼니?':
         // alert
-        updateFoodPartyStatus('모집 완료');
+        updateFoodPartyStatus('모집 종료');
         return;
       case '식사를 완료했끼니?':
         // alert
@@ -61,8 +62,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   };
 
   const handleClickChatButton = () => {
-    // router;
-    console.log('chat button');
+    router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.CHAT(partyId));
   };
 
   return (
@@ -128,7 +128,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       partyId,
-      storeId: '1',
       dehydratedState: dehydrate(queryClient),
     },
   };

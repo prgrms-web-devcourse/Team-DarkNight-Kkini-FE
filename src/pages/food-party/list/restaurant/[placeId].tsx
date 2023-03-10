@@ -25,7 +25,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
   } = useGetSearchedFoodPartyList(placeId);
   const router = useRouter();
   const handleClickFoodPartyItem = (partyId: number) => {
-    router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
+    router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(partyId));
   };
 
   if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
@@ -38,7 +38,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
           <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
           <FoodPartyList
             foodPartyList={foodPartyList}
-            onClick={handleClickFoodPartyItem}
+            onClickViewButton={handleClickFoodPartyItem}
           />
         </Flex>
       )}
