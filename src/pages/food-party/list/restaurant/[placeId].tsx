@@ -3,32 +3,52 @@ import { QueryClient } from '@tanstack/react-query';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { fetchFoodPartyList } from 'services/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 type SearchedFoodPartyListQuery = {
   placeId: string;
-  page: number;
-  size: number;
+  name: string;
 };
 
 type SearchedFoodPartyListProps = SearchedFoodPartyListQuery;
 
-const SearchedFoodPartyList = ({ placeId, page, size }: SearchedFoodPartyListProps) => {
-  const { data } = useGetSearchedFoodPartyList(placeId);
+const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) => {
+  const {
+    data: foodPartyList,
+    isLoading,
+    error,
+    isSuccess,
+  } = useGetSearchedFoodPartyList(placeId);
+  const router = useRouter();
+  const handleClickFoodPartyItem = (partyId: number) => {
+    router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.toString()}</div>;
 
   return (
-    <Flex flexDirection='column' padding='1rem'>
-      <Heading paddingBottom='1rem'>00 맛집의 밥모임 목록</Heading>
-      {/* <FoodPartyList foodPartyList={} onClick={} /> */}
-    </Flex>
+    <>
+      {isSuccess && (
+        <Flex flexDirection='column' padding='1rem'>
+          <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
+          <FoodPartyList
+            foodPartyList={foodPartyList}
+            onClick={handleClickFoodPartyItem}
+          />
+        </Flex>
+      )}
+    </>
   );
 };
 
 export default SearchedFoodPartyList;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { placeId } = context.query;
+  const { placeId, name } = context.query;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.SEARCHED_FOOD_PARTY_LIST, placeId],
@@ -38,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       placeId,
+      name,
     },
   };
 };
