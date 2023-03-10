@@ -1,28 +1,15 @@
-import { Button, keyframes } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { BiPlus } from 'react-icons/bi';
+import { bottomToTopAnimationKeyframes } from 'styles/animations';
 
 type ZoomInButtonProps = {
   onClick: () => void;
 };
 
-const animationKeyframes = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-`;
-
-const animation = `${animationKeyframes} 0.5s`;
-
 const ZoomInButton = ({ onClick }: ZoomInButtonProps) => {
   return (
     <Button
-      animation={animation}
+      animation={`${bottomToTopAnimationKeyframes} 0.5s`}
       backgroundColor='white'
       zIndex={10}
       onClick={onClick}

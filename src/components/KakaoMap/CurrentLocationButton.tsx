@@ -1,29 +1,16 @@
-import { Button, keyframes } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { BiTargetLock } from 'react-icons/bi';
+import { bottomToTopAnimationKeyframes } from 'styles/animations';
 
 type CurrentLocationButtonProps = {
   isLoading: boolean;
   onClick: () => void;
 };
 
-const animationKeyframes = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-`;
-
-const animation = `${animationKeyframes} 0.5s`;
-
 const CurrentLocationButton = ({ isLoading, onClick }: CurrentLocationButtonProps) => {
   return (
     <Button
-      animation={animation}
+      animation={`${bottomToTopAnimationKeyframes} 0.5s`}
       isLoading={isLoading}
       backgroundColor='white'
       zIndex={10}
