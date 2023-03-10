@@ -17,9 +17,8 @@ const FoodPartyList = ({
   return (
     <>
       {!foodPartyList.length ? (
-        <Text>
-          아직 밥모임에 참여해보신 적이 없으시군요, 직접 밥모임을 생성해볼까요!?
-        </Text>
+        // To Do: 스타일링 by 승준
+        <Text>밥모임이 없어요..!</Text>
       ) : (
         <Flex flexDirection='column'>
           {foodPartyList?.map((party) => (
