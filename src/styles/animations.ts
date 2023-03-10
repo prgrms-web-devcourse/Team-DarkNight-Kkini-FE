@@ -1,9 +1,9 @@
 import { keyframes } from '@emotion/react';
 
-export const bottomToTopAnimationKeyframes = keyframes`
+const bottomToTopAnimationKeyframes = keyframes`
   from {
     opacity: 0;
-    transform: translateY(15%);
+    transform: translateY(30%);
   }
 
   to {
@@ -11,3 +11,5 @@ export const bottomToTopAnimationKeyframes = keyframes`
     transform: translateY(0%);
   }
 `;
+
+export const bottomToTopAnimation = `${bottomToTopAnimationKeyframes} 0.5s`;
