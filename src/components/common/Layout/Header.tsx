@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonCircle } from '@chakra-ui/react';
+import { Skeleton } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import LoginButton from 'components/Login/LoginButton';
 import dynamic from 'next/dynamic';
@@ -9,9 +9,13 @@ import { isCheckingRefreshTokenState, isLoginState } from 'stores/auth';
 import { LoginModal } from 'types/modal';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
+const HeaderSkeleton = () => {
+  return <Skeleton width='4rem' height='1.75rem' />;
+};
+
 const DynamicUserProfile = dynamic(() => import('../UserProfile'), {
   ssr: false,
-  loading: () => <SkeletonCircle />,
+  loading: () => <HeaderSkeleton />,
 });
 
 const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
@@ -36,7 +40,7 @@ const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
           <LoginButton isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
         )
       ) : (
-        <Skeleton width='4rem' height='1.75rem' />
+        <HeaderSkeleton />
       )}
     </Container>
   );
