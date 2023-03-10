@@ -1,6 +1,7 @@
 import { Flex, Heading } from '@chakra-ui/react';
 import { QueryClient } from '@tanstack/react-query';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
+import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -27,7 +28,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
   if (error) return <div>{error.toString()}</div>;
 
   return (
