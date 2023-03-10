@@ -8,17 +8,15 @@ export const getKeywordPhotos = async (
   keyword: string,
   count: number
 ) => {
-  const data = await axios
-    .get<AxiosPhotoResponseValue>(URL, {
-      params: {
-        query: `${address_name.split(' ')[2]} ${keyword}`,
-        size: count,
-      },
-      headers: {
-        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_SEARCH_API_KEY}`,
-      },
-    })
-    .then((response) => response.data);
+  const { data } = await axios.get<AxiosPhotoResponseValue>(URL, {
+    params: {
+      query: `${address_name.split(' ')[2]} ${keyword}`,
+      size: count,
+    },
+    headers: {
+      Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_SEARCH_API_KEY}`,
+    },
+  });
 
   return data;
 };
