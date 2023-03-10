@@ -30,7 +30,6 @@ const FoodPartyApplicationDrawer = ({
 }: FoodPartyApplicationDrawerProps) => {
   const { register, handleSubmit } = useForm<FormType>();
   const onSubmit = (data: FormType) => {
-    /**Todo: 신청서 Submit 동작 */
     onClickSubmitButton(data.text, {
       onSuccess: () => {
         onClose();

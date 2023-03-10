@@ -50,7 +50,6 @@ export const checkButtonTextIsDisabled = (
   );
 };
 
-// getFoodPartyDetailChangeStatusButtonText, checkButtonTextIsDisabled에 사용되는 상수들
 const LeaderText: {
   [key: string]: FoodPartyDetailChangeStatusButtonText;
 } = {

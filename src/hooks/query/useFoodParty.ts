@@ -51,7 +51,7 @@ export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
     isLeader,
     isMember,
     isFull,
-    leaderUserId: leader?.userId,
+    leaderUserId: leader?.userId || -1,
   };
 };
 
