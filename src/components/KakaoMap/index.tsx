@@ -3,6 +3,7 @@ import useKakaoMapContext from 'contexts/kakaoMap';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
 import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomRestaurant';
+import useNearFoodParty from 'hooks/useNearFoodParty';
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
@@ -31,6 +32,9 @@ const KakaoMap = () => {
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
 
+  // 밥모임
+  const { getNearFoodParty } = useNearFoodParty();
+
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
     kakao.maps.load(() => {
@@ -57,6 +61,14 @@ const KakaoMap = () => {
       // 스크롤 줌/아웃 제한
       createdKakaoMap.setMinLevel(DEFAULT_MIN_LEVEL);
       createdKakaoMap.setMaxLevel(DEFAULT_MAX_LEVEL);
+
+      // 밥모임 불러오기
+      // TODO: distance를 zoom level에 따라 다르게 넘겨야함 ** 어떻게 구할지는 찾아보기
+      getNearFoodParty({
+        latitude: lat,
+        longitude: lng,
+        distance: 500,
+      });
 
       currentPositionCustomOverlay.current.setMap(createdKakaoMap);
       setKakaoMap(createdKakaoMap);
