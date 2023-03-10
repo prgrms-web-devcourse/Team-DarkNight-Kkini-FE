@@ -92,7 +92,7 @@ export const useCreateFoodParty = () => {
     mutationFn: createFoodParty,
     onSuccess: (data) => {
       const partyId = data.id;
-      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
+      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(partyId));
       toast({
         title: '밥모임이 생성되었습니다!',
         description: '생성된 밥모임 정보를 확인하세요',
