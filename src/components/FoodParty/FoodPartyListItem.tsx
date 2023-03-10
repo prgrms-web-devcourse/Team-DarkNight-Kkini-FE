@@ -56,7 +56,7 @@ const FoodPartyListItem = ({
             <Avatar key={member.userId} src={member.profileImgUrl} />
           ))}
         </AvatarGroup>
-        <Flex alignItems='center'>
+        <Flex alignItems='center' gap='0.5rem'>
           {party.status === '식사 완료' && (
             <Button
               onClick={() => {
