@@ -110,6 +110,21 @@ export const postFoodPartyMemberReview = async (
   return response;
 };
 
+export const createFoodPartyApplication = async (
+  partyId: string,
+  content: string,
+  leaderUserId: number
+): Promise<{ id: number }> => {
+  const response = await axiosAuthApi.post<{ id: number }>(
+    `/api/v1/crews/${partyId}/proposals`,
+    {
+      leaderId: leaderUserId,
+      content,
+    }
+  );
+  return response.data;
+};
+
 export const updateFoodPartyStatus = async (partyId: string, status: FoodPartyStatus) => {
   await axiosAuthApi.patch(`/api/v1/crews/${partyId}`, {
     crewStatus: status,

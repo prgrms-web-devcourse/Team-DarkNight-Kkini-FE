@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import {
   createFoodParty,
+  createFoodPartyApplication,
   fetchFoodPartyDetail,
   fetchFoodPartyList,
   fetchFoodPartyReviewees,
@@ -41,12 +42,16 @@ export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
       memberUserId === userId && crewMemberRole === 'MEMBER'
   );
   const isFull = result.data?.currentMember === result.data?.capacity;
+  const leader = result.data?.members.find(
+    (member) => member.crewMemberRole === 'LEADER'
+  );
 
   return {
     ...result,
     isLeader,
     isMember,
     isFull,
+    leaderUserId: leader?.userId,
   };
 };
 
@@ -121,6 +126,24 @@ export const usePostMemberReview = (crewId: string) => {
         isClosable: true,
       });
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId]);
+    },
+  });
+};
+
+export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: number) => {
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: (content: string) =>
+      createFoodPartyApplication(partyId, content, leaderUserId),
+    onSuccess: () => {
+      toast({
+        title: '신청서가 제출되었습니다.',
+        position: 'top',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };

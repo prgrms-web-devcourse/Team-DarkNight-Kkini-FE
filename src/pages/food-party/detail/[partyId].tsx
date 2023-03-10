@@ -1,6 +1,7 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
+import FoodPartyApplicationDrawer from 'components/FoodParty/FoodPartyApplicationDrawer';
 import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
 import FoodPartyDetailContent from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailContent';
 import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailHeader';
@@ -8,13 +9,14 @@ import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPa
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import {
+  useCreateFoodPartyApplication,
   useGetFoodPartyDetail,
   useUpdateFoodPartyStatus,
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { fetchFoodPartyDetail } from 'services/foodParty';
+import { createFoodPartyApplication, fetchFoodPartyDetail } from 'services/foodParty';
 import { fetchUser } from 'services/user';
 import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
@@ -32,10 +34,25 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isLeader,
     isMember,
     isFull,
+    leaderUserId,
     error,
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
   const { mutate: updateFoodPartyStatus } = useUpdateFoodPartyStatus(partyId);
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { mutate: createFoodPartyApplication } = useCreateFoodPartyApplication(
+    partyId,
+    leaderUserId || -1
+  );
+  const {
+    isOpen: isOpenRestaurantBottomDrawer,
+    onClose: onCloseRestaurantBottomDrawer,
+    onOpen: onOpenRestaurantBottomDrawer,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenApplicationDrawer,
+    onClose: onCloseApplicationDrawer,
+    onOpen: onOpenApplicationDrawer,
+  } = useDisclosure();
+
   const router = useRouter();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
@@ -55,6 +72,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
         return;
       case '참여할 끼니?':
         // To Do: 신청서 드로어 띄우기 by 동우, 승준
+        onOpenApplicationDrawer();
         return;
       default:
         return;
@@ -82,7 +100,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           <FoodPartyDetailContent
             promiseTime={foodPartyDetail.promiseTime}
             content={foodPartyDetail.content}
-            onClick={onOpen}
+            onClick={onOpenRestaurantBottomDrawer}
           />
           <FoodPartyMemberList
             onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
@@ -97,9 +115,14 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             status={foodPartyDetail.status}
           />
           <RestaurantBottomDrawer
-            isOpen={isOpen}
-            onClose={onClose}
+            isOpen={isOpenRestaurantBottomDrawer}
+            onClose={onCloseRestaurantBottomDrawer}
             restaurant={foodPartyDetail.response}
+          />
+          <FoodPartyApplicationDrawer
+            isOpen={isOpenApplicationDrawer}
+            onClose={onCloseApplicationDrawer}
+            onClickSubmitButton={createFoodPartyApplication}
           />
         </Flex>
       ) : (
