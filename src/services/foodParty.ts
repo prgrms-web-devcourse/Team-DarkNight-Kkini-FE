@@ -111,8 +111,5 @@ export const postFoodPartyMemberReview = async (
 };
 
 export const updateFoodPartyStatus = async (partyId: string, status: FoodPartyStatus) => {
-  await axiosAuthApi.patch('/api/v1/crews', {
-    crewId: partyId,
-    status,
-  });
+  await axiosAuthApi.patch(`/api/v1/crews/${partyId}/close`);
 };
