@@ -14,6 +14,8 @@ export const getPhotoUrlsString = (photoUrls: string[]) => {
 };
 
 export const getPhotoUrlsArray = (photoUrls: string) => {
+  if (!photoUrls) return [];
+
   return photoUrls.split(',');
 };
 

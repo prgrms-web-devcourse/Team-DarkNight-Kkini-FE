@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { selectedRestaurantState } from 'stores/Restaurant';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
+import { getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
 type SearchedFoodPartyListQuery = {
   placeId: string;
@@ -47,7 +48,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
       placeName,
       categories,
       roadAddressName,
-      photoUrls: photoUrls?.split(',') || [],
+      photoUrls: getPhotoUrlsArray(photoUrls || ''),
       kakaoPlaceUrl,
       phoneNumber,
       longitude,
