@@ -73,3 +73,16 @@ export type FoodPartyLeaderReviewBody = {
   mannerScore: number;
   tasteScore: number;
 };
+
+export type NearFoodPartyItem = {
+  latitude: number;
+  longitude: number;
+  storeId: number;
+  placeName: string;
+};
+
+export type NearFoodPartyProps = {
+  latitude: number;
+  longitude: number;
+  distance: number;
+};

@@ -1,34 +1,20 @@
-import { axiosApi } from 'apis/axios';
+import { useDisclosure } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import { useEffect, useState } from 'react';
+import { fetchNearFoodPartyList } from 'services/foodParty';
+import { fetchRestaurantDetail } from 'services/restaurant';
+import { NearFoodPartyItem, NearFoodPartyProps } from 'types/foodParty';
+import { Restaurant } from 'types/restaurant';
+import { getElement } from 'utils/helpers/elementHandler';
 import { getUniqueRestaurant } from 'utils/helpers/foodParty';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
-
-export type NearFoodPartyItem = {
-  latitude: number;
-  longitude: number;
-  storeId: number;
-  placeName: string;
-};
-
-type NearFoodPartyProps = {
-  latitude: number;
-  longitude: number;
-  distance: number;
-};
-
-type NearFoodPartyResponse = {
-  data: {
-    responses: NearFoodPartyItem[];
-  };
-};
 
 const FOOD_PARTY_BADGE_IMAGE_FILE_PATH = 'images/rice.png';
 
 const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
   return `
 		<div 
-			id="food-party-overlay-container-${placeName}" 
+			id="food-party-overlay-container-${storeId}" 
 			style="
 				display: flex;
 				flex-direction: column; 
@@ -36,22 +22,21 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 			">
 			<img 
 				src=${FOOD_PARTY_BADGE_IMAGE_FILE_PATH}
-				alt=${placeName}의 밥모임
+				alt=${placeName}의밥모임
 				style="
-					width:40px; 
+					width: 40px; 
 					height: 40px; 
 				"
 			/>
 			<div 
-			style="
-				font-size: 0.7rem; 
-				background-color: #61605E;
-				opacity: 80%;
-				border-radius: 0.25rem;  
-				color: white; 
-				font-weight: 600;
-				padding: 0.2rem;
-				
+				style="
+					font-size: 0.7rem; 
+					background-color: #61605E;
+					opacity: 80%;
+					border-radius: 0.25rem;  
+					color: white; 
+					font-weight: 600;
+					padding: 0.2rem;
 			">${placeName}</div>
 		</div>
 	`;
@@ -63,28 +48,18 @@ const useNearFoodParty = () => {
   const [foodPartyOverlay, setFoodPartyOverlay] = useState<kakao.maps.CustomOverlay[]>(
     []
   );
+  const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
+  const nearFoodPartyDrawerController = useDisclosure();
 
-  const getNearFoodParty = async ({
-    latitude,
-    longitude,
-    distance,
-  }: NearFoodPartyProps) => {
-    const params = {
-      latitude,
-      longitude,
-      distance,
-    };
-
-    const {
-      data: {
-        data: { responses },
-      },
-    } = await axiosApi.get<NearFoodPartyResponse>('/api/v1/crews', {
-      params,
-    });
-
-    const uniqueRestaurant = getUniqueRestaurant(responses);
+  const getNearFoodParty = async (props: NearFoodPartyProps) => {
+    const nearFoodParty = await fetchNearFoodPartyList({ ...props });
+    const uniqueRestaurant = getUniqueRestaurant(nearFoodParty);
     setNearFoodParty(uniqueRestaurant);
+  };
+
+  const handleOnClickRestaurant = async (storeId: number) => {
+    const restaurant = await fetchRestaurantDetail(storeId);
+    setClickedRestaurant(restaurant);
   };
 
   useEffect(() => {
@@ -105,18 +80,39 @@ const useNearFoodParty = () => {
         });
         const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
         overlay.setMap(kakaoMap);
+
+        getElement(`#food-party-overlay-container-${storeId}`)?.addEventListener(
+          'click',
+          () => {
+            handleOnClickRestaurant(storeId);
+          }
+        );
+
         return overlay;
       }
     );
 
     setFoodPartyOverlay(newFoodPartyOverlayList);
     console.log(`draw food party`);
+
+    return () => {
+      if (nearFoodParty.length) {
+        nearFoodParty.forEach(({ storeId }) =>
+          getElement(`#food-party-overlay-container-${storeId}`)?.removeEventListener(
+            'click',
+            () => handleOnClickRestaurant
+          )
+        );
+      }
+    };
   }, [nearFoodParty]);
 
   return {
     nearFoodParty,
     setNearFoodParty,
     getNearFoodParty,
+    nearFoodPartyDrawerController,
+    clickedRestaurant,
   };
 };
 

@@ -1,4 +1,4 @@
-import { axiosAuthApi } from 'apis/axios';
+import { axiosApi, axiosAuthApi } from 'apis/axios';
 import { AxiosResponse } from 'axios';
 import {
   FoodParty,
@@ -8,6 +8,8 @@ import {
   FoodPartyMemberReviewBody,
   FoodPartyRevieweeType,
   FoodPartyStatus,
+  NearFoodPartyItem,
+  NearFoodPartyProps,
 } from 'types/foodParty';
 
 type responseBodyType = {
@@ -34,6 +36,12 @@ type FetchFoodPartyListResponse = {
 
 type FetchFoodPartyRevieweeResponse = {
   data: FoodPartyRevieweeType[];
+};
+
+type NearFoodPartyResponse = {
+  data: {
+    responses: NearFoodPartyItem[];
+  };
 };
 
 export const createFoodParty = async (
@@ -129,4 +137,20 @@ export const updateFoodPartyStatus = async (partyId: string, status: FoodPartySt
   await axiosAuthApi.patch(`/api/v1/crews/${partyId}`, {
     crewStatus: status,
   });
+};
+
+export const fetchNearFoodPartyList = async ({
+  latitude,
+  longitude,
+  distance,
+}: NearFoodPartyProps) => {
+  const {
+    data: {
+      data: { responses },
+    },
+  } = await axiosApi.get<NearFoodPartyResponse>('/api/v1/crews', {
+    params: { latitude, longitude, distance },
+  });
+
+  return responses;
 };
