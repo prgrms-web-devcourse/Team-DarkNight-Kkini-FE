@@ -37,7 +37,7 @@ const FoodPartyDetailStatusButton = ({
 
   return (
     <>
-      {buttonText !== '' && (
+      {buttonText && (
         <Button
           onClick={() => {
             onClick(buttonText);

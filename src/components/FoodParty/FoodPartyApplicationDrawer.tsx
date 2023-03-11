@@ -1,6 +1,5 @@
 import { Flex, FormControl, FormLabel, Text, Textarea } from '@chakra-ui/react';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Image from 'next/image';
