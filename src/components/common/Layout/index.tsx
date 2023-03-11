@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, Flex, useDisclosure } from '@chakra-ui/react';
+import { Box, ChakraProvider, Flex } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
 import Header from 'components/common/Layout/Header';
 import Navigation from 'components/common/Layout/Navigation';
@@ -26,8 +26,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
     })();
   }, []);
 
-  const { isOpen, onOpen, onClose } = useDisclosure(); // 로그인 모달
-
   return (
     <ChakraProvider resetCSS theme={theme}>
       <Global styles={globalStyle} />
@@ -36,13 +34,13 @@ const Layout = ({ children }: { children: ReactNode }) => {
         id='app'
         className={BaseFont.className}
         overflowY='hidden'>
-        <Header isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+        <Header />
         {/* To Do: 스크롤바 스타일링 필요 by 승준 */}
         <Box as='main' flex={1} pos='relative' overflowY='auto'>
           {children}
           <CreateCommunityDrawer />
         </Box>
-        <Navigation isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+        <Navigation />
       </Flex>
     </ChakraProvider>
   );

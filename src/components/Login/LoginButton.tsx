@@ -4,28 +4,31 @@ import Button from 'components/common/Button';
 import GoogleButton from 'components/Login/OAuth/GoogleButton';
 import KakaoButton from 'components/Login/OAuth/KakaoButton';
 import Image from 'next/image';
-import { LoginModal } from 'types/modal';
+import { useRecoilState } from 'recoil';
+import { loginDrawerOpenState } from 'stores/drawer';
 
-const LoginButton = ({ isOpen, onClose, onOpen }: LoginModal) => {
+const LoginButton = () => {
+  const [loginDrawerOpen, setLoginDrawerOpen] = useRecoilState(loginDrawerOpenState);
+
   return (
     <>
       <Button
-        onClick={onOpen}
+        onClick={() => setLoginDrawerOpen(true)}
         width='4rem'
         height='2.5rem'
         style={{ backgroundColor: '#F6BB43' }}>
         로그인
       </Button>
       <BottomDrawer
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={loginDrawerOpen}
+        onClose={() => setLoginDrawerOpen(false)}
         header={
           <Flex justifyContent='space-between'>
             <Text fontSize='1.5rem'>로그인</Text>
             <Image
               src='/images/delete-btn.svg'
               alt='modal-close-button'
-              onClick={onClose}
+              onClick={() => setLoginDrawerOpen(false)}
               width='25'
               height='25'
             />

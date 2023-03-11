@@ -5,21 +5,22 @@ import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { isDrawerOpenedState } from 'stores/drawer';
-import { LoginModal } from 'types/modal';
+import { loginDrawerOpenState } from 'stores/drawer';
 import { NavigationButtonProps } from 'types/navigation';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
-const Navigation = ({ onOpen }: LoginModal) => {
+const Navigation = () => {
   const [isDrawerOpened, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
+  const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
   const isLogin = useRecoilValue(isLoginState);
   const router = useRouter();
 
   const checkLoginUser = () => {
     if (!isLogin) {
-      onOpen();
+      setLoginDrawerOpen(true);
     }
     return isLogin;
   };

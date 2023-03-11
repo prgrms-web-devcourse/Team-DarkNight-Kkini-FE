@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { isCheckingRefreshTokenState, isLoginState } from 'stores/auth';
-import { LoginModal } from 'types/modal';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const ProfileSkeleton = () => {
@@ -23,7 +22,7 @@ const DynamicUserProfile = dynamic(() => import('../UserProfile'), {
   loading: () => <ProfileSkeleton />,
 });
 
-const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
+const Header = () => {
   const isLogin = useRecoilValue(isLoginState);
   const isCheckingRefreshToken = useRecoilValue(isCheckingRefreshTokenState);
 
@@ -42,7 +41,7 @@ const Header = ({ isOpen, onClose, onOpen }: LoginModal) => {
         isLogin ? (
           <DynamicUserProfile />
         ) : (
-          <LoginButton isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+          <LoginButton />
         )
       ) : (
         <ProfileSkeleton />
