@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { BiMinus } from 'react-icons/bi';
+import { bottomToTopAnimation } from 'styles/animations';
 
 type ZoomOutButtonProps = {
   onClick: () => void;
@@ -8,6 +9,7 @@ type ZoomOutButtonProps = {
 const ZoomOutButton = ({ onClick }: ZoomOutButtonProps) => {
   return (
     <Button
+      animation={bottomToTopAnimation}
       backgroundColor='white'
       zIndex={10}
       onClick={onClick}

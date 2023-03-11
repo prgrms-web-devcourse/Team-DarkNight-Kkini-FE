@@ -1,9 +1,21 @@
-import { Button } from '@chakra-ui/react';
+import { Button, keyframes } from '@chakra-ui/react';
 
 type RecommendRandomRestaurantButtonProps = {
   isLoading: boolean;
   onClick: () => void;
 };
+
+const bottomToTopAnimationKeyframes = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0%);
+  }
+`;
 
 const RecommendRandomRestaurantButton = ({
   isLoading,
@@ -11,6 +23,7 @@ const RecommendRandomRestaurantButton = ({
 }: RecommendRandomRestaurantButtonProps) => {
   return (
     <Button
+      animation={`${bottomToTopAnimationKeyframes} 0.5s`}
       position='absolute'
       bottom='1.5rem'
       left='50%'
