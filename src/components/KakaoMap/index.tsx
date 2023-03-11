@@ -33,7 +33,8 @@ const KakaoMap = () => {
     useRecommendRandomRestaurant();
 
   // 밥모임
-  const { getNearFoodParty } = useNearFoodParty();
+  const { getNearFoodParty, clickedRestaurant, nearFoodPartyDrawerController } =
+    useNearFoodParty();
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
@@ -166,6 +167,12 @@ const KakaoMap = () => {
     };
   }, [kakaoMap, onOpen, randomRestaurant]);
 
+  useEffect(() => {
+    if (!kakaoMap || !clickedRestaurant) return;
+
+    nearFoodPartyDrawerController.onOpen();
+  }, [kakaoMap, clickedRestaurant]);
+
   return (
     <Box position='relative' width='100%' height='100%'>
       <div
@@ -189,12 +196,20 @@ const KakaoMap = () => {
           recommendRandomRestaurant();
         }}
       />
+      {/* TODO: 아래 drawer 하나로 합치기 by 수화 */}
       <RestaurantBottomDrawer
         isOpen={isOpen}
         onClose={onClose}
         onClickJoinButton={handleClickJoinToFoodPartyButton}
         restaurant={randomRestaurant}
       />
+      {clickedRestaurant && (
+        <RestaurantBottomDrawer
+          isOpen={nearFoodPartyDrawerController.isOpen}
+          onClose={nearFoodPartyDrawerController.onClose}
+          restaurant={clickedRestaurant}
+        />
+      )}
     </Box>
   );
 };
