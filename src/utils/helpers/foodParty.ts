@@ -43,6 +43,7 @@ export const getFoodPartyDetailStatusButtonText = (
   if (isMember) return MemberText[status];
 
   // 참여하지 않은 경우
+  if (applied === '거절') return '거절 당했어요...';
   if (applied === '대기 중') return '수락 대기 중';
   if (isFull) return '인원이 꽉 차버렸끼니!';
   return NotMemberText[status];
@@ -54,7 +55,8 @@ export const checkButtonTextIsDisabled = (
   return (
     buttonText === '인원이 꽉 차버렸끼니!' ||
     buttonText === '모집이 완료되버렸끼니!' ||
-    buttonText === '수락 대기 중'
+    buttonText === '수락 대기 중' ||
+    buttonText === '거절 당했어요...'
   );
 };
 
