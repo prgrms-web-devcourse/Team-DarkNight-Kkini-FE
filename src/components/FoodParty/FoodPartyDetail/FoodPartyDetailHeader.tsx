@@ -1,8 +1,11 @@
 import { Divider, Flex, Heading, Stack } from '@chakra-ui/react';
 import Category from 'components/common/Category';
+import { FoodPartyStatus } from 'types/foodParty';
+
+import FoodPartyDetailStatusCategory from './FoodPartyDetailStatusCategory';
 
 type FoodPartyDetailHeaderProps = {
-  status: string;
+  status: FoodPartyStatus;
   category: string;
   foodPartyName: string;
 };
@@ -15,7 +18,7 @@ const FoodPartyDetailHeader = ({
   return (
     <Flex flexDirection='column' gap='0.5rem'>
       <Stack direction='row'>
-        <Category>{status}</Category>
+        <FoodPartyDetailStatusCategory status={status} />
         <Category>{category}</Category>
       </Stack>
       <Heading as='h1'>{foodPartyName}</Heading>
