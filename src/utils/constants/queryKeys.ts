@@ -1,6 +1,7 @@
 const QUERY_KEYS = {
   USER: {
     MY_INFO: 'myInfo',
+    USER_INFO: 'userInfo',
   },
   FOOD_PARTY: {
     MY_FOOD_PARTY_LIST: 'myFoodPartyList',

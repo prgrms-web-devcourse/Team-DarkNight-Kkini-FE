@@ -17,3 +17,8 @@ export const fetchUser = async () => {
   const { data } = await axiosAuthApi.get<MyProfileType>('/api/v1/user/me');
   return data.data;
 };
+
+export const fetchSpecificUser = async (userId: string) => {
+  const { data } = await axiosAuthApi.get<MyProfileType>(`api/v1/user/${userId}`);
+  return data.data;
+};
