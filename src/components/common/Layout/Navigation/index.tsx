@@ -41,7 +41,7 @@ const Navigation = () => {
     if (!checkLoginUser()) {
       return;
     }
-
+    isDrawerOpened && setIsDrawerOpened(false);
     router.push(ROUTING_PATHS.FOOD_PARTY.LIST.MY);
   };
 
