@@ -5,6 +5,7 @@ import React, { ReactNode } from 'react';
 type Props = {
   width?: string;
   height?: string;
+  disabled?: boolean;
   style?: FlexProps;
   children?: ReactNode;
   type?: string;
@@ -24,6 +25,7 @@ const Button = ({
       justify='center'
       w={width}
       h={height}
+      disabled={props.disabled}
       borderRadius='8px'
       onClick={onClick}
       type={props.type}
