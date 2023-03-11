@@ -1,9 +1,12 @@
 import { Flex, Text } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
+import { usePostLeaderReview } from 'hooks/query/useFoodParty';
 import Image from 'next/image';
 import { useState } from 'react';
+import { postFoodPartyLeaderReview } from 'services/foodParty';
 
+import { usePostMemberReview } from '../../../hooks/query/useFoodParty';
 import LeaderRadioGroup from './LeaderRadioGroup';
 import MemberRadioGroup from './MemberRadioGroup';
 type ReviewBottomDrawerType = {
@@ -12,6 +15,8 @@ type ReviewBottomDrawerType = {
   /** 유저 정보를 넘겨준다.  */
   selectedUserRole: string;
   selectedUserName: string;
+  selectedUserId: number;
+  partyId: string;
 };
 
 const ReviewBottomDrawer = ({
@@ -19,12 +24,34 @@ const ReviewBottomDrawer = ({
   onClose,
   selectedUserRole,
   selectedUserName,
+  selectedUserId,
+  partyId,
 }: ReviewBottomDrawerType) => {
   /**ToDo. tasteScore, mannerScore body에 담아 Post 요청하기 */
   const [tasteScore, setTasteScore] = useState(0);
   const [mannerScore, setMannerScore] = useState(0);
-  const handleClickReviewButton = () => {};
+  const { mutate: mutateLeader, isSuccess: isSuccessMutateLeader } =
+    usePostLeaderReview(partyId);
+  const { mutate: mutateMember, isSuccess: isSuccessMutateMember } =
+    usePostMemberReview(partyId);
+  const handleClickReviewButton = () => {
+    const leaderBody = {
+      leaderId: selectedUserId,
+      content: '',
+      mannerScore,
+      tasteScore,
+    };
+    const memberBody = {
+      revieweeId: selectedUserId,
+      content: '',
+      mannerScore,
+    };
+    selectedUserRole === 'LEADER'
+      ? mutateLeader({ crewId: partyId, body: leaderBody })
+      : mutateMember({ crewId: partyId, body: memberBody });
+  };
 
+  if (isSuccessMutateLeader || isSuccessMutateMember) onClose();
   return (
     <BottomDrawer
       isOpen={isOpen}
