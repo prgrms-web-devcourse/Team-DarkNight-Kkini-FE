@@ -4,15 +4,13 @@ import Button from 'components/common/Button';
 import { usePostLeaderReview } from 'hooks/query/useFoodParty';
 import Image from 'next/image';
 import { useState } from 'react';
-import { postFoodPartyLeaderReview } from 'services/foodParty';
 
 import { usePostMemberReview } from '../../../hooks/query/useFoodParty';
-import LeaderRadioGroup from './LeaderRadioGroup';
-import MemberRadioGroup from './MemberRadioGroup';
+import LeaderReviewList from './LeaderReviewList';
+import MemberReviewList from './MemberReviewList';
 type ReviewBottomDrawerType = {
   isOpen: boolean;
   onClose: () => void;
-  /** 유저 정보를 넘겨준다.  */
   selectedUserRole: string;
   selectedUserName: string;
   selectedUserId: number;
@@ -70,8 +68,8 @@ const ReviewBottomDrawer = ({
       }
       body={
         <Flex direction='column' gap='0.5rem'>
-          {selectedUserRole === 'LEADER' && <LeaderRadioGroup setScore={setTasteScore} />}
-          <MemberRadioGroup setScore={setMannerScore} />
+          {selectedUserRole === 'LEADER' && <LeaderReviewList setScore={setTasteScore} />}
+          <MemberReviewList setScore={setMannerScore} />
           <Button
             onClick={handleClickReviewButton}
             style={{
