@@ -6,16 +6,24 @@ import CreateCommunityDrawer from 'components/DraggableDrawer/CreateCommunityDra
 import { ReactNode, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { silentLogin } from 'services/auth';
-import { isLoginState } from 'stores/auth';
+import { isCheckingRefreshTokenState, isLoginState } from 'stores/auth';
 import theme from 'styles/chakraTheme';
 import { BaseFont } from 'styles/fonts';
 import globalStyle from 'styles/global';
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const setLoginState = useSetRecoilState(isLoginState);
+  const setIsCheckingRefreshToken = useSetRecoilState(isCheckingRefreshTokenState);
 
   useEffect(() => {
-    silentLogin().then((res) => res && setLoginState(true));
+    (async () => {
+      try {
+        const token = await silentLogin();
+        token && setLoginState(true);
+      } finally {
+        setIsCheckingRefreshToken(true);
+      }
+    })();
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure(); // 로그인 모달
