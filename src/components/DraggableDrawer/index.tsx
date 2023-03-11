@@ -1,11 +1,11 @@
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import React, { ReactNode } from 'react';
+import { useDrawer } from 'hooks/useDrawer';
+import { useWindowHeight } from 'hooks/useWindowHeight';
+import { ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 
-import { useDrawer } from '../../hooks/useDrawer';
-import { useWindowHeight } from '../../hooks/useWindowHeight';
 import DrawerHeader from './DrawerHeader';
 
 type DraggableDrawerProps = {

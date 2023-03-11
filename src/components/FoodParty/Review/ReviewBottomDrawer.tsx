@@ -2,10 +2,10 @@ import { Flex, Text } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import { usePostLeaderReview } from 'hooks/query/useFoodParty';
+import { usePostMemberReview } from 'hooks/query/useFoodParty';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { usePostMemberReview } from '../../../hooks/query/useFoodParty';
 import LeaderReviewList from './LeaderReviewList';
 import MemberReviewList from './MemberReviewList';
 
