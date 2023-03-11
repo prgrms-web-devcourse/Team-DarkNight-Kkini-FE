@@ -7,7 +7,7 @@ import { ReactNode, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { silentLogin } from 'services/auth';
 import { isCheckingRefreshTokenState, isLoginState } from 'stores/auth';
-import theme from 'styles/chakra-theme';
+import theme from 'styles/chakraTheme';
 import { BaseFont } from 'styles/fonts';
 import globalStyle from 'styles/global';
 
