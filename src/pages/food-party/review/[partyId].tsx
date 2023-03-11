@@ -32,7 +32,7 @@ const FoodPartyReviewPage = () => {
   };
 
   const handleClickGoBackToList = () => {
-    router.push('/food-party/list/restaurant/my');
+    router.push('/food-party/list/my');
   };
 
   return (
