@@ -1,4 +1,8 @@
-import { FoodPartyDetailStatusButtonText, FoodPartyStatus } from 'types/foodParty';
+import {
+  FoodPartyDetailStatusButtonText,
+  FoodPartyStatus,
+  ProposalStatus,
+} from 'types/foodParty';
 import { DocumentsType } from 'types/kakaoSearch';
 
 export const getPhotoUrlsStringFromDocuments = (documents: DocumentsType[]) => {
@@ -26,6 +30,7 @@ export const templatePromiseTime = (hour: number, minute: number) => {
 };
 
 export const getFoodPartyDetailStatusButtonText = (
+  applied: ProposalStatus,
   isLeader: boolean,
   isMember: boolean,
   isFull: boolean,
@@ -38,6 +43,7 @@ export const getFoodPartyDetailStatusButtonText = (
   if (isMember) return MemberText[status];
 
   // 참여하지 않은 경우
+  if (applied === '대기 중') return '수락 대기 중';
   if (isFull) return '인원이 꽉 차버렸끼니!';
   return NotMemberText[status];
 };
@@ -46,7 +52,9 @@ export const checkButtonTextIsDisabled = (
   buttonText: FoodPartyDetailStatusButtonText
 ) => {
   return (
-    buttonText === '인원이 꽉 차버렸끼니!' || buttonText === '모집이 완료되버렸끼니!'
+    buttonText === '인원이 꽉 차버렸끼니!' ||
+    buttonText === '모집이 완료되버렸끼니!' ||
+    buttonText === '수락 대기 중'
   );
 };
 

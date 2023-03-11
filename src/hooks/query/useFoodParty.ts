@@ -131,12 +131,14 @@ export const usePostMemberReview = (crewId: string) => {
 };
 
 export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: number) => {
+  const queryClient = useQueryClient();
   const toast = useToast();
 
   return useMutation({
     mutationFn: (content: string) =>
       createFoodPartyApplication(partyId, content, leaderUserId),
     onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
       toast({
         title: '신청서가 제출되었습니다.',
         position: 'top',

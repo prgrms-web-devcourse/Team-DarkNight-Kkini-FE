@@ -103,6 +103,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             capacity={foodPartyDetail.capacity}
           />
           <FoodPartyDetailStatusButton
+            applied={foodPartyDetail.proposalStatus}
             isLeader={isLeader}
             isMember={isMember}
             isFull={isFull}
