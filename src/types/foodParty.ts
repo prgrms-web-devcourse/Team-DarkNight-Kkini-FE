@@ -24,6 +24,15 @@ export type Member = {
   crewMemberRole: CrewMemberRole;
 };
 
+export type Message = {
+  userId: number;
+  username: string;
+  profileImgUrl: string;
+  type: string;
+  createdAt: string;
+  content: string;
+};
+
 export type FoodParty = {
   id: number;
   name: string;

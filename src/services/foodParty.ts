@@ -8,6 +8,7 @@ import {
   FoodPartyMemberReviewBody,
   FoodPartyRevieweeType,
   FoodPartyStatus,
+  Message,
   NearFoodPartyItem,
   NearFoodPartyProps,
 } from 'types/foodParty';
@@ -41,6 +42,14 @@ type FetchFoodPartyRevieweeResponse = {
 type NearFoodPartyResponse = {
   data: {
     responses: NearFoodPartyItem[];
+  };
+};
+
+type FetchFoodPartyMessageList = {
+  data: {
+    chats: {
+      content: Message[];
+    };
   };
 };
 
@@ -94,6 +103,18 @@ export const fetchFoodPartyReviewees = async (partyId: string) => {
   );
 
   return foodPartyReviewees;
+};
+
+export const fetchFoodPartyMessageList = async (roomId: string) => {
+  const {
+    data: {
+      data: {
+        chats: { content: messageList },
+      },
+    },
+  } = await axiosAuthApi<FetchFoodPartyMessageList>(`/api/v1/crews/${roomId}/chats`);
+
+  return messageList;
 };
 
 export const postFoodPartyLeaderReview = async (
