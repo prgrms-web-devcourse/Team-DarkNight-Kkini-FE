@@ -11,15 +11,21 @@ import Category from 'components/common/Category';
 import { FoodParty } from 'types/foodParty';
 import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
 
+import FoodPartyDetailStatusCategory from './FoodPartyDetail/FoodPartyDetailStatusCategory';
+
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
+
+type FoodPartyListItemProps = {
+  party: FoodParty;
+  onClickViewButton: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number) => void;
+};
 
 const FoodPartyListItem = ({
   party,
-  onClick,
-}: {
-  party: FoodParty;
-  onClick: (partyId: number) => void;
-}) => {
+  onClickViewButton,
+  onClickReviewButton,
+}: FoodPartyListItemProps) => {
   const [year, month, day, hour, minute] = party.promiseTime;
 
   return (
@@ -32,7 +38,7 @@ const FoodPartyListItem = ({
       marginBottom='1rem'>
       <Flex flexDirection='column' gap='0.5rem'>
         <Stack direction='row'>
-          <Category>{party.status}</Category>
+          <FoodPartyDetailStatusCategory status={party.crewStatus} />
           <Category>{party.category}</Category>
         </Stack>
         <Text>{party.name}</Text>
@@ -52,12 +58,22 @@ const FoodPartyListItem = ({
             <Avatar key={member.userId} src={member.profileImgUrl} />
           ))}
         </AvatarGroup>
-        <Button
-          onClick={() => {
-            onClick(party.id);
-          }}>
-          View
-        </Button>
+        <Flex alignItems='center' gap='0.5rem'>
+          {party.crewStatus === '식사 완료' && (
+            <Button
+              onClick={() => {
+                onClickReviewButton && onClickReviewButton(party.id);
+              }}>
+              Review
+            </Button>
+          )}
+          <Button
+            onClick={() => {
+              onClickViewButton(party.id);
+            }}>
+            View
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   );

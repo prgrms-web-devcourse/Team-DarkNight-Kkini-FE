@@ -3,7 +3,19 @@ import { Restaurant } from './restaurant';
 
 type CrewMemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
 
-export type FoodPartyStatus = '모집 중' | '모집 완료' | '식사 완료';
+export type ProposalStatus = '미신청' | '대기 중' | '승인' | '거절';
+
+export type FoodPartyStatus = '모집 중' | '모집 종료' | '식사 완료';
+
+export type FoodPartyDetailStatusButtonText =
+  | '모집 완료할끼니?'
+  | '식사를 완료했끼니?'
+  | '참여할 끼니?'
+  | '모집이 완료되버렸끼니!'
+  | '인원이 꽉 차버렸끼니!'
+  | '수락 대기 중'
+  | '거절 당했어요...'
+  | '';
 
 export type Member = {
   userId: number;
@@ -18,10 +30,11 @@ export type FoodParty = {
   currentMember: number;
   capacity: number;
   promiseTime: number[];
-  status: FoodPartyStatus;
+  crewStatus: FoodPartyStatus;
   content: string;
   category: string;
   members: Member[];
+  proposalStatus: ProposalStatus;
 };
 
 export type FoodPartyDetail = { response: Restaurant } & FoodParty;

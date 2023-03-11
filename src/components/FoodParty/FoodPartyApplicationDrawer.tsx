@@ -1,4 +1,5 @@
 import { Flex, FormControl, FormLabel, Text, Textarea } from '@chakra-ui/react';
+import { UseMutateFunction } from '@tanstack/react-query';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Image from 'next/image';
@@ -7,7 +8,14 @@ import { useForm } from 'react-hook-form';
 type FoodPartyApplicationDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
-  onClickSubmitButton: () => void;
+  onClickSubmitButton: UseMutateFunction<
+    {
+      id: number;
+    },
+    unknown,
+    string,
+    unknown
+  >;
 };
 
 type FormType = {
@@ -21,7 +29,11 @@ const FoodPartyApplicationDrawer = ({
 }: FoodPartyApplicationDrawerProps) => {
   const { register, handleSubmit } = useForm<FormType>();
   const onSubmit = (data: FormType) => {
-    /**Todo: 신청서 Submit 동작 */
+    onClickSubmitButton(data.text, {
+      onSuccess: () => {
+        onClose();
+      },
+    });
   };
 
   return (
@@ -53,7 +65,7 @@ const FoodPartyApplicationDrawer = ({
           />
           <Button
             type='submit'
-            onClick={onClickSubmitButton}
+            onClick={handleSubmit(onSubmit)}
             style={{
               background: 'primary',
               marginTop: '1rem',

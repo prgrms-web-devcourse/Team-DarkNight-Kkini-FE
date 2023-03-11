@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import {
   createFoodParty,
+  createFoodPartyApplication,
   fetchFoodPartyDetail,
   fetchFoodPartyList,
   fetchFoodPartyReviewees,
@@ -10,29 +11,15 @@ import {
   postFoodPartyLeaderReview,
   postFoodPartyMemberReview,
 } from 'services/foodParty';
-import { FoodPartyLeaderReviewBody, FoodPartyMemberReviewBody } from 'types/foodParty';
+import {
+  FoodPartyLeaderReviewBody,
+  FoodPartyMemberReviewBody,
+  FoodPartyStatus,
+} from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
-export const useCreateFoodParty = () => {
-  const router = useRouter();
-  const toast = useToast();
-  return useMutation({
-    mutationFn: createFoodParty,
-    onSuccess: (data) => {
-      const partyId = data.id;
-      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL(partyId));
-      toast({
-        title: '밥모임이 생성되었습니다!',
-        description: '생성된 밥모임 정보를 확인하세요',
-        position: 'top',
-        status: 'success',
-        duration: 2000,
-        isClosable: true,
-      });
-    },
-  });
-};
+import { updateFoodPartyStatus } from './../../services/foodParty';
 
 export const useGetMyFoodPartyList = () => {
   return useQuery({
@@ -55,12 +42,16 @@ export const useGetFoodPartyDetail = (partyId: string, userId?: number) => {
       memberUserId === userId && crewMemberRole === 'MEMBER'
   );
   const isFull = result.data?.currentMember === result.data?.capacity;
+  const leader = result.data?.members.find(
+    (member) => member.crewMemberRole === 'LEADER'
+  );
 
   return {
     ...result,
     isLeader,
     isMember,
     isFull,
+    leaderUserId: leader?.userId || -1,
   };
 };
 
@@ -98,6 +89,27 @@ export const usePostLeaderReview = (crewId: string) => {
   });
 };
 
+export const useCreateFoodParty = () => {
+  const router = useRouter();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: createFoodParty,
+    onSuccess: (data) => {
+      const partyId = data.id;
+      router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(partyId));
+      toast({
+        title: '밥모임이 생성되었습니다!',
+        description: '생성된 밥모임 정보를 확인하세요',
+        position: 'top',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
 export const usePostMemberReview = (crewId: string) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -114,6 +126,41 @@ export const usePostMemberReview = (crewId: string) => {
         isClosable: true,
       });
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId]);
+    },
+  });
+};
+
+export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: number) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: (content: string) =>
+      createFoodPartyApplication(partyId, content, leaderUserId),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+      toast({
+        title: '신청서가 제출되었습니다.',
+        position: 'top',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
+export const useUpdateFoodPartyStatus = (partyId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (status: FoodPartyStatus) => updateFoodPartyStatus(partyId, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
+      // To Do: 배포 전에 지우기 by 승준
+      console.error(error);
     },
   });
 };

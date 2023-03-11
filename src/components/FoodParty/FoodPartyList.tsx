@@ -1,24 +1,47 @@
-import { Flex, Text } from '@chakra-ui/react';
-import { FoodParty, FoodPartyStatus } from 'types/foodParty';
+import { Button, Flex, Text } from '@chakra-ui/react';
+import { FoodParty } from 'types/foodParty';
 
 import FoodPartyListItem from './FoodPartyListItem';
 
 type FoodPartyListProps = {
   foodPartyList: FoodParty[];
-  onClick: (partyId: number) => void;
+  onClickViewButton: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number) => void;
+  onClickCreateFoodPartyButton?: () => void;
 };
 
-const FoodPartyList = ({ foodPartyList, onClick }: FoodPartyListProps) => {
+const FoodPartyList = ({
+  foodPartyList,
+  onClickViewButton,
+  onClickReviewButton,
+  onClickCreateFoodPartyButton,
+}: FoodPartyListProps) => {
   return (
     <>
       {!foodPartyList.length ? (
-        <Text>
-          아직 밥모임에 참여해보신 적이 없으시군요, 직접 밥모임을 생성해볼까요!?
-        </Text>
+        // To Do: 스타일링 by 승준
+        <Flex
+          flexDirection='column'
+          position='absolute'
+          alignItems='center'
+          gap='1rem'
+          top='50%'
+          left='50%'
+          transform='translate(-50%, -50%)'>
+          <Text>밥모임이 없어요..!</Text>
+          {onClickCreateFoodPartyButton && (
+            <Button onClick={onClickCreateFoodPartyButton}>밥모임 생성하러 가기</Button>
+          )}
+        </Flex>
       ) : (
         <Flex flexDirection='column'>
           {foodPartyList?.map((party) => (
-            <FoodPartyListItem key={party.id} party={party} onClick={onClick} />
+            <FoodPartyListItem
+              key={party.id}
+              party={party}
+              onClickViewButton={onClickViewButton}
+              onClickReviewButton={onClickReviewButton}
+            />
           ))}
         </Flex>
       )}
