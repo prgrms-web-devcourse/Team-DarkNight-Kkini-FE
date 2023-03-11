@@ -10,6 +10,7 @@ import {
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import Category from 'components/common/Category';
 import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
+import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import { useGetFoodPartyDetail } from 'hooks/query/useFoodParty';
@@ -37,7 +38,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   } = useGetFoodPartyDetail(partyId, userInformation?.id);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <div>{error.toString()}</div>;
 
   // To Do: Date 등 따로 컴포넌트를 빼자.
