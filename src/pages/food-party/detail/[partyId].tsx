@@ -1,5 +1,4 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyApplicationDrawer from 'components/FoodParty/FoodPartyApplicationDrawer';
 import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
@@ -16,10 +15,7 @@ import {
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { fetchFoodPartyDetail } from 'services/foodParty';
-import { fetchUser } from 'services/user';
 import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
-import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 // To Do: 404 처리 by 승준
@@ -133,23 +129,13 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 
 export default FoodPartyDetail;
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { partyId } = context.query;
-
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEYS.USER.MY_INFO],
-    queryFn: () => fetchUser(),
-  });
-  await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId],
-    queryFn: () => fetchFoodPartyDetail(partyId as string),
-  });
 
   return {
     props: {
       partyId,
-      dehydratedState: dehydrate(queryClient),
     },
   };
 };

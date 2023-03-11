@@ -1,13 +1,10 @@
 import { Flex, Heading } from '@chakra-ui/react';
-import { QueryClient } from '@tanstack/react-query';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { fetchFoodPartyList } from 'services/foodParty';
-import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 type SearchedFoodPartyListQuery = {
@@ -51,13 +48,9 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
 
 export default SearchedFoodPartyList;
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { placeId, name } = context.query;
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEYS.FOOD_PARTY.SEARCHED_FOOD_PARTY_LIST, placeId],
-    queryFn: () => fetchFoodPartyList(placeId as string),
-  });
 
   return {
     props: {
