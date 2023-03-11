@@ -20,7 +20,7 @@ type NearFoodPartyResponse = {
   };
 };
 
-const FOOD_PARTY_BADGE_IMAGE_FILE_PATH = '/foodPartyLogo.gif';
+const FOOD_PARTY_BADGE_IMAGE_FILE_PATH = 'images/rice.png';
 
 const useNearFoodParty = () => {
   const { kakaoMap, setKakaoMap } = useKakaoMapContext();
@@ -59,7 +59,7 @@ const useNearFoodParty = () => {
     const newFoodPartyMarkerList = nearFoodParty.map(({ latitude, longitude }) => {
       const markerImage = new kakao.maps.MarkerImage(
         FOOD_PARTY_BADGE_IMAGE_FILE_PATH,
-        new kakao.maps.Size(200, 270)
+        new kakao.maps.Size(40, 45)
       );
       const marker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(latitude, longitude),
@@ -70,6 +70,7 @@ const useNearFoodParty = () => {
     });
 
     setFoodPartyMarker(newFoodPartyMarkerList);
+    console.log(`draw food party`);
   }, [nearFoodParty]);
 
   return {

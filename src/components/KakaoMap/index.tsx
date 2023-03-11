@@ -63,11 +63,15 @@ const KakaoMap = () => {
       createdKakaoMap.setMaxLevel(DEFAULT_MAX_LEVEL);
 
       // 밥모임 불러오기
-      // TODO: distance를 zoom level에 따라 다르게 넘겨야함 ** 어떻게 구할지는 찾아보기
+      const { centerLongitude, northLongitude } =
+        kakaoMapHelpers.getLongitude(createdKakaoMap);
       getNearFoodParty({
         latitude: lat,
         longitude: lng,
-        distance: 500,
+        distance: kakaoMapHelpers.getDistanceFromLongitude(
+          centerLongitude,
+          northLongitude
+        ),
       });
 
       currentPositionCustomOverlay.current.setMap(createdKakaoMap);
@@ -85,6 +89,19 @@ const KakaoMap = () => {
           ...previousKakaoMapOptions,
           level: kakaoMapHelpers.getLevel(kakaoMap),
         }));
+        const { centerLongitude, northLongitude } =
+          kakaoMapHelpers.getLongitude(kakaoMap);
+        const distance = kakaoMapHelpers.getDistanceFromLongitude(
+          centerLongitude,
+          northLongitude
+        );
+        const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
+        getNearFoodParty({
+          latitude,
+          longitude,
+          distance,
+        });
+        console.log(`zoom change`);
       });
 
       kakaoMapAddEventListener(kakaoMap, 'center_changed', () => {
@@ -110,6 +127,21 @@ const KakaoMap = () => {
           </div>`
         );
         currentPositionCustomOverlay.current.setMap(kakaoMap);
+      });
+
+      kakaoMapAddEventListener(kakaoMap, 'dragend', () => {
+        const { centerLongitude, northLongitude } =
+          kakaoMapHelpers.getLongitude(kakaoMap);
+        const distance = kakaoMapHelpers.getDistanceFromLongitude(
+          centerLongitude,
+          northLongitude
+        );
+        const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
+        getNearFoodParty({
+          latitude,
+          longitude,
+          distance,
+        });
       });
     });
   }, [kakaoMap, setKakaoMapOptions]);
