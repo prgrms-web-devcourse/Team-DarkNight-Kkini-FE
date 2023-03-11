@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { usePostMemberReview } from '../../../hooks/query/useFoodParty';
 import LeaderReviewList from './LeaderReviewList';
 import MemberReviewList from './MemberReviewList';
+
 type ReviewBottomDrawerType = {
   isOpen: boolean;
   onClose: () => void;
@@ -25,7 +26,6 @@ const ReviewBottomDrawer = ({
   selectedUserId,
   partyId,
 }: ReviewBottomDrawerType) => {
-  /**ToDo. tasteScore, mannerScore body에 담아 Post 요청하기 */
   const [tasteScore, setTasteScore] = useState(0);
   const [mannerScore, setMannerScore] = useState(0);
   const { mutate: mutateLeader, isSuccess: isSuccessMutateLeader } =
