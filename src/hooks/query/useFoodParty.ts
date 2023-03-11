@@ -1,12 +1,16 @@
 import { useToast } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import {
   createFoodParty,
   fetchFoodPartyDetail,
   fetchFoodPartyList,
+  fetchFoodPartyReviewees,
   fetchMyFoodPartyList,
+  postFoodPartyLeaderReview,
+  postFoodPartyMemberReview,
 } from 'services/foodParty';
+import { FoodPartyLeaderReviewBody, FoodPartyMemberReviewBody } from 'types/foodParty';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
@@ -64,5 +68,52 @@ export const useGetSearchedFoodPartyList = (placeId: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.SEARCHED_FOOD_PARTY_LIST, placeId],
     queryFn: () => fetchFoodPartyList(placeId),
+  });
+};
+
+export const useGetFoodPartyReviewees = (crewId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId],
+    queryFn: () => fetchFoodPartyReviewees(crewId),
+  });
+};
+
+export const usePostLeaderReview = (crewId: string) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  return useMutation({
+    mutationFn: ({ crewId, body }: { crewId: string; body: FoodPartyLeaderReviewBody }) =>
+      postFoodPartyLeaderReview(crewId, body),
+    onSuccess: () => {
+      toast({
+        title: '방장 리뷰가 작성되었습니다',
+        description: '작성해주셔서 감사합니다',
+        position: 'bottom',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId]);
+    },
+  });
+};
+
+export const usePostMemberReview = (crewId: string) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  return useMutation({
+    mutationFn: ({ crewId, body }: { crewId: string; body: FoodPartyMemberReviewBody }) =>
+      postFoodPartyMemberReview(crewId, body),
+    onSuccess: () => {
+      toast({
+        title: '멤버 리뷰가 작성되었습니다',
+        description: '작성해주셔서 감사합니다',
+        position: 'bottom',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_REVIEWEES, crewId]);
+    },
   });
 };

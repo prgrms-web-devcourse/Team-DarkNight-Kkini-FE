@@ -1,5 +1,13 @@
 import { axiosAuthApi } from 'apis/axios';
-import { FoodParty, FoodPartyCreateBody, FoodPartyDetail } from 'types/foodParty';
+import { AxiosResponse } from 'axios';
+import {
+  FoodParty,
+  FoodPartyCreateBody,
+  FoodPartyDetail,
+  FoodPartyLeaderReviewBody,
+  FoodPartyMemberReviewBody,
+  FoodPartyRevieweeType,
+} from 'types/foodParty';
 
 type responseBodyType = {
   id: number;
@@ -21,6 +29,10 @@ type FetchFoodPartyListResponse = {
       content: FoodParty[];
     };
   };
+};
+
+type FetchFoodPartyRevieweeResponse = {
+  data: FoodPartyRevieweeType[];
 };
 
 export const createFoodParty = async (
@@ -63,4 +75,36 @@ export const fetchFoodPartyList = async (placeId: string) => {
   });
 
   return foodPartyList;
+};
+
+export const fetchFoodPartyReviewees = async (partyId: string) => {
+  const {
+    data: { data: foodPartyReviewees },
+  } = await axiosAuthApi<FetchFoodPartyRevieweeResponse>(
+    `api/v1/crews/${partyId}/reviews`
+  );
+
+  return foodPartyReviewees;
+};
+
+export const postFoodPartyLeaderReview = async (
+  crewId: string,
+  body: FoodPartyLeaderReviewBody
+): Promise<AxiosResponse> => {
+  const response = await axiosAuthApi.post<AxiosResponse>(
+    `/api/v1/crews/${crewId}/reviews/leader`,
+    body
+  );
+  return response;
+};
+
+export const postFoodPartyMemberReview = async (
+  crewId: string,
+  body: FoodPartyMemberReviewBody
+) => {
+  const response = await axiosAuthApi.post(
+    `/api/v1/crews/${crewId}/reviews/member`,
+    body
+  );
+  return response;
 };

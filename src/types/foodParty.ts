@@ -39,3 +39,24 @@ export type FoodPartyCreateBody = {
     photoUrls: string;
   } & RestaurantType;
 } & PartyFormType;
+
+export type FoodPartyRevieweeType = {
+  userId: number;
+  nickname: string;
+  profileImgUrl: string;
+  crewMemberRole: string;
+  isReviewed: boolean;
+};
+
+export type FoodPartyMemberReviewBody = {
+  revieweeId: number;
+  content: string;
+  mannerScore: number;
+};
+
+export type FoodPartyLeaderReviewBody = {
+  leaderId: number;
+  content: string;
+  mannerScore: number;
+  tasteScore: number;
+};
