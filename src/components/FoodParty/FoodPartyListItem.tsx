@@ -36,7 +36,7 @@ const FoodPartyListItem = ({
       marginBottom='1rem'>
       <Flex flexDirection='column' gap='0.5rem'>
         <Stack direction='row'>
-          <Category>{party.status}</Category>
+          <Category>{party.crewStatus}</Category>
           <Category>{party.category}</Category>
         </Stack>
         <Text>{party.name}</Text>
@@ -57,7 +57,7 @@ const FoodPartyListItem = ({
           ))}
         </AvatarGroup>
         <Flex alignItems='center' gap='0.5rem'>
-          {party.status === '식사 완료' && (
+          {party.crewStatus === '식사 완료' && (
             <Button
               onClick={() => {
                 onClickReviewButton && onClickReviewButton(party.id);

@@ -26,7 +26,7 @@ export type FoodParty = {
   currentMember: number;
   capacity: number;
   promiseTime: number[];
-  status: FoodPartyStatus;
+  crewStatus: FoodPartyStatus;
   content: string;
   category: string;
   members: Member[];

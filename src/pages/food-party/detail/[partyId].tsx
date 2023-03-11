@@ -88,7 +88,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           padding='1rem'
           gap='0.5rem'>
           <FoodPartyDetailHeader
-            status={foodPartyDetail.status}
+            status={foodPartyDetail.crewStatus}
             category={foodPartyDetail.category}
             foodPartyName={foodPartyDetail.name}
           />
@@ -107,7 +107,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             isMember={isMember}
             isFull={isFull}
             onClick={handleClickFoodPartyDetailChangeStatusButton}
-            status={foodPartyDetail.status}
+            status={foodPartyDetail.crewStatus}
           />
           <RestaurantBottomDrawer
             isOpen={isOpenRestaurantBottomDrawer}
