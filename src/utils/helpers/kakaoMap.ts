@@ -67,7 +67,9 @@ export const kakaoMapHelpers = {
       northLongitude,
     };
   },
-  getDistanceFromLongitude: (centerLongitude: number, northLongitude: number) => {
+  getDistanceFromLongitude: (kakaoMap: kakao.maps.Map) => {
+    const { centerLongitude, northLongitude } = kakaoMapHelpers.getLongitude(kakaoMap);
+
     // 한국기준, 0.01도 = 800m
     const LONGITUDE = {
       DEGREE: 0.01,

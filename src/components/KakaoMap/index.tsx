@@ -63,15 +63,10 @@ const KakaoMap = () => {
       createdKakaoMap.setMaxLevel(DEFAULT_MAX_LEVEL);
 
       // 밥모임 불러오기
-      const { centerLongitude, northLongitude } =
-        kakaoMapHelpers.getLongitude(createdKakaoMap);
       getNearFoodParty({
         latitude: lat,
         longitude: lng,
-        distance: kakaoMapHelpers.getDistanceFromLongitude(
-          centerLongitude,
-          northLongitude
-        ),
+        distance: kakaoMapHelpers.getDistanceFromLongitude(createdKakaoMap),
       });
 
       currentPositionCustomOverlay.current.setMap(createdKakaoMap);
@@ -89,12 +84,8 @@ const KakaoMap = () => {
           ...previousKakaoMapOptions,
           level: kakaoMapHelpers.getLevel(kakaoMap),
         }));
-        const { centerLongitude, northLongitude } =
-          kakaoMapHelpers.getLongitude(kakaoMap);
-        const distance = kakaoMapHelpers.getDistanceFromLongitude(
-          centerLongitude,
-          northLongitude
-        );
+
+        const distance = kakaoMapHelpers.getDistanceFromLongitude(kakaoMap);
         const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
         getNearFoodParty({
           latitude,
@@ -130,12 +121,7 @@ const KakaoMap = () => {
       });
 
       kakaoMapAddEventListener(kakaoMap, 'dragend', () => {
-        const { centerLongitude, northLongitude } =
-          kakaoMapHelpers.getLongitude(kakaoMap);
-        const distance = kakaoMapHelpers.getDistanceFromLongitude(
-          centerLongitude,
-          northLongitude
-        );
+        const distance = kakaoMapHelpers.getDistanceFromLongitude(kakaoMap);
         const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
         getNearFoodParty({
           latitude,
