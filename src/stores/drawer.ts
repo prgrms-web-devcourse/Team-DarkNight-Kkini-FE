@@ -9,3 +9,13 @@ export const loginDrawerOpenState = atom<boolean>({
   key: 'loginDrawerOpen',
   default: false,
 });
+
+export const restaurantDrawerOpenState = atom<boolean>({
+  key: 'restaurantOpen',
+  default: false,
+});
+
+export const randomRestaurantDrawerOpenState = atom<boolean>({
+  key: 'randomRestaurantOpen',
+  default: false,
+});

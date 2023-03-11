@@ -7,8 +7,8 @@ import { BsMap } from 'react-icons/bs';
 import { CgCommunity } from 'react-icons/cg';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
-import { isDrawerOpenedState } from 'stores/drawer';
 import { loginDrawerOpenState } from 'stores/drawer';
+import { isDrawerOpenedState } from 'stores/drawer';
 import { NavigationButtonProps } from 'types/navigation';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 

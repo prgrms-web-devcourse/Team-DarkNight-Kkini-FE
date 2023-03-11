@@ -1,4 +1,4 @@
-import { Box, useDisclosure, VStack } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
@@ -6,6 +6,10 @@ import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomResta
 import useNearFoodParty from 'hooks/useNearFoodParty';
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
+import {
+  randomRestaurantDrawerOpenState,
+  restaurantDrawerOpenState,
+} from 'stores/drawer';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import { DEFAULT_MAX_LEVEL, DEFAULT_MIN_LEVEL } from 'utils/constants/kakaoMap';
 import { getElement } from 'utils/helpers/elementHandler';
@@ -28,13 +32,17 @@ const KakaoMap = () => {
   const currentPositionCustomOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
 
   // 랜덤 맛집 드로어
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [randomRestaurantDrawerOpen, setRandomRestaurantDrawerOpen] = useRecoilState(
+    randomRestaurantDrawerOpenState
+  );
   const { recommendRandomRestaurant, recommendRandomRestaurantIsLoading } =
     useRecommendRandomRestaurant();
 
   // 밥모임
-  const { getNearFoodParty, clickedRestaurant, nearFoodPartyDrawerController } =
-    useNearFoodParty();
+  const { getNearFoodParty, clickedRestaurant } = useNearFoodParty();
+  const [restaurantDrawerOpen, setRestaurantDrawerOpen] = useRecoilState(
+    restaurantDrawerOpenState
+  );
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
@@ -144,7 +152,7 @@ const KakaoMap = () => {
       '#random-restaurant-custom-overlay-container'
     );
     const handleClickRandomRestaurantCustomOverlay = () => {
-      onOpen();
+      setRandomRestaurantDrawerOpen(true);
       kakaoMapHelpers.panto({
         kakaoMap,
         latitude: randomRestaurant.customOverlay?.getPosition().getLat(),
@@ -165,12 +173,12 @@ const KakaoMap = () => {
         );
       }
     };
-  }, [kakaoMap, onOpen, randomRestaurant]);
+  }, [kakaoMap, randomRestaurant]);
 
   useEffect(() => {
     if (!kakaoMap || !clickedRestaurant) return;
 
-    nearFoodPartyDrawerController.onOpen();
+    setRestaurantDrawerOpen(true);
   }, [kakaoMap, clickedRestaurant]);
 
   return (
@@ -198,16 +206,17 @@ const KakaoMap = () => {
       />
       {/* TODO: 아래 drawer 하나로 합치기 by 수화 */}
       <RestaurantBottomDrawer
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={randomRestaurantDrawerOpen}
+        onClose={() => setRandomRestaurantDrawerOpen(false)}
         onClickJoinButton={handleClickJoinToFoodPartyButton}
         restaurant={randomRestaurant}
       />
       {clickedRestaurant && (
         <RestaurantBottomDrawer
-          isOpen={nearFoodPartyDrawerController.isOpen}
-          onClose={nearFoodPartyDrawerController.onClose}
+          isOpen={restaurantDrawerOpen}
+          onClose={() => setRestaurantDrawerOpen(false)}
           restaurant={clickedRestaurant}
+          onClickJoinButton={() => {}}
         />
       )}
     </Box>

@@ -49,7 +49,6 @@ const useNearFoodParty = () => {
     []
   );
   const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
-  const nearFoodPartyDrawerController = useDisclosure();
 
   const getNearFoodParty = async (props: NearFoodPartyProps) => {
     const nearFoodParty = await fetchNearFoodPartyList({ ...props });
@@ -111,7 +110,6 @@ const useNearFoodParty = () => {
     nearFoodParty,
     setNearFoodParty,
     getNearFoodParty,
-    nearFoodPartyDrawerController,
     clickedRestaurant,
   };
 };
