@@ -1,26 +1,26 @@
 import { Button } from '@chakra-ui/react';
-import { FoodPartyDetailChangeStatusButtonText, FoodPartyStatus } from 'types/foodParty';
+import { FoodPartyDetailStatusButtonText, FoodPartyStatus } from 'types/foodParty';
 import {
   checkButtonTextIsDisabled,
-  getFoodPartyDetailChangeStatusButtonText,
+  getFoodPartyDetailStatusButtonText,
 } from 'utils/helpers/foodParty';
 
-type FoodPartyDetailChangeStatusButtonProps = {
+type FoodPartyDetailStatusButtonProps = {
   isLeader: boolean;
   isMember: boolean;
   isFull: boolean;
   status: FoodPartyStatus;
-  onClick: (buttonText: FoodPartyDetailChangeStatusButtonText) => void;
+  onClick: (buttonText: FoodPartyDetailStatusButtonText) => void;
 };
 
-const FoodPartyDetailChangeStatusButton = ({
+const FoodPartyDetailStatusButton = ({
   isLeader,
   isMember,
   isFull,
   status,
   onClick,
-}: FoodPartyDetailChangeStatusButtonProps) => {
-  const buttonText = getFoodPartyDetailChangeStatusButtonText(
+}: FoodPartyDetailStatusButtonProps) => {
+  const buttonText = getFoodPartyDetailStatusButtonText(
     isLeader,
     isMember,
     isFull,
@@ -54,4 +54,4 @@ const FoodPartyDetailChangeStatusButton = ({
   );
 };
 
-export default FoodPartyDetailChangeStatusButton;
+export default FoodPartyDetailStatusButton;

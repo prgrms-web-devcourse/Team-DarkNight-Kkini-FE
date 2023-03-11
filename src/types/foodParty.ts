@@ -5,7 +5,7 @@ type CrewMemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
 
 export type FoodPartyStatus = '모집 중' | '모집 종료' | '식사 완료';
 
-export type FoodPartyDetailChangeStatusButtonText =
+export type FoodPartyDetailStatusButtonText =
   | '모집 완료할끼니?'
   | '식사를 완료했끼니?'
   | '참여할 끼니?'

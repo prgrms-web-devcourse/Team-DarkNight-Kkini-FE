@@ -1,4 +1,4 @@
-import { FoodPartyDetailChangeStatusButtonText, FoodPartyStatus } from 'types/foodParty';
+import { FoodPartyDetailStatusButtonText, FoodPartyStatus } from 'types/foodParty';
 import { DocumentsType } from 'types/kakaoSearch';
 
 export const getPhotoUrlsStringFromDocuments = (documents: DocumentsType[]) => {
@@ -25,12 +25,12 @@ export const templatePromiseTime = (hour: number, minute: number) => {
   return `${hour}:${String(minute).padStart(2, '0')}`;
 };
 
-export const getFoodPartyDetailChangeStatusButtonText = (
+export const getFoodPartyDetailStatusButtonText = (
   isLeader: boolean,
   isMember: boolean,
   isFull: boolean,
   status: FoodPartyStatus
-): FoodPartyDetailChangeStatusButtonText => {
+): FoodPartyDetailStatusButtonText => {
   // 방장인 경우
   if (isLeader) return LeaderText[status];
 
@@ -43,7 +43,7 @@ export const getFoodPartyDetailChangeStatusButtonText = (
 };
 
 export const checkButtonTextIsDisabled = (
-  buttonText: FoodPartyDetailChangeStatusButtonText
+  buttonText: FoodPartyDetailStatusButtonText
 ) => {
   return (
     buttonText === '인원이 꽉 차버렸끼니!' || buttonText === '모집이 완료되버렸끼니!'
@@ -51,7 +51,7 @@ export const checkButtonTextIsDisabled = (
 };
 
 const LeaderText: {
-  [key: string]: FoodPartyDetailChangeStatusButtonText;
+  [key: string]: FoodPartyDetailStatusButtonText;
 } = {
   '모집 중': '모집 완료할끼니?',
   '모집 종료': '식사를 완료했끼니?',
@@ -59,7 +59,7 @@ const LeaderText: {
 };
 
 const MemberText: {
-  [key: string]: FoodPartyDetailChangeStatusButtonText;
+  [key: string]: FoodPartyDetailStatusButtonText;
 } = {
   '모집 중': '',
   '모집 종료': '',
@@ -67,7 +67,7 @@ const MemberText: {
 };
 
 const NotMemberText: {
-  [key: string]: FoodPartyDetailChangeStatusButtonText;
+  [key: string]: FoodPartyDetailStatusButtonText;
 } = {
   '모집 중': '참여할 끼니?',
   '모집 종료': '모집이 완료되버렸끼니!',

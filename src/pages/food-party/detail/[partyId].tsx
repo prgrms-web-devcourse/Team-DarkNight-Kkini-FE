@@ -1,10 +1,10 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyApplicationDrawer from 'components/FoodParty/FoodPartyApplicationDrawer';
-import FoodPartyDetailChangeStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailChangeStatusButton';
 import FoodPartyDetailContent from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailContent';
 import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailHeader';
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
+import FoodPartyDetailStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailStatusButton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import {
@@ -15,7 +15,7 @@ import {
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { FoodPartyDetailChangeStatusButtonText } from 'types/foodParty';
+import { FoodPartyDetailStatusButtonText } from 'types/foodParty';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 // To Do: 404 처리 by 승준
@@ -54,8 +54,8 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <div>{error.toString()}</div>;
 
-  const handleClickFoodPartyDetailChangeStatusButton = (
-    buttonText: FoodPartyDetailChangeStatusButtonText
+  const handleClickFoodPartyDetailStatusButton = (
+    buttonText: FoodPartyDetailStatusButtonText
   ) => {
     switch (buttonText) {
       case '모집 완료할끼니?':
@@ -102,11 +102,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             memberList={foodPartyDetail.members}
             capacity={foodPartyDetail.capacity}
           />
-          <FoodPartyDetailChangeStatusButton
+          <FoodPartyDetailStatusButton
             isLeader={isLeader}
             isMember={isMember}
             isFull={isFull}
-            onClick={handleClickFoodPartyDetailChangeStatusButton}
+            onClick={handleClickFoodPartyDetailStatusButton}
             status={foodPartyDetail.crewStatus}
           />
           <RestaurantBottomDrawer
