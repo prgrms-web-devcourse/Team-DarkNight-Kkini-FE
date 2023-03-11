@@ -1,17 +1,21 @@
 import { Flex, Text } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
+import { usePostLeaderReview } from 'hooks/query/useFoodParty';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import LeaderRadioGroup from './LeaderRadioGroup';
-import MemberRadioGroup from './MemberRadioGroup';
+import { usePostMemberReview } from '../../../hooks/query/useFoodParty';
+import LeaderReviewList from './LeaderReviewList';
+import MemberReviewList from './MemberReviewList';
+
 type ReviewBottomDrawerType = {
   isOpen: boolean;
   onClose: () => void;
-  /** 유저 정보를 넘겨준다.  */
   selectedUserRole: string;
   selectedUserName: string;
+  selectedUserId: number;
+  partyId: string;
 };
 
 const ReviewBottomDrawer = ({
@@ -19,12 +23,33 @@ const ReviewBottomDrawer = ({
   onClose,
   selectedUserRole,
   selectedUserName,
+  selectedUserId,
+  partyId,
 }: ReviewBottomDrawerType) => {
-  /**ToDo. tasteScore, mannerScore body에 담아 Post 요청하기 */
   const [tasteScore, setTasteScore] = useState(0);
   const [mannerScore, setMannerScore] = useState(0);
-  const handleClickReviewButton = () => {};
+  const { mutate: mutateLeader, isSuccess: isSuccessMutateLeader } =
+    usePostLeaderReview(partyId);
+  const { mutate: mutateMember, isSuccess: isSuccessMutateMember } =
+    usePostMemberReview(partyId);
+  const handleClickReviewButton = () => {
+    const leaderBody = {
+      leaderId: selectedUserId,
+      content: '',
+      mannerScore,
+      tasteScore,
+    };
+    const memberBody = {
+      revieweeId: selectedUserId,
+      content: '',
+      mannerScore,
+    };
+    selectedUserRole === 'LEADER'
+      ? mutateLeader({ crewId: partyId, body: leaderBody })
+      : mutateMember({ crewId: partyId, body: memberBody });
+  };
 
+  if (isSuccessMutateLeader || isSuccessMutateMember) onClose();
   return (
     <BottomDrawer
       isOpen={isOpen}
@@ -43,8 +68,8 @@ const ReviewBottomDrawer = ({
       }
       body={
         <Flex direction='column' gap='0.5rem'>
-          {selectedUserRole === 'LEADER' && <LeaderRadioGroup setScore={setTasteScore} />}
-          <MemberRadioGroup setScore={setMannerScore} />
+          {selectedUserRole === 'LEADER' && <LeaderReviewList setScore={setTasteScore} />}
+          <MemberReviewList setScore={setMannerScore} />
           <Button
             onClick={handleClickReviewButton}
             style={{

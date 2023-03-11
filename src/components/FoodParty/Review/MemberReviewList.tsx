@@ -8,7 +8,7 @@ type MemberRadioGroupProps = {
   setScore: (value: number) => void;
 };
 
-const MemberRadioGroup = ({ setScore }: MemberRadioGroupProps) => {
+const MemberReviewList = ({ setScore }: MemberRadioGroupProps) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'mannerScore',
     onChange: (value) => setScore(parseInt(value)),
@@ -34,4 +34,4 @@ const MemberRadioGroup = ({ setScore }: MemberRadioGroupProps) => {
   );
 };
 
-export default MemberRadioGroup;
+export default MemberReviewList;

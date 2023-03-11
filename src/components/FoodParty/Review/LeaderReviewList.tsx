@@ -4,11 +4,11 @@ import { foodPartyLeaderReviewState } from 'utils/constants/foodParty';
 
 import ReviewItem from './ReviewItem';
 
-type LeaderRadioGroupProps = {
+type LeaderReviewListProps = {
   setScore: (value: number) => void;
 };
 
-const LeaderRadioGroup = ({ setScore }: LeaderRadioGroupProps) => {
+const LeaderReviewList = ({ setScore }: LeaderReviewListProps) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'leaderTasteScore',
     onChange: (value) => setScore(parseInt(value)),
@@ -35,4 +35,4 @@ const LeaderRadioGroup = ({ setScore }: LeaderRadioGroupProps) => {
   );
 };
 
-export default LeaderRadioGroup;
+export default LeaderReviewList;
