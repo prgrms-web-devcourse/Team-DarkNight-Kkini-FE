@@ -91,7 +91,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       {isSuccessGettingExistingMessageList && isSuccessGettingUserInformation ? (
         <Flex position='relative' flexDirection='column' height='100%'>
           {/* 채팅 리스트 */}
-          <MessageList messageList={messageList} />
+          <MessageList messageList={messageList} currentUserId={userInformation.id} />
           {/* 인풋 창 */}
           <MessageInput ref={messageInputRef} />
         </Flex>
