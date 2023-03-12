@@ -8,7 +8,7 @@ export const useGetUser = () => {
     queryKey: [QUERY_KEYS.USER.MY_INFO],
     queryFn: fetchUser,
     staleTime: 10000,
-    suspense: true,
+    // suspense: true,
     refetchOnWindowFocus: false,
   });
 };
