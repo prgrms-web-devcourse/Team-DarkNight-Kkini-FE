@@ -17,6 +17,7 @@ import { getNumberArrayCreatedAt } from 'utils/helpers/foodParty';
 
 const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   const client = useRef<CompatClient>();
+  const messageListRef = useRef<HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLInputElement>(null);
   const [isLoadingToConnectSocket, setIsLoadingToConnectSocket] = useState(true);
   const [isErrorConnectingSocket, setIsErrorConnectingSocket] = useState(false);
@@ -122,6 +123,12 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     };
   }, []);
 
+  // 스크롤 항상 아래로 유지하기.
+  useEffect(() => {
+    if (!messageListRef.current) return;
+    messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+  });
+
   if (
     isLoadingGettingExistingMessageList ||
     isLoadingGettingUserInformation ||
@@ -144,7 +151,11 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingUserInformation &&
       isSuccessGettingFoodPartyDetail ? (
         <Flex position='relative' flexDirection='column' height='100%'>
-          <MessageList messageList={messageList} currentUserId={userInformation.id} />
+          <MessageList
+            ref={messageListRef}
+            messageList={messageList}
+            currentUserId={userInformation.id}
+          />
           {foodPartyDetail.crewStatus !== '식사 완료' && (
             <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
           )}
