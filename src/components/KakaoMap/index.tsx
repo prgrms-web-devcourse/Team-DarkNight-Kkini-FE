@@ -104,7 +104,6 @@ const KakaoMap = () => {
           longitude,
           distance,
         });
-        console.log(`zoom change`);
       });
 
       kakaoMapAddEventListener(kakaoMap, 'center_changed', () => {

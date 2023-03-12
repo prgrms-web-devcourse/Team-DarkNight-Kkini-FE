@@ -1,4 +1,3 @@
-import { useDisclosure } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import { useEffect, useState } from 'react';
 import { fetchNearFoodPartyList } from 'services/foodParty';
@@ -92,7 +91,6 @@ const useNearFoodParty = () => {
     );
 
     setFoodPartyOverlay(newFoodPartyOverlayList);
-    console.log(`draw food party`);
 
     return () => {
       if (nearFoodParty.length) {
