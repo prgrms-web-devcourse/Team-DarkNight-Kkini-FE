@@ -13,6 +13,7 @@ import { GetServerSideProps } from 'next';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Message, ReceivedMessage } from 'types/foodParty';
+import { sendMessage } from 'utils/helpers/chat';
 import { getNumberArrayCreatedAt } from 'utils/helpers/foodParty';
 
 const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
@@ -50,21 +51,18 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     )
       return;
 
+    // 키보드로 enter를 눌러 메세지를 보낼 때 유효성 검사.
+    // enter 키가 아니거나 shift + enter를 하면 메세지를 보낼 수 없도록 함.
     if (event) {
       if (event.key !== 'Enter' || (event.shiftKey && event.key === 'Enter')) return;
     }
 
-    const sendMessageRequest = {
-      content: messageInputRef.current.value,
-      type: 'CHAT',
+    sendMessage({
+      client: client.current,
+      roomId,
       userId: userInformation.id,
-    };
-
-    client.current.send(
-      `/app/chat.sendMessage/${roomId}`,
-      {},
-      JSON.stringify(sendMessageRequest)
-    );
+      content: messageInputRef.current.value,
+    });
 
     messageInputRef.current.value = '';
   };
@@ -77,6 +75,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   useEffect(() => {
     if (!userInformation) return;
 
+    // 소켓 client 생성
     client.current = Stomp.over(
       () => new SockJS(`${process.env.NEXT_PUBLIC_API_END_POINT}/ws`)
     );
@@ -86,14 +85,14 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     const axiosAuthApiAuthorization =
       axiosAuthApi.defaults.headers.common['Authorization'];
 
-    let subscribe: StompSubscription | undefined;
+    let subscription: StompSubscription | undefined;
     client.current.connect(
       {
         Authorization: axiosAuthApiAuthorization,
       },
-      // 연결 시 다음 callback 함수 실행
+      // 연결 시 + 소켓 서버에서 publish하면 다음 callback 함수 실행
       () => {
-        subscribe = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
+        subscription = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
           const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
 
           if (receivedMessage.type === 'LEAVE' || receivedMessage.type === 'JOIN') return;
@@ -118,7 +117,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
 
     return () => {
       client.current?.disconnect(() => {
-        subscribe?.unsubscribe();
+        subscription?.unsubscribe();
       });
     };
   }, []);

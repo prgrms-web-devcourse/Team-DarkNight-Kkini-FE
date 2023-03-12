@@ -25,7 +25,7 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
         backgroundColor='#f2f2f2'>
         {messageList.map((message) => (
           <MessageListItem
-            key={getUniqueMessageKey(message.createdAt)}
+            key={getUniqueMessageKey(message)}
             message={message}
             currentUserId={currentUserId}
           />
@@ -39,5 +39,7 @@ MessageList.displayName = 'MessageList';
 
 export default MessageList;
 
-const getUniqueMessageKey = (createdAt: number[]) =>
-  createdAt.map((time) => String(time)).join('');
+const getUniqueMessageKey = (message: Message) =>
+  message.createdAt.map((time) => String(time)).join('') +
+  message.content +
+  message.username;
