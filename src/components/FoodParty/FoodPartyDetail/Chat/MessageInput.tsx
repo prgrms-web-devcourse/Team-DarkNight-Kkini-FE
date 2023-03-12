@@ -1,9 +1,9 @@
 import { Box, Flex, Input } from '@chakra-ui/react';
-import { forwardRef } from 'react';
+import { forwardRef, KeyboardEvent } from 'react';
 import { IoIosSend } from 'react-icons/io';
 
 type MessageInputProps = {
-  onSendMessage: () => void;
+  onSendMessage: (event?: KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
@@ -20,7 +20,8 @@ const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
         padding='1rem'>
         <Box position='relative' width='100%'>
           <Input
-            // onKeyDown={}
+            focusBorderColor='primary'
+            onKeyPress={onSendMessage}
             ref={ref}
             fontSize='1rem'
             backgroundColor='subBackground'
@@ -29,7 +30,9 @@ const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
             placeholder='메세지를 입력해주세요.'
           />
           <Flex
-            onClick={onSendMessage}
+            as='button'
+            type='submit'
+            onClick={() => onSendMessage()}
             zIndex={10}
             justifyContent='center'
             alignItems='center'

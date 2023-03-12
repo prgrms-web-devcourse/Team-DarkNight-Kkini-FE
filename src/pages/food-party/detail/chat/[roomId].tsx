@@ -10,7 +10,7 @@ import {
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
-import { useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Message, ReceivedMessage } from 'types/foodParty';
 import { getNumberArrayCreatedAt } from 'utils/helpers/foodParty';
@@ -39,13 +39,13 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     error: errorGettingFoodPartyDetail,
   } = useGetFoodPartyDetail(roomId, userInformation?.id);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (event?: KeyboardEvent<HTMLInputElement>) => {
     if (
       !client.current ||
       !messageInputRef.current ||
       !userInformation ||
-      // 빈 텍스트 일 때
-      !messageInputRef.current.value
+      !messageInputRef.current.value || // empty string
+      event?.key !== 'Enter'
     )
       return;
 
@@ -119,6 +119,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isLoadingToConnectSocket ||
     isLoadingGettingFoodPartyDetail
   )
+    // To Do: 스켈레톤 작업 필요 by 승준
     return <div>Loading...</div>;
   if (errorGettingExistingMessageList)
     return <div>{errorGettingExistingMessageList.toString()}</div>;
