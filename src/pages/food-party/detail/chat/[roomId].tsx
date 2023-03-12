@@ -19,6 +19,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   const client = useRef<CompatClient>();
   const messageInputRef = useRef<HTMLInputElement>(null);
   const [isLoadingToConnectSocket, setIsLoadingToConnectSocket] = useState(true);
+  const [isErrorConnectingSocket, setIsErrorConnectingSocket] = useState(false);
   const [messageList, setMessageList] = useState<Message[]>([]);
   const {
     data: existingMessageList,
@@ -44,10 +45,13 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       !client.current ||
       !messageInputRef.current ||
       !userInformation ||
-      !messageInputRef.current.value || // empty string
-      event?.key !== 'Enter'
+      !messageInputRef.current.value // empty string
     )
       return;
+
+    if (event) {
+      if (event.key !== 'Enter' || (event.shiftKey && event.key === 'Enter')) return;
+    }
 
     const sendMessageRequest = {
       content: messageInputRef.current.value,
@@ -86,6 +90,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       {
         Authorization: axiosAuthApiAuthorization,
       },
+      // 연결 시 다음 callback 함수 실행
       () => {
         subscribe = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
           const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
@@ -102,6 +107,10 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
             newReceivedMessage,
           ]);
         });
+      },
+      // 에러 발생 시 다음 callback 함수 실행
+      () => {
+        setIsErrorConnectingSocket(true);
       }
     );
     setIsLoadingToConnectSocket(false);
@@ -130,7 +139,8 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
 
   return (
     <>
-      {isSuccessGettingExistingMessageList &&
+      {!isErrorConnectingSocket &&
+      isSuccessGettingExistingMessageList &&
       isSuccessGettingUserInformation &&
       isSuccessGettingFoodPartyDetail ? (
         <Flex position='relative' flexDirection='column' height='100%'>
@@ -140,7 +150,9 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
           )}
         </Flex>
       ) : (
-        <GoHomeWhenErrorInvoked />
+        <GoHomeWhenErrorInvoked
+          errorText={isErrorConnectingSocket ? '채팅 연결에 실패했습니다.' : ''}
+        />
       )}
     </>
   );
