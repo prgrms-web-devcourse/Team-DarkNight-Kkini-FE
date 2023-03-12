@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { isDrawerOpenedState } from 'stores/drawer';
+import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 
 import { useWindowHeight } from './useWindowHeight';
 
