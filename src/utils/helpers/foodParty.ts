@@ -1,7 +1,7 @@
-import { NearFoodPartyItem } from 'hooks/useNearFoodParty';
 import {
   FoodPartyDetailStatusButtonText,
   FoodPartyStatus,
+  NearFoodPartyItem,
   ProposalStatus,
 } from 'types/foodParty';
 import { DocumentsType } from 'types/kakaoSearch';
