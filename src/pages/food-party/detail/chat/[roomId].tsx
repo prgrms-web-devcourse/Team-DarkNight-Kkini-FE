@@ -85,6 +85,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     const axiosAuthApiAuthorization =
       axiosAuthApi.defaults.headers.common['Authorization'];
 
+    // 서버와 소켓 통신 연결
     let subscription: StompSubscription | undefined;
     client.current.connect(
       {
@@ -116,6 +117,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     setIsLoadingToConnectSocket(false);
 
     return () => {
+      // unmount될 때 소켓 연결 끊음.
       client.current?.disconnect(() => {
         subscription?.unsubscribe();
       });
