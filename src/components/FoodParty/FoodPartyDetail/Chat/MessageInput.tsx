@@ -20,6 +20,7 @@ const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
         padding='1rem'>
         <Box position='relative' width='100%'>
           <Input
+            // onKeyDown={}
             ref={ref}
             fontSize='1rem'
             backgroundColor='subBackground'
@@ -39,6 +40,7 @@ const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
             position='absolute'
             top='50%'
             right='0.5rem'
+            cursor='pointer'
             transform='translateY(-50%)'>
             <IoIosSend />
           </Flex>

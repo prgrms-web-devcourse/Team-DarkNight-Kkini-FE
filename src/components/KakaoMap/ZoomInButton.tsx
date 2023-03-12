@@ -9,6 +9,7 @@ type ZoomInButtonProps = {
 const ZoomInButton = ({ onClick }: ZoomInButtonProps) => {
   return (
     <Button
+      aria-label='확대 버튼'
       animation={bottomToTopAnimation}
       backgroundColor='white'
       zIndex={10}
