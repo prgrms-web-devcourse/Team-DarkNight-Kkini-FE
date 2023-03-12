@@ -1,6 +1,6 @@
 import { axiosAuthApi } from 'apis/axios';
 
-type MyProfileType = {
+type ProfileType = {
   data: {
     id: number;
     nickname: string;
@@ -14,11 +14,11 @@ type MyProfileType = {
 };
 
 export const fetchUser = async () => {
-  const { data } = await axiosAuthApi.get<MyProfileType>('/api/v1/user/me');
+  const { data } = await axiosAuthApi.get<ProfileType>('/api/v1/user/me');
   return data.data;
 };
 
 export const fetchSpecificUser = async (userId: string) => {
-  const { data } = await axiosAuthApi.get<MyProfileType>(`api/v1/user/${userId}`);
+  const { data } = await axiosAuthApi.get<ProfileType>(`api/v1/user/${userId}`);
   return data.data;
 };
