@@ -2,7 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 
 type MyPageCountProps = {
   name: string;
-  value: number | undefined;
+  value?: number;
 };
 
 const MyPageCount = ({ name, value }: MyPageCountProps) => {
