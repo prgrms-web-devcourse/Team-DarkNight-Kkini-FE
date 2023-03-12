@@ -4,7 +4,10 @@ import { axiosAuthApi } from 'apis/axios';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import MessageInput from 'components/FoodParty/FoodPartyDetail/Chat/MessageInput';
 import MessageList from 'components/FoodParty/FoodPartyDetail/Chat/MessageList';
-import { useGetFoodPartyMessageList } from 'hooks/query/useFoodParty';
+import {
+  useGetFoodPartyDetail,
+  useGetFoodPartyMessageList,
+} from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useEffect, useRef, useState } from 'react';
@@ -29,8 +32,12 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isSuccess: isSuccessGettingUserInformation,
     error: errorGettingUserInformation,
   } = useGetUser();
-
-  console.log(messageList);
+  const {
+    data: foodPartyDetail,
+    isLoading: isLoadingGettingFoodPartyDetail,
+    isSuccess: isSuccessGettingFoodPartyDetail,
+    error: errorGettingFoodPartyDetail,
+  } = useGetFoodPartyDetail(roomId, userInformation?.id);
 
   const handleSendMessage = () => {
     if (
@@ -109,20 +116,27 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   if (
     isLoadingGettingExistingMessageList ||
     isLoadingGettingUserInformation ||
-    isLoadingToConnectSocket
+    isLoadingToConnectSocket ||
+    isLoadingGettingFoodPartyDetail
   )
     return <div>Loading...</div>;
   if (errorGettingExistingMessageList)
     return <div>{errorGettingExistingMessageList.toString()}</div>;
   if (errorGettingUserInformation)
     return <div>{errorGettingUserInformation.toString()}</div>;
+  if (errorGettingFoodPartyDetail)
+    return <div>{errorGettingFoodPartyDetail.toString()}</div>;
 
   return (
     <>
-      {isSuccessGettingExistingMessageList && isSuccessGettingUserInformation ? (
+      {isSuccessGettingExistingMessageList &&
+      isSuccessGettingUserInformation &&
+      isSuccessGettingFoodPartyDetail ? (
         <Flex position='relative' flexDirection='column' height='100%'>
           <MessageList messageList={messageList} currentUserId={userInformation.id} />
-          <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
+          {foodPartyDetail.crewStatus !== '식사 완료' && (
+            <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
+          )}
         </Flex>
       ) : (
         <GoHomeWhenErrorInvoked />
