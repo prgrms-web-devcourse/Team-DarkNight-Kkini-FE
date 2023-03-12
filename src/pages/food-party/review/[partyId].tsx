@@ -1,10 +1,9 @@
 import { Avatar, Flex, Heading, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import ReviewBottomDrawer from 'components/FoodParty/Review/ReviewBottomDrawer';
+import { useGetFoodPartyReviewees } from 'hooks/query/useFoodParty';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
-import { useGetFoodPartyReviewees } from '../../../hooks/query/useFoodParty';
 const FoodPartyReviewPage = () => {
   const router = useRouter();
   const [selectedUserName, setSelectedUserName] = useState('');
@@ -32,7 +31,7 @@ const FoodPartyReviewPage = () => {
   };
 
   const handleClickGoBackToList = () => {
-    router.push('/food-party/list/restaurant/my');
+    router.push('/food-party/list/my');
   };
 
   return (

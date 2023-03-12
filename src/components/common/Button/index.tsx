@@ -1,4 +1,5 @@
 import { Flex, FlexProps } from '@chakra-ui/react';
+import { SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
 
@@ -7,6 +8,7 @@ type Props = {
   height?: string;
   disabled?: boolean;
   style?: FlexProps;
+  css?: SerializedStyles;
   children?: ReactNode;
   type?: string;
   onClick?: () => void;

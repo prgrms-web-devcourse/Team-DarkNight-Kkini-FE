@@ -7,9 +7,8 @@ import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 import { getPhotoUrlsStringFromDocuments } from 'utils/helpers/foodParty';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
+import { getNearbyRestaurants } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
-
-import { getNearbyRestaurants } from '../../utils/helpers/kakaoMap';
 
 const DEFAULT_BADGE_IMAGE_SIZE = 72;
 const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
