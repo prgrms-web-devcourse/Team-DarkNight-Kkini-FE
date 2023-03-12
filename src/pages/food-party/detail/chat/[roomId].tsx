@@ -68,6 +68,8 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     client.current = Stomp.over(
       () => new SockJS(`${process.env.NEXT_PUBLIC_API_END_POINT}/ws`)
     );
+    // console에 디버깅 찍히는 기능 제거.
+    client.current.debug = () => {};
 
     const axiosAuthApiAuthorization =
       axiosAuthApi.defaults.headers.common['Authorization'];
