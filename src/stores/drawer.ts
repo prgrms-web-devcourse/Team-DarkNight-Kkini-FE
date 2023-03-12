@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-export const isDrawerOpenedState = atom<boolean>({
-  key: 'isDrawerOpened',
+export const foodPartyCreateDrawerOpenState = atom<boolean>({
+  key: 'foodPartyCreateDrawerOpen',
   default: false,
 });
 

@@ -8,12 +8,14 @@ import { CgCommunity } from 'react-icons/cg';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { loginDrawerOpenState } from 'stores/drawer';
-import { isDrawerOpenedState } from 'stores/drawer';
+import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { NavigationButtonProps } from 'types/navigation';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const Navigation = () => {
-  const [isDrawerOpened, setIsDrawerOpened] = useRecoilState(isDrawerOpenedState);
+  const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
+    foodPartyCreateDrawerOpenState
+  );
   const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
   const isLogin = useRecoilValue(isLoginState);
   const router = useRouter();
@@ -31,7 +33,7 @@ const Navigation = () => {
 
   const handleClickCommunity = () => {
     if (checkLoginUser()) {
-      isDrawerOpened ? setIsDrawerOpened(false) : setIsDrawerOpened(true);
+      setFoodPartyCreateDrawerOpen(!foodPartyCreateDrawerOpen);
     }
   };
 
