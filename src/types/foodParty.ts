@@ -3,6 +3,8 @@ import { Restaurant } from './restaurant';
 
 type CrewMemberRole = 'LEADER' | 'MEMBER' | 'BLOCKED';
 
+type MessageType = 'JOIN' | 'CHAT' | 'LEAVE';
+
 export type ProposalStatus = '미신청' | '대기 중' | '승인' | '거절';
 
 export type FoodPartyStatus = '모집 중' | '모집 종료' | '식사 완료';
@@ -28,8 +30,17 @@ export type Message = {
   userId: number;
   username: string;
   profileImgUrl: string;
-  type: string;
+  type: MessageType;
   createdAt: number[];
+  content: string;
+};
+
+export type ReceivedMessage = {
+  userId: number;
+  username: string;
+  profileImgUrl: string;
+  type: MessageType;
+  createdAt: string;
   content: string;
 };
 

@@ -9,11 +9,13 @@ import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { Message } from 'types/foodParty';
+import { Message, ReceivedMessage } from 'types/foodParty';
+import { getNumberArrayCreatedAt } from 'utils/helpers/foodParty';
 
 const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   const client = useRef<CompatClient>();
   const messageInputRef = useRef<HTMLInputElement>(null);
+  const [isLoadingToConnectSocket, setIsLoadingToConnectSocket] = useState(true);
   const [messageList, setMessageList] = useState<Message[]>([]);
   const {
     data: existingMessageList,
@@ -28,11 +30,20 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     error: errorGettingUserInformation,
   } = useGetUser();
 
-  const sendMessage = (content: string) => {
-    if (!client.current || !userInformation) return;
+  console.log(messageList);
+
+  const handleSendMessage = () => {
+    if (
+      !client.current ||
+      !messageInputRef.current ||
+      !userInformation ||
+      // 빈 텍스트 일 때
+      !messageInputRef.current.value
+    )
+      return;
 
     const sendMessageRequest = {
-      content,
+      content: messageInputRef.current.value,
       type: 'CHAT',
       userId: userInformation.id,
     };
@@ -42,6 +53,8 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       {},
       JSON.stringify(sendMessageRequest)
     );
+
+    messageInputRef.current.value = '';
   };
 
   // 기존 메시지 이력
@@ -66,11 +79,23 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       },
       () => {
         subscribe = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
-          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
-          console.log(JSON.parse(payload.body));
+          const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
+
+          if (receivedMessage.type === 'LEAVE' || receivedMessage.type === 'JOIN') return;
+
+          const newReceivedMessage: Message = {
+            ...receivedMessage,
+            createdAt: getNumberArrayCreatedAt(receivedMessage.createdAt),
+          };
+
+          setMessageList((previousMessageList) => [
+            ...previousMessageList,
+            newReceivedMessage,
+          ]);
         });
       }
     );
+    setIsLoadingToConnectSocket(false);
 
     return () => {
       client.current?.disconnect(() => {
@@ -79,7 +104,11 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     };
   }, []);
 
-  if (isLoadingGettingExistingMessageList || isLoadingGettingUserInformation)
+  if (
+    isLoadingGettingExistingMessageList ||
+    isLoadingGettingUserInformation ||
+    isLoadingToConnectSocket
+  )
     return <div>Loading...</div>;
   if (errorGettingExistingMessageList)
     return <div>{errorGettingExistingMessageList.toString()}</div>;
@@ -90,10 +119,8 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     <>
       {isSuccessGettingExistingMessageList && isSuccessGettingUserInformation ? (
         <Flex position='relative' flexDirection='column' height='100%'>
-          {/* 채팅 리스트 */}
           <MessageList messageList={messageList} currentUserId={userInformation.id} />
-          {/* 인풋 창 */}
-          <MessageInput ref={messageInputRef} />
+          <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
         </Flex>
       ) : (
         <GoHomeWhenErrorInvoked />
