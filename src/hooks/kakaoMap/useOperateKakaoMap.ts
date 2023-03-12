@@ -4,10 +4,8 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
+import { DEFAULT_MAX_LEVEL, DEFAULT_MIN_LEVEL } from 'utils/constants/kakaoMap';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
-
-const DEFAULT_MIN_LEVEL = 0;
-const DEFAULT_MAX_LEVEL = 12;
 
 const DEFAULT_TOAST_DURATION = 5000;
 

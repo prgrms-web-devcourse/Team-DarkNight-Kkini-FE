@@ -1,3 +1,4 @@
+import { NearFoodPartyItem } from 'hooks/useNearFoodParty';
 import {
   FoodPartyDetailStatusButtonText,
   FoodPartyStatus,
@@ -84,4 +85,11 @@ const NotMemberText: {
   '모집 중': '참여할 끼니?',
   '모집 종료': '모집이 완료되버렸끼니!',
   '식사 완료': '',
+};
+
+export const getUniqueRestaurant = (foodParty: NearFoodPartyItem[]) => {
+  return foodParty.filter(
+    ({ storeId }, index, array) =>
+      index === array.findIndex((item) => item.storeId === storeId)
+  );
 };

@@ -59,6 +59,26 @@ export const kakaoMapHelpers = {
       position: new kakao.maps.LatLng(latitude, longitude),
       content,
     }),
+  getLongitude: (kakaoMap: kakao.maps.Map) => {
+    const { longitude } = kakaoMapHelpers.getCenter(kakaoMap);
+    const northLongitude = kakaoMap.getBounds().getNorthEast().getLng();
+    return {
+      centerLongitude: longitude,
+      northLongitude,
+    };
+  },
+  getDistanceFromLongitude: (kakaoMap: kakao.maps.Map) => {
+    const { centerLongitude, northLongitude } = kakaoMapHelpers.getLongitude(kakaoMap);
+
+    // 한국기준, 0.01도 = 800m
+    const LONGITUDE = {
+      DEGREE: 0.01,
+      METER: 800,
+    };
+    const gapOfLongitude = Number(Math.abs(centerLongitude - northLongitude).toFixed(3));
+    const distance = (LONGITUDE.METER * gapOfLongitude) / LONGITUDE.DEGREE;
+    return distance;
+  },
 };
 
 export const kakaoMapAddEventListener = (

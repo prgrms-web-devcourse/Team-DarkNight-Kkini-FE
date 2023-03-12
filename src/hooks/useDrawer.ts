@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { isDrawerOpenedState } from '../stores/drawer';
+import { foodPartyCreateDrawerOpenState } from '../stores/drawer';
 import { useWindowHeight } from './useWindowHeight';
 
 type DrawerMatrics = {
@@ -21,7 +21,9 @@ export function useDrawer() {
   const content = useRef<HTMLDivElement>(null);
   const MIN_Y = 120; // 바텀시트가 최대로 높이 올라갔을 때의 y 값
   const { MAX_Y } = useWindowHeight(); // 바텀시트가 최소로 내려갔을 때의 y 값
-  const [isOpened, setIsOpened] = useRecoilState(isDrawerOpenedState);
+  const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
+    foodPartyCreateDrawerOpenState
+  );
 
   const metrics = useRef<DrawerMatrics>({
     touchStart: {
@@ -104,7 +106,7 @@ export function useDrawer() {
       if (currentDrawerY >= MAX_Y - 4) {
         if (touchMove.movingDirection === 'down') {
           drawerRef.style.setProperty('transform', `translateY(670px)`);
-          setIsOpened(false);
+          setFoodPartyCreateDrawerOpen(false);
           drawerRef.style.setProperty('display', 'none');
         }
       }
@@ -137,7 +139,7 @@ export function useDrawer() {
       drawerRef.removeEventListener('touchmove', handleTouchMove);
       drawerRef.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [MAX_Y, setIsOpened, isOpened]);
+  }, [MAX_Y, setFoodPartyCreateDrawerOpen, foodPartyCreateDrawerOpen]);
 
   useEffect(() => {
     const handleTouchStart = () => {
@@ -149,7 +151,7 @@ export function useDrawer() {
     contentRef.addEventListener('touchstart', handleTouchStart, { passive: true });
 
     return () => contentRef.removeEventListener('touchstart', handleTouchStart);
-  }, [isOpened]);
+  }, [foodPartyCreateDrawerOpen]);
 
   return { drawer, content };
 }

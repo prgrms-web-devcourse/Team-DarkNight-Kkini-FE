@@ -1,6 +1,21 @@
 import { atom } from 'recoil';
 
-export const isDrawerOpenedState = atom<boolean>({
-  key: 'isDrawerOpened',
+export const foodPartyCreateDrawerOpenState = atom<boolean>({
+  key: 'foodPartyCreateDrawerOpen',
+  default: false,
+});
+
+export const loginDrawerOpenState = atom<boolean>({
+  key: 'loginDrawerOpen',
+  default: false,
+});
+
+export const restaurantDrawerOpenState = atom<boolean>({
+  key: 'restaurantOpen',
+  default: false,
+});
+
+export const randomRestaurantDrawerOpenState = atom<boolean>({
+  key: 'randomRestaurantOpen',
   default: false,
 });

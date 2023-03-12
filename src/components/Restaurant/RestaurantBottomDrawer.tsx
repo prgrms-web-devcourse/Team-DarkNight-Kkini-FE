@@ -3,6 +3,9 @@ import BottomDrawer from 'components/common/BottomDrawer';
 import Button from 'components/common/Button';
 import Category from 'components/common/Category';
 import { BiRightArrowCircle } from 'react-icons/bi';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isLoginState } from 'stores/auth';
+import { loginDrawerOpenState } from 'stores/drawer';
 import { Restaurant } from 'types/restaurant';
 import { getCategoryArray, getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
@@ -21,6 +24,8 @@ const RestaurantBottomDrawer = ({
 }: RestaurantBottomDrawerProps) => {
   const categories = getCategoryArray(restaurant.categories);
   const photoUrls = getPhotoUrlsArray(restaurant.photoUrls || '');
+  const isLogin = useRecoilValue(isLoginState);
+  const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
 
   return (
     <BottomDrawer
@@ -81,7 +86,7 @@ const RestaurantBottomDrawer = ({
           )}
           {onClickJoinButton && (
             <Button
-              onClick={onClickJoinButton}
+              onClick={isLogin ? onClickJoinButton : () => setLoginDrawerOpen(true)}
               width='100%'
               style={{
                 backgroundColor: 'primary',
@@ -89,7 +94,7 @@ const RestaurantBottomDrawer = ({
                 color: 'white',
                 fontWeight: 700,
               }}>
-              밥모임 참여하기
+              {isLogin ? '밥모임 참여하기' : '로그인해서 밥모임 참여하기'}
             </Button>
           )}
         </>

@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 // import Image from 'next/image';
 import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isDrawerOpenedState } from 'stores/drawer';
+import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { searchRestaurantListState, selectedRestaurantState } from 'stores/Restaurant';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getCategoryArray } from 'utils/helpers/foodParty';
@@ -43,11 +43,11 @@ const RestaurantItem = ({
   const router = useRouter();
   const searchRestaurantList = useRecoilValue(searchRestaurantListState);
   const setSelectedRestaurantList = useSetRecoilState(selectedRestaurantState);
-  const isDrawerOpened = useSetRecoilState(isDrawerOpenedState);
+  const foodPartyCreateDrawerOpen = useSetRecoilState(foodPartyCreateDrawerOpenState);
 
   const handleClickCreateFoodParty = () => {
     setSelectedRestaurantList({ ...searchRestaurantList[index] });
-    isDrawerOpened(false);
+    foodPartyCreateDrawerOpen(false);
     router.push(ROUTING_PATHS.FOOD_PARTY.CREATE);
   };
 
