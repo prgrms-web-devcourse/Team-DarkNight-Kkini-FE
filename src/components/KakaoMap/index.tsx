@@ -4,6 +4,7 @@ import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import useOperateKakaoMap from 'hooks/kakaoMap/useOperateKakaoMap';
 import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomRestaurant';
 import useNearFoodParty from 'hooks/useNearFoodParty';
+import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import {
@@ -12,6 +13,7 @@ import {
 } from 'stores/drawer';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import { DEFAULT_MAX_LEVEL, DEFAULT_MIN_LEVEL } from 'utils/constants/kakaoMap';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getElement } from 'utils/helpers/elementHandler';
 import { kakaoMapAddEventListener, kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
@@ -30,6 +32,7 @@ const KakaoMap = () => {
   const { randomRestaurant, handleClickJoinToFoodPartyButton } =
     useRandomRestaurantContext();
   const currentPositionCustomOverlay = useRef<kakao.maps.CustomOverlay | null>(null);
+  const router = useRouter();
 
   // 랜덤 맛집 드로어
   const [randomRestaurantDrawerOpen, setRandomRestaurantDrawerOpen] = useRecoilState(
@@ -216,7 +219,14 @@ const KakaoMap = () => {
           isOpen={restaurantDrawerOpen}
           onClose={() => setRestaurantDrawerOpen(false)}
           restaurant={clickedRestaurant}
-          onClickJoinButton={() => {}}
+          onClickJoinButton={() => {
+            router.push(
+              ROUTING_PATHS.FOOD_PARTY.LIST.RESTAURANT(
+                clickedRestaurant.placeId,
+                clickedRestaurant.placeName
+              )
+            );
+          }}
         />
       )}
     </Box>
