@@ -11,7 +11,13 @@ const MessageList = ({ messageList }: { messageList: Message[] }) => {
   console.log(messageList);
 
   return (
-    <Flex flexDirection='column' flex={1} padding='1rem' backgroundColor='subBackground'>
+    <Flex
+      flexDirection='column'
+      flex={1}
+      gap='0.5rem'
+      padding='1rem 1rem 5rem 1rem'
+      overflowY='auto'
+      backgroundColor='#f2f2f2'>
       {messageList.map((message) => (
         <MessageListItem key={getUniqueMessageKey(message.createdAt)} message={message} />
       ))}
