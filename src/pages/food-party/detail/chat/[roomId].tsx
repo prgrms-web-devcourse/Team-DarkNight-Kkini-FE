@@ -1,6 +1,8 @@
 import { Flex } from '@chakra-ui/react';
-import { CompatClient, Stomp } from '@stomp/stompjs';
+import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
 import { axiosAuthApi } from 'apis/axios';
+import MessageInput from 'components/FoodParty/FoodPartyDetail/Chat/MessageInput';
+import MessageList from 'components/FoodParty/FoodPartyDetail/Chat/MessageList';
 import { useGetFoodPartyMessageList } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
@@ -9,10 +11,10 @@ import SockJS from 'sockjs-client';
 import { Message } from 'types/foodParty';
 
 const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
-  const client = useRef<CompatClient>(null);
-  const messageInput = useRef<>(null);
+  const client = useRef<CompatClient>();
+  const messageInputRef = useRef<HTMLInputElement>(null);
   const [messageList, setMessageList] = useState<Message[]>([]);
-  const { data: messageListWhenEntered } = useGetFoodPartyMessageList(roomId);
+  const { data: messageListWhenEntered, isLoading } = useGetFoodPartyMessageList(roomId);
   const { data: userInformation } = useGetUser();
 
   const sendMessage = (content: string) => {
@@ -31,11 +33,14 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     );
   };
 
+  // 기존 메시지 이력
   useEffect(() => {
     if (messageListWhenEntered) setMessageList(messageListWhenEntered);
   }, [messageListWhenEntered]);
 
   useEffect(() => {
+    if (!userInformation) return;
+
     client.current = Stomp.over(
       () => new SockJS(`${process.env.NEXT_PUBLIC_API_END_POINT}/ws`)
     );
@@ -43,38 +48,45 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     const axiosAuthApiAuthorization =
       axiosAuthApi.defaults.headers.common['Authorization'];
 
+    let subscribe: StompSubscription | undefined;
     client.current.connect(
       {
         Authorization: axiosAuthApiAuthorization,
       },
       () => {
-        client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
+        subscribe = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
           // console.log(JSON.parse(payload.body));
         });
 
-        const chatRequest = {
-          content: '끼니끼니끼니끼니',
-          type: 'CHAT',
-          userId: 12,
-        };
+        // const chatRequest = {
+        //   content: '끼니끼니끼니끼니',
+        //   type: 'CHAT',
+        //   userId: 12,
+        // };
 
-        client.current?.send(
-          `/app/chat.sendMessage/${roomId}`,
-          {},
-          JSON.stringify(chatRequest)
-        );
+        // client.current?.send(
+        //   `/app/chat.sendMessage/${roomId}`,
+        //   {},
+        //   JSON.stringify(chatRequest)
+        // );
       }
     );
+
+    return () => {
+      client.current?.disconnect(() => {
+        subscribe?.unsubscribe();
+      });
+    };
   }, []);
 
   // ref.current.value = '';
 
   return (
-    <Flex>
+    <Flex position='relative' flexDirection='column' height='100%'>
       {/* 채팅 리스트 */}
-      {/* <MessageList /> */}
-
+      <MessageList messageList={messageList} />
       {/* 인풋 창 */}
+      <MessageInput ref={messageInputRef} />
     </Flex>
   );
 };

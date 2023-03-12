@@ -29,7 +29,7 @@ export type Message = {
   username: string;
   profileImgUrl: string;
   type: string;
-  createdAt: string;
+  createdAt: number[];
   content: string;
 };
 

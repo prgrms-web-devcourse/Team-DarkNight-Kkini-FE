@@ -71,7 +71,6 @@ export const useGetFoodPartyReviewees = (crewId: string) => {
 };
 
 export const useGetFoodPartyMessageList = (roomId: string) => {
-  console.log(roomId);
   return useQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.CHAT_MESSAGE_LIST, roomId],
     queryFn: () => fetchFoodPartyMessageList(roomId),
