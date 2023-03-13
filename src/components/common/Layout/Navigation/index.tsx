@@ -47,9 +47,8 @@ const Navigation = () => {
   const handleClickApplication = () => {
     if (checkLoginUser()) {
       router.push(ROUTING_PATHS.APPLICATION);
+      foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
     }
-    foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
-    router.push(ROUTING_PATHS.FOOD_PARTY.LIST.MY);
   };
 
   const NavigationItem: NavigationButtonProps[] = [
