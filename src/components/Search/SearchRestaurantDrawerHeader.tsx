@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
-import SearchRestaurant from 'components/SearchRestaurant';
+import SearchRestaurant from 'components/Search';
 
-const DrawerHeader = () => {
+const SearchRestaurantDrawerHeader = () => {
   return (
     <Box
       display='flex'
@@ -20,4 +20,4 @@ const DrawerHeader = () => {
   );
 };
 
-export default DrawerHeader;
+export default SearchRestaurantDrawerHeader;

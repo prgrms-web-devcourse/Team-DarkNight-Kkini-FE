@@ -1,19 +1,14 @@
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
-import { useDrawer } from 'hooks/useDrawer';
+import SearchRestaurantContent from 'components/Search/SearchRestaurantContent';
+import SearchRestaurantDrawerHeader from 'components/Search/SearchRestaurantDrawerHeader ';
+import { useDragDrawer } from 'hooks/useDragDrawer';
 import { useWindowHeight } from 'hooks/useWindowHeight';
-import { ReactNode } from 'react';
 import { useRecoilValue } from 'recoil';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 
-import DrawerHeader from './DrawerHeader';
-
-type DraggableDrawerProps = {
-  children: ReactNode;
-};
-
-const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
-  const { drawer, content } = useDrawer();
+const SearchRestaurantDrawer = () => {
+  const { drawer, content } = useDragDrawer();
   const { windowHeight } = useWindowHeight();
   const foodPartyCreateDrawerOpen = useRecoilValue(foodPartyCreateDrawerOpenState);
 
@@ -44,7 +39,7 @@ const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
           }
         }
       `}>
-      <DrawerHeader />
+      <SearchRestaurantDrawerHeader />
       <Box
         ref={content}
         css={css`
@@ -52,7 +47,9 @@ const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
           overflow: auto;
           -webkit-overflow-scrolling: touch;
         `}>
-        {children}
+        <Box pos='relative' h='100%'>
+          <SearchRestaurantContent />
+        </Box>
       </Box>
     </Box>
   ) : (
@@ -60,4 +57,4 @@ const DraggableDrawer = ({ children }: DraggableDrawerProps) => {
   );
 };
 
-export default DraggableDrawer;
+export default SearchRestaurantDrawer;
