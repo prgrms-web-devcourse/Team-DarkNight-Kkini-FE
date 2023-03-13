@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import SearchRestaurantContent from 'components/Search/SearchRestaurantContent';
-import SearchRestaurantDrawerHeader from 'components/Search/SearchRestaurantDrawerHeader ';
+import SearchRestaurantDrawerHeader from 'components/Search/SearchRestaurantDrawerHeader';
 import { useDragDrawer } from 'hooks/useDragDrawer';
 import { useWindowHeight } from 'hooks/useWindowHeight';
 import { useRecoilValue } from 'recoil';
