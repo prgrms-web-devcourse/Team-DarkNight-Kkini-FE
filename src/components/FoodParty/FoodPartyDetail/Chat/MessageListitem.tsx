@@ -1,4 +1,4 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { Message } from 'types/foodParty';
 
 const MessageListItem = ({
@@ -12,27 +12,30 @@ const MessageListItem = ({
   const [, , , hour, minute] = message.createdAt;
 
   return (
-    <Flex
-      flexDirection='column'
-      maxWidth='80%'
-      alignSelf={isCurrentUser ? 'flex-end' : 'flex-start'}>
-      {!isCurrentUser && (
-        <Flex alignItems='center' gap='0.5rem'>
-          <Avatar src={message.profileImgUrl} size='xs' marginBottom='-0.5rem' />
-          <Text fontSize='14px'>{message.username}</Text>
+    <Flex width='100%' flexDirection={isCurrentUser ? 'row-reverse' : 'row'} gap='0.5rem'>
+      <Flex flexDirection='column' maxWidth='80%'>
+        {!isCurrentUser && (
+          <Flex alignItems='center' gap='0.5rem'>
+            <Avatar src={message.profileImgUrl} size='xs' marginBottom='-0.5rem' />
+            <Text fontSize='14px'>{message.username}</Text>
+          </Flex>
+        )}
+
+        <Flex flexDirection={isCurrentUser ? 'row-reverse' : 'row'} gap='0.5rem'>
+          <Text
+            marginLeft={!isCurrentUser ? '0.5rem' : '0'}
+            backgroundColor={isCurrentUser ? 'orange.200' : 'white'}
+            fontWeight={isCurrentUser ? 'extrabold' : 'medium'}
+            padding='0.5rem 0.75rem'
+            borderRadius={isCurrentUser ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'}
+            fontSize='12px'>
+            {message.content}
+          </Text>
+          <Text flex={1} fontSize='10px' alignSelf='flex-end' whiteSpace='nowrap'>
+            {templateTime(hour, minute)}
+          </Text>
         </Flex>
-      )}
-      {templateTime(hour, minute)}
-      <Text
-        marginLeft={!isCurrentUser ? '0.5rem' : '0'}
-        backgroundColor={isCurrentUser ? 'primary' : 'white'}
-        color={isCurrentUser ? 'white' : 'black'}
-        fontWeight={isCurrentUser ? '700' : '300'}
-        padding='1rem 0.5rem'
-        borderRadius={isCurrentUser ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'}
-        fontSize='12px'>
-        {message.content}
-      </Text>
+      </Flex>
     </Flex>
   );
 };
