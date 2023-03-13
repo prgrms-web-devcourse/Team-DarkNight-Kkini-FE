@@ -57,12 +57,16 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       if (event.key !== 'Enter' || (event.shiftKey && event.key === 'Enter')) return;
     }
 
-    sendMessage({
-      client: client.current,
-      roomId,
-      userId: userInformation.id,
-      content: messageInputRef.current.value,
-    });
+    try {
+      sendMessage({
+        client: client.current,
+        roomId,
+        userId: userInformation.id,
+        content: messageInputRef.current.value,
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     messageInputRef.current.value = '';
   };
@@ -90,35 +94,46 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     const axiosAuthApiAuthorization =
       axiosAuthApi.defaults.headers.common['Authorization'];
 
-    // 서버와 소켓 통신 연결
     let subscription: StompSubscription | undefined;
-    client.current.connect(
-      {
-        Authorization: axiosAuthApiAuthorization,
-      },
-      // 연결 시 + 소켓 서버에서 publish하면 다음 callback 함수 실행
-      () => {
-        subscription = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
-          const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
-          if (receivedMessage.type === 'LEAVE' || receivedMessage.type === 'JOIN') return;
+    try {
+      // 서버와 소켓 통신 연결
+      client.current.connect(
+        {
+          Authorization: axiosAuthApiAuthorization,
+        },
+        // 연결 시 + 소켓 서버에서 publish하면 다음 callback 함수 실행
+        () => {
+          subscription = client.current?.subscribe(
+            `/topic/public/${roomId}`,
+            (payload) => {
+              const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
+              if (receivedMessage.type === 'LEAVE' || receivedMessage.type === 'JOIN')
+                return;
 
-          const newReceivedMessage: Message = {
-            ...receivedMessage,
-            createdAt: getNumberArrayCreatedAt(receivedMessage.createdAt),
-          };
+              const newReceivedMessage: Message = {
+                ...receivedMessage,
+                createdAt: getNumberArrayCreatedAt(receivedMessage.createdAt),
+              };
 
-          setMessageList((previousMessageList) => [
-            ...previousMessageList,
-            newReceivedMessage,
-          ]);
-        });
-      },
-      // 에러 발생 시 다음 callback 함수 실행
-      () => {
-        setIsErrorConnectingSocket(true);
-      }
-    );
-    setIsLoadingToConnectSocket(false);
+              setMessageList((previousMessageList) => [
+                ...previousMessageList,
+                newReceivedMessage,
+              ]);
+            }
+          );
+        },
+        // 에러 발생 시 다음 callback 함수 실행
+        () => {
+          setIsErrorConnectingSocket(true);
+        }
+      );
+    } catch (error) {
+      // 원래는 isErrorConnectingSocket을 true로 바꿔서 GoHomeWhenErrorInvoked 컴포넌트를 보여줘야 하지만
+      // 에러 발생 시 소켓이 실제로 끊어지진 않은 것 같아 일단 콘솔창에 출력만 하도록 함.
+      console.error(error);
+    } finally {
+      setIsLoadingToConnectSocket(false);
+    }
 
     return () => {
       // unmount될 때 소켓 연결 끊음.
