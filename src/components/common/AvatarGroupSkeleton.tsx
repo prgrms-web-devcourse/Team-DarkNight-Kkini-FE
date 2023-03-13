@@ -1,10 +1,12 @@
 import { Flex, SkeletonCircle } from '@chakra-ui/react';
 
+let uniqueNumberId = 0;
+
 const AvatarGroupSkeleton = ({ avatarCount }: { avatarCount: number }) => {
-  const avatarSkeletons = Array.from(
-    { length: avatarCount },
-    (_, index) => `avatar-skeleton-${index}`
-  );
+  const avatarSkeletons = Array.from({ length: avatarCount }, () => {
+    uniqueNumberId += 1;
+    return `avatar-skeleton-${uniqueNumberId}`;
+  });
 
   return (
     <Flex alignItems='center'>
