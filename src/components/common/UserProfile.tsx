@@ -1,6 +1,7 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react';
 import { useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const UserProfile = () => {
   const { data } = useGetUser();
@@ -8,7 +9,7 @@ const UserProfile = () => {
 
   const handleClickUserIcon = () => {
     if (data && data.id) {
-      router.push(`/user/${data.id}`);
+      router.push(ROUTING_PATHS.USER.PROFILE(data.id));
     }
   };
 
