@@ -85,6 +85,7 @@ const ApplicationDrawer = ({
                       </Button>
                       <Button
                         flex='1'
+                        backgroundColor='#FEEBC8'
                         onClick={() =>
                           handleClickApplicationChangeStatus(id, true, onClose)
                         }>

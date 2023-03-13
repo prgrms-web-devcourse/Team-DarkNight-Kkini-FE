@@ -12,7 +12,7 @@ const STATUS_COLORS: Record<StatusKey, string> = {
   '식사 완료': 'purple',
   '대기 중': 'orange',
   거절: 'pink',
-  승인: 'purple',
+  승인: 'green',
 };
 
 const StatusBadge = ({ status, style }: { status: StatusKey; style?: BadgeProps }) => {
