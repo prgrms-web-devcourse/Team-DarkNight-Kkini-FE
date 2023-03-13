@@ -63,15 +63,19 @@ const FoodPartyListItem = ({
             <Button
               onClick={() => {
                 onClickReviewButton && onClickReviewButton(party.id);
-              }}>
-              Review
+              }}
+              fontWeight='semibold'
+              fontSize='14px'>
+              리뷰하기
             </Button>
           )}
           <Button
             onClick={() => {
               onClickViewButton(party.id);
-            }}>
-            View
+            }}
+            fontWeight='semibold'
+            fontSize='14px'>
+            보기
           </Button>
         </Flex>
       </Flex>
