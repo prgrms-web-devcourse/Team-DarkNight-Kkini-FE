@@ -27,6 +27,7 @@ export type Member = {
 };
 
 export type Message = {
+  id: number;
   userId: number;
   username: string;
   profileImgUrl: string;
@@ -36,6 +37,7 @@ export type Message = {
 };
 
 export type ReceivedMessage = {
+  id: number;
   userId: number;
   username: string;
   profileImgUrl: string;
