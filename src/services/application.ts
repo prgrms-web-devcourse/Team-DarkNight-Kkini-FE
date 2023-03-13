@@ -12,7 +12,7 @@ export type ApplicationItemType = {
   crewName: string;
 };
 
-type ApplicationStatus = '대기 중' | '승인' | '거절' | '미신청';
+export type ApplicationStatus = '대기 중' | '승인' | '거절' | '미신청';
 
 type ApplicationResponse = {
   data: {

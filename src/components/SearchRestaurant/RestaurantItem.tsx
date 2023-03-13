@@ -72,7 +72,14 @@ const RestaurantItem = ({
         <Flex w='100%' flexDir='column' justify='space-between'>
           <Stack direction='row'>
             {getCategoryArray(categories).map((category) => (
-              <Category key={category}>{category}</Category>
+              <Category
+                key={category}
+                style={{
+                  borderRadius: '0.5rem',
+                  padding: '2px 5px',
+                }}>
+                {category}
+              </Category>
             ))}
           </Stack>
           <Text fontSize='sm' color='#8b8b8b'>
