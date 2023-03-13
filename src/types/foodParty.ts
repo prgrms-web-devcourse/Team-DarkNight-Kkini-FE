@@ -34,6 +34,7 @@ export type Message = {
   type: MessageType;
   createdAt: number[];
   content: string;
+  isFirstMessageOfThatDay?: boolean;
 };
 
 export type ReceivedMessage = {

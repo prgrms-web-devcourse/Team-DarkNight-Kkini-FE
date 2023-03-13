@@ -1,6 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { forwardRef } from 'react';
 import { FoodPartyStatus, Message } from 'types/foodParty';
+import { getMessageListCheckedIsFirstMessageOfThatDay } from 'utils/helpers/chat';
 
 import MessageListItem from './MessageListitem';
 
@@ -12,6 +13,9 @@ type MessageListProps = {
 
 const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
   ({ status, messageList, currentUserId }, ref) => {
+    const messageListCheckedIsFirstMessageOfThatDay =
+      getMessageListCheckedIsFirstMessageOfThatDay(messageList);
+
     return (
       <Flex
         ref={ref}
@@ -21,7 +25,7 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
         padding='1rem 1rem 5rem 1rem'
         overflowY='auto'
         backgroundColor='#f2f2f2'>
-        {messageList.map((message) => (
+        {messageListCheckedIsFirstMessageOfThatDay.map((message) => (
           <MessageListItem
             key={message.id}
             message={message}
