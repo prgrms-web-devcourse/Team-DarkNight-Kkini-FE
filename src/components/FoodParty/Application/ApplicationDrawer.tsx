@@ -2,21 +2,36 @@ import { Avatar, Badge, Box, Button, Flex, Text } from '@chakra-ui/react';
 import BottomDrawer from 'components/common/BottomDrawer';
 import Image from 'next/image';
 import { ApplicationItemType } from 'services/application';
+import { ApplicationStatusChangePayload } from 'types/application';
 
 type ApplicationDrawerProps = {
   isOpen: boolean;
   onClose: () => void;
-  onClickChangeApplicationState?: (applicationId: number, status: boolean) => void;
+  onClickChangeApplicationStatus?: (props: ApplicationStatusChangePayload) => void;
   application: ApplicationItemType;
 };
 
 const ApplicationDrawer = ({
   isOpen,
   onClose,
-  onClickChangeApplicationState,
+  onClickChangeApplicationStatus,
   application,
 }: ApplicationDrawerProps) => {
   const { user, crewName, id } = application;
+
+  const handleClickApplicationChangeStatus = (
+    id: number,
+    status: boolean,
+    onClose: () => void
+  ) => {
+    if (!onClickChangeApplicationStatus) return;
+
+    onClickChangeApplicationStatus({
+      applicationId: id,
+      status: status ? '승인' : '거절',
+      closeApplicationDrawer: onClose,
+    });
+  };
 
   return (
     <BottomDrawer
@@ -25,7 +40,7 @@ const ApplicationDrawer = ({
       header={
         <Flex justifyContent='space-between'>
           <Text fontSize='1.5rem'>
-            {onClickChangeApplicationState
+            {onClickChangeApplicationStatus
               ? `${user.nickname}님이 보낸 신청서`
               : `${crewName} 밥모임에게`}
           </Text>
@@ -50,7 +65,7 @@ const ApplicationDrawer = ({
               fontSize='1.1rem'>
               {application.content}
             </Box>
-            {onClickChangeApplicationState && (
+            {onClickChangeApplicationStatus && (
               <>
                 <Flex alignItems='center' gap='0.5rem' padding='0.8rem 0'>
                   <Avatar src={user.profileImgUrl} size='sm' />
@@ -60,12 +75,14 @@ const ApplicationDrawer = ({
                 <Flex alignItems='center' padding='0.5rem 0' gap='0.8rem'>
                   <Button
                     flex='1'
-                    onClick={() => onClickChangeApplicationState(id, true)}>
+                    onClick={() => handleClickApplicationChangeStatus(id, true, onClose)}>
                     좋아요
                   </Button>
                   <Button
                     flex='1'
-                    onClick={() => onClickChangeApplicationState(id, false)}>
+                    onClick={() =>
+                      handleClickApplicationChangeStatus(id, false, onClose)
+                    }>
                     죄송합니다
                   </Button>
                 </Flex>

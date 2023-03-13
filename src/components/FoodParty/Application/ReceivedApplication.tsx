@@ -3,12 +3,17 @@ import {
   useChangeApplicationStatus,
   useReceivedApplication,
 } from 'hooks/query/useApplication';
+import { ApplicationStatusChangePayload } from 'types/application';
 
 const ReceivedApplication = () => {
   const { data } = useReceivedApplication();
   const { mutate } = useChangeApplicationStatus();
-  const handleChangeApplicationStatus = (applicationId: number, status: boolean) => {
-    mutate({ applicationId, status: status ? '승인' : '거절' });
+  const handleChangeApplicationStatus = ({
+    applicationId,
+    status,
+    closeApplicationDrawer,
+  }: ApplicationStatusChangePayload) => {
+    mutate({ applicationId, status, closeApplicationDrawer });
   };
 
   return (

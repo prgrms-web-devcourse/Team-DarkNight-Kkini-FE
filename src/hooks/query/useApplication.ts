@@ -5,6 +5,7 @@ import {
   fetchReceivedApplication,
   fetchSentApplication,
 } from 'services/application';
+import { ApplicationStatusChangePayload } from 'types/application';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 
 export const useReceivedApplication = () => {
@@ -28,8 +29,14 @@ export const useChangeApplicationStatus = () => {
   const toast = useToast();
 
   return useMutation({
-    mutationFn: ({ applicationId, status }: { applicationId: number; status: string }) =>
-      changeApplicationStatus(applicationId, status),
+    mutationFn: ({
+      applicationId,
+      status,
+      closeApplicationDrawer,
+    }: ApplicationStatusChangePayload) => {
+      closeApplicationDrawer();
+      return changeApplicationStatus(applicationId, status);
+    },
     onSuccess: () => {
       toast({
         title: `신청서가 처리 되었습니다`,

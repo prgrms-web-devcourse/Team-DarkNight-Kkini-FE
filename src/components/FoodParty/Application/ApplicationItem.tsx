@@ -3,10 +3,11 @@ import ApplicationDrawer from 'components/FoodParty/Application/ApplicationDrawe
 import { useState } from 'react';
 import { CiLocationOn } from 'react-icons/ci';
 import { ApplicationItemType } from 'services/application';
+import { ApplicationStatusChangePayload } from 'types/application';
 
 type ApplicationItemProps = {
   application: ApplicationItemType;
-  onClick?: (applicationId: number, status: boolean) => void;
+  onClick?: (props: ApplicationStatusChangePayload) => void;
 };
 
 const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
@@ -33,7 +34,7 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
               {crewName}
             </Text>
             밥모임에
-            {onclick && (
+            {onClick && (
               <Text as='span' fontWeight='600' marginLeft='0.2rem'>
                 {user.nickname}님이
               </Text>
@@ -53,7 +54,7 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
         isOpen={isOpen}
         onClose={closeDrawer}
         application={application}
-        onClickChangeApplicationState={onClick}
+        onClickChangeApplicationStatus={onClick}
       />
     </>
   );
