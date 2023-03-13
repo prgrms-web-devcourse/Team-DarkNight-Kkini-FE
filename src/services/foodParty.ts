@@ -47,9 +47,7 @@ type NearFoodPartyResponse = {
 
 type FetchFoodPartyMessageList = {
   data: {
-    chats: {
-      content: Message[];
-    };
+    chats: Message[];
   };
 };
 
@@ -108,9 +106,7 @@ export const fetchFoodPartyReviewees = async (partyId: string) => {
 export const fetchFoodPartyMessageList = async (roomId: string) => {
   const {
     data: {
-      data: {
-        chats: { content: messageList },
-      },
+      data: { chats: messageList },
     },
   } = await axiosAuthApi<FetchFoodPartyMessageList>(`/api/v1/crews/${roomId}/chats`);
 
