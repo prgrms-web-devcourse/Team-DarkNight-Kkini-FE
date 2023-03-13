@@ -78,11 +78,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   const handleChangeFoodPartyDetailStatusButton = () => {
     switch (foodPartyDetailStatusButtonText) {
       case '모집 완료할끼니?':
-        // To Do: alert 띄우기 by 승준
         updateFoodPartyStatus('모집 종료');
         return;
       case '식사를 완료했끼니?':
-        // To Do: alert 띄우기 by 승준
         updateFoodPartyStatus('식사 완료');
         return;
       case '참여할 끼니?':
@@ -142,6 +140,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             onClickSubmitButton={createFoodPartyApplication}
           />
           <FoodPartyDetailCheckChangeStatusModal
+            foodPartyDetailStatusButtonText={foodPartyDetailStatusButtonText}
             isOpen={isOpenCheckChangeStatusModal}
             onClose={onCloseCheckChangeStatusModal}
             onClickYes={handleChangeFoodPartyDetailStatusButton}
