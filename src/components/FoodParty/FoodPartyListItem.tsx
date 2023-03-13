@@ -31,7 +31,7 @@ const FoodPartyListItem = ({
     // To Do: ellipsis 처리 by 승준
     <Flex
       flexDirection='column'
-      padding='1.5rem'
+      padding='1rem'
       borderRadius='1rem'
       border='1px solid #e2e5e6'
       marginBottom='1rem'>
