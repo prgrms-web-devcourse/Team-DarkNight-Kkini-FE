@@ -9,6 +9,7 @@ type ZoomOutButtonProps = {
 const ZoomOutButton = ({ onClick }: ZoomOutButtonProps) => {
   return (
     <Button
+      aria-label='축소 버튼'
       animation={bottomToTopAnimation}
       backgroundColor='white'
       zIndex={10}

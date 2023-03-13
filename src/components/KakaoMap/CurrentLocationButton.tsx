@@ -10,6 +10,7 @@ type CurrentLocationButtonProps = {
 const CurrentLocationButton = ({ isLoading, onClick }: CurrentLocationButtonProps) => {
   return (
     <Button
+      aria-label='현재 위치 버튼'
       animation={bottomToTopAnimation}
       isLoading={isLoading}
       backgroundColor='white'

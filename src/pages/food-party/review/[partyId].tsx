@@ -1,5 +1,6 @@
 import { Avatar, Flex, Heading, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import Button from 'components/common/Button';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import ReviewBottomDrawer from 'components/FoodParty/Review/ReviewBottomDrawer';
 import { useGetFoodPartyReviewees } from 'hooks/query/useFoodParty';
 import { useRouter } from 'next/router';
@@ -19,7 +20,7 @@ const FoodPartyReviewPage = () => {
   } = useGetFoodPartyReviewees(partyId as string);
 
   if (isLoading) return <div></div>;
-  if (error) return <div>{error.toString()}</div>;
+  if (error) return <GoHomeWhenErrorInvoked />;
 
   const members = myRevieweeList ? myRevieweeList.filter((member) => member.userId) : [];
 
