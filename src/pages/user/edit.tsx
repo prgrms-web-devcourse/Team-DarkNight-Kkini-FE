@@ -8,7 +8,6 @@ import {
   Input,
   VStack,
 } from '@chakra-ui/react';
-import { css } from '@emotion/react';
 import Button from 'components/common/Button';
 import UserIconForm from 'components/User/Edit/UserIconForm';
 import { useGetUser, useUpdateUserProfile } from 'hooks/query/useUser';

@@ -20,6 +20,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { logout } from 'services/auth';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
+import { isMyProfile } from 'utils/validations/user';
 
 const UserPage = ({ userId }: { userId: string }) => {
   const router = useRouter();
@@ -38,7 +39,6 @@ const UserPage = ({ userId }: { userId: string }) => {
     logout();
     window.location.replace(ROUTING_PATHS.HOME);
   };
-
   return (
     isSuccess && (
       <motion.div
@@ -60,7 +60,7 @@ const UserPage = ({ userId }: { userId: string }) => {
           borderRadius={8}
           p='1rem 1.5rem'>
           <Flex w='100%' py='0.5rem'>
-            <Heading fontSize='2xl'>내 프로필</Heading>
+            <Heading fontSize='2xl'>프로필</Heading>
           </Flex>
           <Flex h='5rem' align='center'>
             <Avatar src={data.profileImgUrl} width='65' height='65' mr='0.5rem' />
@@ -107,7 +107,7 @@ const UserPage = ({ userId }: { userId: string }) => {
               <Text fontSize='md'>{data.introduction} </Text>
             </Box>
           </UserPageItem>
-          {MyUserData?.id === parseInt(userId) && (
+          {isMyProfile(MyUserData?.id, userId) && (
             <>
               <UserPageButton
                 buttonText='정보 수정하기'
