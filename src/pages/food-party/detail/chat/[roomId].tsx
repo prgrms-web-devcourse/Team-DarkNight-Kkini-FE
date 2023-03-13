@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
 import { axiosAuthApi } from 'apis/axios';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
@@ -41,7 +41,6 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isSuccess: isSuccessGettingFoodPartyDetail,
     error: errorGettingFoodPartyDetail,
   } = useGetFoodPartyDetail(roomId, userInformation?.id);
-  console.log(messageList);
 
   const handleSendMessage = (event?: KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -75,6 +74,10 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
 
   useEffect(() => {
     if (!userInformation) return;
+    if (foodPartyDetail?.crewStatus === '식사 완료') {
+      setIsLoadingToConnectSocket(false);
+      return;
+    }
 
     // 소켓 client 생성
     client.current = Stomp.over(
@@ -96,7 +99,6 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       () => {
         subscription = client.current?.subscribe(`/topic/public/${roomId}`, (payload) => {
           const receivedMessage = JSON.parse(payload.body) as ReceivedMessage;
-
           if (receivedMessage.type === 'LEAVE' || receivedMessage.type === 'JOIN') return;
 
           const newReceivedMessage: Message = {
@@ -155,6 +157,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingFoodPartyDetail ? (
         <Flex position='relative' flexDirection='column' height='100%'>
           <MessageList
+            status={foodPartyDetail.crewStatus}
             ref={messageListRef}
             messageList={messageList}
             currentUserId={userInformation.id}

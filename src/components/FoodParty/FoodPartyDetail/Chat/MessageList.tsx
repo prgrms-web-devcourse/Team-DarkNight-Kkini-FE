@@ -1,19 +1,17 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { forwardRef } from 'react';
-import { Message } from 'types/foodParty';
+import { FoodPartyStatus, Message } from 'types/foodParty';
 
 import MessageListItem from './MessageListitem';
 
 type MessageListProps = {
+  status: FoodPartyStatus;
   messageList: Message[];
   currentUserId: number;
 };
 
 const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
-  (
-    { messageList, currentUserId }: { messageList: Message[]; currentUserId: number },
-    ref
-  ) => {
+  ({ status, messageList, currentUserId }, ref) => {
     return (
       <Flex
         ref={ref}
@@ -30,6 +28,11 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
             currentUserId={currentUserId}
           />
         ))}
+        {status === '식사 완료' && (
+          <Text fontSize='14px' textAlign='center' marginTop='1rem'>
+            식사가 종료되었습니다.
+          </Text>
+        )}
       </Flex>
     );
   }
