@@ -20,6 +20,7 @@ const MessageInput = forwardRef<HTMLInputElement, MessageInputProps>(
         padding='1rem'>
         <Box position='relative' width='100%'>
           <Input
+            maxLength={100}
             focusBorderColor='primary'
             onKeyPress={onSendMessage}
             ref={ref}
