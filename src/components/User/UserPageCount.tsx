@@ -1,11 +1,11 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-type MyPageCountProps = {
+type UserPageCountProps = {
   name: string;
   value?: number;
 };
 
-const UserPageCount = ({ name, value }: MyPageCountProps) => {
+const UserPageCount = ({ name, value }: UserPageCountProps) => {
   return (
     <Flex direction='column' align='center'>
       <Text fontWeight={600}>{name}</Text>

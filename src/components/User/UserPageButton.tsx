@@ -1,11 +1,11 @@
 import Button from 'components/common/Button';
 
-type MyPageButtonProps = {
+type UserPageButtonProps = {
   buttonText: string;
   onClick: () => void;
 };
 
-const UserPageButton = ({ buttonText, onClick }: MyPageButtonProps) => {
+const UserPageButton = ({ buttonText, onClick }: UserPageButtonProps) => {
   return (
     <Button
       onClick={onClick}

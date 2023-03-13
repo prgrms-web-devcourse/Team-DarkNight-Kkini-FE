@@ -1,11 +1,11 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 
-type MyPageItemProps = {
+type UserPageItemProps = {
   name: string;
 } & PropsWithChildren;
 
-const UserPageItem = ({ name, children }: MyPageItemProps) => {
+const UserPageItem = ({ name, children }: UserPageItemProps) => {
   return (
     <Flex h='5rem' direction='column' gap='0.5rem' mt='1rem'>
       <Text fontWeight={600} fontSize='lg'>

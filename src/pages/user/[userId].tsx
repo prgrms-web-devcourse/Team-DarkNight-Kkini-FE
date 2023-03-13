@@ -18,7 +18,7 @@ import { motion } from 'framer-motion';
 import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
 
-const MyPage = () => {
+const UserPage = () => {
   const router = useRouter();
 
   const { data: MyUserData } = useGetUser();
@@ -120,4 +120,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default UserPage;
