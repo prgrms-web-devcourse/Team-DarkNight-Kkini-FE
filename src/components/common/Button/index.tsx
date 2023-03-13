@@ -7,8 +7,8 @@ type Props = {
   width?: string;
   height?: string;
   disabled?: boolean;
+  loading?: boolean;
   style?: FlexProps;
-  css?: SerializedStyles;
   children?: ReactNode;
   type?: string;
   onClick?: () => void;
@@ -28,6 +28,7 @@ const Button = ({
       w={width}
       h={height}
       disabled={props.disabled}
+      loading={props.loading}
       borderRadius='8px'
       onClick={onClick}
       type={props.type}
