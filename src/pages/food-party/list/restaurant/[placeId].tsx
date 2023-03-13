@@ -58,7 +58,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
   };
 
   if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
-  if (error) return <div>{error.toString()}</div>;
+  if (error) return <GoHomeWhenErrorInvoked />;
 
   return (
     <>

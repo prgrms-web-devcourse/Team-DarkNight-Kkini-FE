@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { css } from '@emotion/react';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import MyPageButton from 'components/User/MyPageButton';
 import MyPageCount from 'components/User/MyPageCount';
 import MyPageItem from 'components/User/MyPageItem';
@@ -25,7 +26,7 @@ const MyPage = () => {
   const { data, isLoading, error } = useGetSpecificUser(userId as string);
 
   if (isLoading) return <div></div>;
-  if (error) return <div>{error.toString()}</div>;
+  if (error) return <GoHomeWhenErrorInvoked />;
 
   return (
     <motion.div

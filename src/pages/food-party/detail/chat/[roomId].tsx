@@ -41,6 +41,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isSuccess: isSuccessGettingFoodPartyDetail,
     error: errorGettingFoodPartyDetail,
   } = useGetFoodPartyDetail(roomId, userInformation?.id);
+  console.log(messageList);
 
   const handleSendMessage = (event?: KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -138,12 +139,13 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
   )
     // To Do: 스켈레톤 작업 필요 by 승준
     return <div>Loading...</div>;
-  if (errorGettingExistingMessageList)
-    return <div>{errorGettingExistingMessageList.toString()}</div>;
-  if (errorGettingUserInformation)
-    return <div>{errorGettingUserInformation.toString()}</div>;
-  if (errorGettingFoodPartyDetail)
-    return <div>{errorGettingFoodPartyDetail.toString()}</div>;
+  if (
+    errorGettingExistingMessageList ||
+    errorGettingExistingMessageList ||
+    errorGettingUserInformation ||
+    errorGettingFoodPartyDetail
+  )
+    return <GoHomeWhenErrorInvoked />;
 
   return (
     <>

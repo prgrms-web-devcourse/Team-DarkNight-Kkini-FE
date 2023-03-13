@@ -52,7 +52,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   const router = useRouter();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
-  if (error) return <div>{error.toString()}</div>;
+  if (error) return <GoHomeWhenErrorInvoked />;
 
   const handleClickFoodPartyDetailStatusButton = (
     buttonText: FoodPartyDetailStatusButtonText
