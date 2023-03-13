@@ -41,7 +41,7 @@ const MessageListItem = ({
           {!isCurrentUser && (
             <Flex alignItems='center' gap='0.5rem'>
               <Avatar src={message.profileImgUrl} size='xs' marginBottom='-0.5rem' />
-              <Text fontSize='14px'>{message.username}</Text>
+              <Text fontSize='12px'>{message.username}</Text>
             </Flex>
           )}
 
@@ -49,7 +49,7 @@ const MessageListItem = ({
             <Text
               marginLeft={!isCurrentUser ? '0.5rem' : '0'}
               backgroundColor={isCurrentUser ? 'orange.200' : 'white'}
-              fontWeight={isCurrentUser ? 'extrabold' : 'medium'}
+              fontWeight={isCurrentUser ? 'extrabold' : 'normal'}
               padding='0.5rem 0.75rem'
               borderRadius={isCurrentUser ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'}
               fontSize='12px'>
