@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import {
+  foodPartyCreateDrawerOpenState,
   randomRestaurantDrawerOpenState,
   restaurantDrawerOpenState,
 } from 'stores/drawer';
@@ -26,6 +27,9 @@ import ZoomOutButton from './ZoomOutButton';
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const { kakaoMap, setKakaoMap } = useKakaoMapContext();
+  const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
+    foodPartyCreateDrawerOpenState
+  );
   const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
@@ -46,6 +50,11 @@ const KakaoMap = () => {
   const [restaurantDrawerOpen, setRestaurantDrawerOpen] = useRecoilState(
     restaurantDrawerOpenState
   );
+
+  const checkFoodPartyCreateDrawerIsOpened = () => {
+    foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
+    return;
+  };
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
@@ -91,7 +100,12 @@ const KakaoMap = () => {
     kakao.maps.load(() => {
       if (!kakaoMap) return;
 
+      kakaoMapAddEventListener(kakaoMap, 'click', () => {
+        foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
+      });
+
       kakaoMapAddEventListener(kakaoMap, 'zoom_changed', () => {
+        checkFoodPartyCreateDrawerIsOpened();
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,
           level: kakaoMapHelpers.getLevel(kakaoMap),
@@ -107,6 +121,7 @@ const KakaoMap = () => {
       });
 
       kakaoMapAddEventListener(kakaoMap, 'center_changed', () => {
+        checkFoodPartyCreateDrawerIsOpened();
         const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,
