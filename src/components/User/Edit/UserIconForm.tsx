@@ -26,15 +26,16 @@ const UserIconForm = ({
     file && fileReader.readAsDataURL(file);
 
     fileReader.addEventListener('load', (e) => {
-      const newSrc = typeof e.target?.result === 'string' ? e.target?.result : undefined;
-      if (file && newSrc) {
+      const newProfileImageSrc =
+        typeof e.target?.result === 'string' ? e.target?.result : undefined;
+      if (file && newProfileImageSrc) {
         formData.append('file', file);
         mutate(formData, {
           onSuccess: (data) => {
             setValue(data.path);
           },
         });
-        setImageSrc(newSrc);
+        setImageSrc(newProfileImageSrc);
       }
     });
   }, [file, mutate, setValue]);
