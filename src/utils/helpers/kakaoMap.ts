@@ -77,7 +77,7 @@ export const kakaoMapHelpers = {
     };
     const gapOfLongitude = Number(Math.abs(centerLongitude - northLongitude).toFixed(3));
     const distance = (LONGITUDE.METER * gapOfLongitude) / LONGITUDE.DEGREE;
-    return distance;
+    return Math.floor(distance);
   },
 };
 
