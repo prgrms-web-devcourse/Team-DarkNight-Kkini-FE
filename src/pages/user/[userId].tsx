@@ -63,7 +63,7 @@ const UserPage = ({ userId }: { userId: string }) => {
             <Heading fontSize='2xl'>프로필</Heading>
           </Flex>
           <Flex h='5rem' align='center'>
-            <Avatar src={data.profileImgUrl} width='65' height='65' mr='0.5rem' />
+            <Avatar src={data.profileImgUrl} size='lg' mr='0.5rem' />
             <Flex flex='1' justify='space-between' align='center' px='2.2rem'>
               <UserProfileCount
                 name='방장 횟수'
