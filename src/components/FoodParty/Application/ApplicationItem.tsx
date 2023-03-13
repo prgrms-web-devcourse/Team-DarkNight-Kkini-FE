@@ -1,9 +1,10 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import StatusBadge from 'components/common/StatusBadge';
 import ApplicationDrawer from 'components/FoodParty/Application/ApplicationDrawer';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { CiForkAndKnife, CiLocationOn } from 'react-icons/ci';
+import { CiLocationOn } from 'react-icons/ci';
 import { ApplicationItemType } from 'services/application';
 import { ApplicationStatusChangePayload } from 'types/application';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
@@ -46,10 +47,15 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
           <Flex flexDirection='column'>
             <Flex gap='0.5rem' fontSize='0.9rem' textColor='gray.800' alignItems='center'>
               <CiLocationOn />
-              <Text>{storeName}</Text>
+              <Text marginLeft='0.5rem'>{storeName}</Text>
             </Flex>
-            <Flex alignItems='center' gap='0.5rem'>
-              <CiForkAndKnife />
+            <Flex alignItems='center' gap='0.5rem' marginTop='0.2rem'>
+              <Image
+                src='/images/fork-knife.svg'
+                alt='밥모임 정보'
+                width='18'
+                height='18'
+              />
               <Button
                 height='1.5rem'
                 fontSize='0.9rem'

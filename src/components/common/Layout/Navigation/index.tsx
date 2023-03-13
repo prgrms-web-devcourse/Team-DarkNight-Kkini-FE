@@ -1,10 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import NavigationButton from 'components/common/Layout/Navigation/NavigationButton';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
-import { CiForkAndKnife, CiReceipt } from 'react-icons/ci';
+import { CiReceipt } from 'react-icons/ci';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { loginDrawerOpenState } from 'stores/drawer';
@@ -63,7 +64,7 @@ const Navigation = () => {
       onClick: handleClickCreateFoodParty,
     },
     {
-      Icon: <MyFoodPartyIcon />,
+      Icon: <Image src='/images/fork-knife.svg' alt='포크와 칼' width='30' height='36' />,
       label: '내 밥모임',
       onClick: handleClickMyFoodParty,
     },
@@ -104,11 +105,6 @@ const MapIcon = styled(BsMap)`
   height: 1.6rem;
   padding-top: 0.2rem;
   padding-bottom: 0.1rem;
-`;
-
-const MyFoodPartyIcon = styled(CiForkAndKnife)`
-  width: 2.5rem;
-  height: 2.5rem;
 `;
 
 const ApplicationIcon = styled(CiReceipt)`
