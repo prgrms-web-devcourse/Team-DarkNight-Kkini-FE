@@ -25,7 +25,7 @@ const FoodPartyMemberList = ({
         </Flex>
         {onClickChatButton && <Button onClick={onClickChatButton}>채팅방</Button>}
       </Flex>
-      <Flex flexDirection='column' gap='0.5rem' height='240px' overflowY='auto'>
+      <Flex flexDirection='column' gap='0.5rem' height='160px' overflowY='auto'>
         {memberList.map((member) => (
           <FoodPartyMemberItem key={member.userId} member={member} />
         ))}
