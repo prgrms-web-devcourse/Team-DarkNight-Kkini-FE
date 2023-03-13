@@ -13,6 +13,10 @@ const QUERY_KEYS = {
   RESTAURANT: {
     RESTAURANT_INFORMATION: 'restaurantInformation',
   },
+  APPLICATION: {
+    RECEIVED: 'receivedApplication',
+    SENT: 'sentApplication',
+  },
 } as const;
 
 export default QUERY_KEYS;
