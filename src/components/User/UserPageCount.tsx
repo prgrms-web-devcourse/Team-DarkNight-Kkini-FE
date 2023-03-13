@@ -5,7 +5,7 @@ type MyPageCountProps = {
   value?: number;
 };
 
-const MyPageCount = ({ name, value }: MyPageCountProps) => {
+const UserPageCount = ({ name, value }: MyPageCountProps) => {
   return (
     <Flex direction='column' align='center'>
       <Text fontWeight={600}>{name}</Text>
@@ -14,4 +14,4 @@ const MyPageCount = ({ name, value }: MyPageCountProps) => {
   );
 };
 
-export default MyPageCount;
+export default UserPageCount;

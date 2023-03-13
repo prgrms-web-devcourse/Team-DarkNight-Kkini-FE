@@ -5,7 +5,7 @@ type MyPageItemProps = {
   name: string;
 } & PropsWithChildren;
 
-const MyPageItem = ({ name, children }: MyPageItemProps) => {
+const UserPageItem = ({ name, children }: MyPageItemProps) => {
   return (
     <Flex h='5rem' direction='column' gap='0.5rem' mt='1rem'>
       <Text fontWeight={600} fontSize='lg'>
@@ -16,4 +16,4 @@ const MyPageItem = ({ name, children }: MyPageItemProps) => {
   );
 };
 
-export default MyPageItem;
+export default UserPageItem;
