@@ -16,6 +16,7 @@ const UserPageButton = ({ buttonText, onClick }: MyPageButtonProps) => {
         borderColor: 'primary',
         color: 'primary',
         marginTop: '0.5rem',
+        padding: '0.75rem',
       }}>
       {buttonText}
     </Button>
