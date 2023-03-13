@@ -3,6 +3,7 @@ import BottomDrawer from 'components/common/BottomDrawer';
 import Image from 'next/image';
 import { ApplicationItemType } from 'services/application';
 import { ApplicationStatusChangePayload } from 'types/application';
+import { isActiveApplication } from 'utils/helpers/application';
 
 type ApplicationDrawerProps = {
   isOpen: boolean;
@@ -73,18 +74,28 @@ const ApplicationDrawer = ({
                   <Badge colorScheme='orange'>매너온도 {user.mannerScore}</Badge>
                 </Flex>
                 <Flex alignItems='center' padding='0.5rem 0' gap='0.8rem'>
-                  <Button
-                    flex='1'
-                    onClick={() => handleClickApplicationChangeStatus(id, true, onClose)}>
-                    좋아요
-                  </Button>
-                  <Button
-                    flex='1'
-                    onClick={() =>
-                      handleClickApplicationChangeStatus(id, false, onClose)
-                    }>
-                    죄송합니다
-                  </Button>
+                  {isActiveApplication(application.status) ? (
+                    <>
+                      <Button
+                        flex='1'
+                        onClick={() =>
+                          handleClickApplicationChangeStatus(id, false, onClose)
+                        }>
+                        죄송합니다
+                      </Button>
+                      <Button
+                        flex='1'
+                        onClick={() =>
+                          handleClickApplicationChangeStatus(id, true, onClose)
+                        }>
+                        좋아요
+                      </Button>
+                    </>
+                  ) : (
+                    <Button flex='1' onClick={onClose}>
+                      이미 처리한 신청서입니다.
+                    </Button>
+                  )}
                 </Flex>
               </>
             )}
