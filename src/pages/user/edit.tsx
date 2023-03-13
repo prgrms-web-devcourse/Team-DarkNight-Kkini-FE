@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 
 const EditUserProfilePage = () => {
   const { data, isSuccess } = useGetUser();
-  const { mutate } = useUpdateUserProfile(data?.id.toString() as string);
+  const { mutate } = useUpdateUserProfile(data?.id as number);
 
   const {
     register,

@@ -15,7 +15,7 @@ const ROUTING_PATHS = {
   },
   USER: {
     PROFILE: (userId: string | number) => `/user/${userId}`,
-    EDIT_PROFILE: 'user/edit',
+    EDIT_PROFILE: '/user/edit',
   },
 };
 
