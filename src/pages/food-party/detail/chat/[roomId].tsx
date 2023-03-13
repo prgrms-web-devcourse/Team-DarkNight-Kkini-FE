@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
 import { axiosAuthApi } from 'apis/axios';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
+import FoodPartyDetailChatLoadingSpinner from 'components/FoodParty/FoodPartyDetail/Chat/FoodPartyDetailChatLoadingSpinner';
 import MessageInput from 'components/FoodParty/FoodPartyDetail/Chat/MessageInput';
 import MessageList from 'components/FoodParty/FoodPartyDetail/Chat/MessageList';
 import {
@@ -156,7 +157,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isLoadingGettingFoodPartyDetail
   )
     // To Do: 스켈레톤 작업 필요 by 승준
-    return <div>Loading...</div>;
+    return <FoodPartyDetailChatLoadingSpinner />;
   if (
     errorGettingExistingMessageList ||
     errorGettingExistingMessageList ||
@@ -171,7 +172,11 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingExistingMessageList &&
       isSuccessGettingUserInformation &&
       isSuccessGettingFoodPartyDetail ? (
-        <Flex position='relative' flexDirection='column' height='100%'>
+        <Flex
+          position='relative'
+          flexDirection='column'
+          height='100%'
+          backgroundColor='#f2f2f2'>
           <MessageList
             status={foodPartyDetail.crewStatus}
             ref={messageListRef}

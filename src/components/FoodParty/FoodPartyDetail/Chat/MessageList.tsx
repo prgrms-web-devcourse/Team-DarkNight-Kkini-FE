@@ -23,8 +23,7 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
         flex={1}
         gap='0.75rem'
         padding='1rem 1rem 5rem 1rem'
-        overflowY='auto'
-        backgroundColor='#f2f2f2'>
+        overflowY='auto'>
         {messageListCheckedIsFirstMessageOfThatDay.map((message) => (
           <MessageListItem
             key={message.id}
