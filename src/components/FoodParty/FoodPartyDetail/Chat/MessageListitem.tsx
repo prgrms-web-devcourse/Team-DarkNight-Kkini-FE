@@ -15,9 +15,22 @@ const MessageListItem = ({
   return (
     <>
       {message.isFirstMessageOfThatDay && (
-        <Text textAlign='center' fontSize='10px'>
-          {templatePromiseDate(year, month, day)}
-        </Text>
+        <Flex
+          justifyContent='center'
+          alignItems='center'
+          _notFirst={{
+            marginTop: '2rem',
+          }}>
+          <Box
+            textAlign='center'
+            fontSize='12px'
+            backgroundColor='white'
+            borderRadius='1rem'
+            fontWeight='extrabold'
+            padding='0.5rem'>
+            {templatePromiseDate(year, month, day)}
+          </Box>
+        </Flex>
       )}
       <Flex
         width='100%'
