@@ -30,15 +30,15 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
             {status}
           </Badge>
           <Text marginTop='0.3rem'>
-            <Text as='span' fontWeight='600' marginRight='0.2rem'>
+            <Text as='span' fontWeight='600'>
               {crewName}
-            </Text>
-            밥모임에
+            </Text>{' '}
+            밥모임에{' '}
             {onClick && (
-              <Text as='span' fontWeight='600' marginLeft='0.2rem'>
+              <Text as='span' fontWeight='600'>
                 {user.nickname}님이
               </Text>
-            )}
+            )}{' '}
             신청했습니다.
           </Text>
           <Flex alignItems='center' gap='0.5rem' fontSize='0.9rem' textColor='purple.500'>
