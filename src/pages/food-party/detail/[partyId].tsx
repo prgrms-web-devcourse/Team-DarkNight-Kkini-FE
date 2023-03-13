@@ -1,6 +1,7 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyApplicationDrawer from 'components/FoodParty/FoodPartyApplicationDrawer';
+import FoodPartyDetailCheckChangeStatusModal from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailCheckChangeStatusModal';
 import FoodPartyDetailContent from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailContent';
 import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailHeader';
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
@@ -15,13 +16,17 @@ import {
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { FoodPartyDetailStatusButtonText } from 'types/foodParty';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
+import {
+  checkButtonTextIsDisabled,
+  getFoodPartyDetailStatusButtonText,
+} from 'utils/helpers/foodParty';
 
 // To Do: 404 처리 by 승준
 // partyId로 조회하는 페이지
 // 조회가 안되면 404 처리
 const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
+  const router = useRouter();
   const { data: userInformation } = useGetUser();
   // To Do: 실시간 업데이트를 위한 refetch 필요 by 승준
   const {
@@ -49,15 +54,29 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     onClose: onCloseApplicationDrawer,
     onOpen: onOpenApplicationDrawer,
   } = useDisclosure();
-  const router = useRouter();
+  const {
+    isOpen: isOpenCheckChangeStatusModal,
+    onClose: onCloseCheckChangeStatusModal,
+    onOpen: onOpenCheckChangeStatusModal,
+  } = useDisclosure();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <GoHomeWhenErrorInvoked />;
 
-  const handleClickFoodPartyDetailStatusButton = (
-    buttonText: FoodPartyDetailStatusButtonText
-  ) => {
-    switch (buttonText) {
+  const foodPartyDetailStatusButtonText = getFoodPartyDetailStatusButtonText({
+    applied: foodPartyDetail!.proposalStatus,
+    isLeader,
+    isMember,
+    isFull,
+    status: foodPartyDetail!.crewStatus,
+  });
+
+  const isDisabledFoodPartyDetailStatusButton = checkButtonTextIsDisabled(
+    foodPartyDetailStatusButtonText
+  );
+
+  const handleChangeFoodPartyDetailStatusButton = () => {
+    switch (foodPartyDetailStatusButtonText) {
       case '모집 완료할끼니?':
         // To Do: alert 띄우기 by 승준
         updateFoodPartyStatus('모집 종료');
@@ -76,6 +95,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 
   const handleClickChatButton = () => {
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.CHAT(partyId));
+  };
+
+  const handleClickFoodPartyDetailStatusButton = () => {
+    if (foodPartyDetailStatusButtonText === '참여할 끼니?') onOpenApplicationDrawer();
+    else onOpenCheckChangeStatusModal();
   };
 
   return (
@@ -103,12 +127,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             capacity={foodPartyDetail.capacity}
           />
           <FoodPartyDetailStatusButton
-            applied={foodPartyDetail.proposalStatus}
-            isLeader={isLeader}
-            isMember={isMember}
-            isFull={isFull}
+            buttonText={foodPartyDetailStatusButtonText}
+            isDisabled={isDisabledFoodPartyDetailStatusButton}
             onClick={handleClickFoodPartyDetailStatusButton}
-            status={foodPartyDetail.crewStatus}
           />
           <RestaurantBottomDrawer
             isOpen={isOpenRestaurantBottomDrawer}
@@ -119,6 +140,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             isOpen={isOpenApplicationDrawer}
             onClose={onCloseApplicationDrawer}
             onClickSubmitButton={createFoodPartyApplication}
+          />
+          <FoodPartyDetailCheckChangeStatusModal
+            isOpen={isOpenCheckChangeStatusModal}
+            onClose={onCloseCheckChangeStatusModal}
+            onClickYes={handleChangeFoodPartyDetailStatusButton}
           />
         </Flex>
       ) : (

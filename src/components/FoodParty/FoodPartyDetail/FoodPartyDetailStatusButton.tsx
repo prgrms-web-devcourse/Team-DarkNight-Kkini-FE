@@ -1,47 +1,22 @@
 import { Button } from '@chakra-ui/react';
-import {
-  FoodPartyDetailStatusButtonText,
-  FoodPartyStatus,
-  ProposalStatus,
-} from 'types/foodParty';
-import {
-  checkButtonTextIsDisabled,
-  getFoodPartyDetailStatusButtonText,
-} from 'utils/helpers/foodParty';
+import { FoodPartyDetailStatusButtonText } from 'types/foodParty';
 
 type FoodPartyDetailStatusButtonProps = {
-  applied: ProposalStatus;
-  isLeader: boolean;
-  isMember: boolean;
-  isFull: boolean;
-  status: FoodPartyStatus;
-  onClick: (buttonText: FoodPartyDetailStatusButtonText) => void;
+  buttonText: FoodPartyDetailStatusButtonText;
+  isDisabled: boolean;
+  onClick: () => void;
 };
 
 const FoodPartyDetailStatusButton = ({
-  applied,
-  isLeader,
-  isMember,
-  isFull,
-  status,
+  buttonText,
+  isDisabled,
   onClick,
 }: FoodPartyDetailStatusButtonProps) => {
-  const buttonText = getFoodPartyDetailStatusButtonText(
-    applied,
-    isLeader,
-    isMember,
-    isFull,
-    status
-  );
-  const isDisabled = checkButtonTextIsDisabled(buttonText);
-
   return (
     <>
       {buttonText && (
         <Button
-          onClick={() => {
-            onClick(buttonText);
-          }}
+          onClick={onClick}
           disabled={isDisabled}
           position='absolute'
           left='50%'
