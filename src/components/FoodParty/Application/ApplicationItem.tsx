@@ -1,9 +1,12 @@
-import { Badge, Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
+import StatusBadge from 'components/common/StatusBadge';
 import ApplicationDrawer from 'components/FoodParty/Application/ApplicationDrawer';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { CiLocationOn } from 'react-icons/ci';
+import { CiForkAndKnife, CiLocationOn } from 'react-icons/ci';
 import { ApplicationItemType } from 'services/application';
 import { ApplicationStatusChangePayload } from 'types/application';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 type ApplicationItemProps = {
   application: ApplicationItemType;
@@ -11,7 +14,8 @@ type ApplicationItemProps = {
 };
 
 const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
-  const { user, status, storeName, crewName } = application;
+  const { user, status, storeName, crewName, crewId } = application;
+  const router = useRouter();
   const [isOpen, setOpen] = useState(false);
   const closeDrawer = () => setOpen(false);
 
@@ -26,10 +30,8 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
         alignItems='center'
         gap='1rem'>
         <Flex direction='column'>
-          <Badge colorScheme='purple' width='3rem' textAlign='center'>
-            {status}
-          </Badge>
-          <Text marginTop='0.3rem'>
+          <StatusBadge status={status} style={{ width: '3rem', textAlign: 'center' }} />
+          <Text margin='0.3rem 0'>
             <Text as='span' fontWeight='600'>
               {crewName}
             </Text>{' '}
@@ -41,14 +43,25 @@ const ApplicationItem = ({ application, onClick }: ApplicationItemProps) => {
             )}{' '}
             신청했습니다.
           </Text>
-          <Flex alignItems='center' gap='0.5rem' fontSize='0.9rem' textColor='purple.500'>
-            <CiLocationOn />
-            <Text>{storeName}</Text>
+          <Flex flexDirection='column'>
+            <Flex gap='0.5rem' fontSize='0.9rem' textColor='gray.800' alignItems='center'>
+              <CiLocationOn />
+              <Text>{storeName}</Text>
+            </Flex>
+            <Flex alignItems='center' gap='0.5rem'>
+              <CiForkAndKnife />
+              <Button
+                height='1.5rem'
+                fontSize='0.9rem'
+                onClick={() =>
+                  router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(crewId))
+                }>
+                밥모임으로 이동하기
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
-        <Button backgroundColor='#E9D8FD' onClick={() => setOpen(true)}>
-          보기
-        </Button>
+        <Button onClick={() => setOpen(true)}>보기</Button>
       </Flex>
       <ApplicationDrawer
         isOpen={isOpen}
