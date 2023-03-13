@@ -21,8 +21,7 @@ const UserProfile = () => {
       </Flex>
       <Avatar
         src={data?.profileImgUrl}
-        width='35'
-        height='35'
+        size='sm'
         marginLeft='0.7rem'
         onClick={handleClickUserIcon}
       />

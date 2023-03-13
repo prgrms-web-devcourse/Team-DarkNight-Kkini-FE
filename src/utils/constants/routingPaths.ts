@@ -17,6 +17,7 @@ const ROUTING_PATHS = {
     PROFILE: (userId: string | number) => `/user/${userId}`,
     EDIT_PROFILE: '/user/edit',
   },
+  APPLICATION: '/food-party/application',
 };
 
 export default ROUTING_PATHS;

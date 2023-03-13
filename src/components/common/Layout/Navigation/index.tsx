@@ -1,10 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import NavigationButton from 'components/common/Layout/Navigation/NavigationButton';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsMap } from 'react-icons/bs';
-import { CgCommunity } from 'react-icons/cg';
+import { CiReceipt } from 'react-icons/ci';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { loginDrawerOpenState } from 'stores/drawer';
@@ -31,18 +32,24 @@ const Navigation = () => {
     router.push(ROUTING_PATHS.HOME);
   };
 
-  const handleClickCommunity = () => {
+  const handleClickCreateFoodParty = () => {
     if (checkLoginUser()) {
       setFoodPartyCreateDrawerOpen(!foodPartyCreateDrawerOpen);
     }
   };
 
   const handleClickMyFoodParty = () => {
-    if (!checkLoginUser()) {
-      return;
+    if (checkLoginUser()) {
+      foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
+      router.push(ROUTING_PATHS.FOOD_PARTY.LIST.MY);
     }
-    foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
-    router.push(ROUTING_PATHS.FOOD_PARTY.LIST.MY);
+  };
+
+  const handleClickApplication = () => {
+    if (checkLoginUser()) {
+      router.push(ROUTING_PATHS.APPLICATION);
+      foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
+    }
   };
 
   const NavigationItem: NavigationButtonProps[] = [
@@ -52,14 +59,19 @@ const Navigation = () => {
       onClick: handleClickAroundFoodPartyList,
     },
     {
-      Icon: <PlusIcon />,
+      Icon: <FoodPartyCreateIcon />,
       label: '밥모임생성',
-      onClick: handleClickCommunity,
+      onClick: handleClickCreateFoodParty,
     },
     {
-      Icon: <CommunityIcon />,
+      Icon: <Image src='/images/fork-knife.svg' alt='포크와 칼' width='30' height='36' />,
       label: '내 밥모임',
       onClick: handleClickMyFoodParty,
+    },
+    {
+      Icon: <ApplicationIcon />,
+      label: '신청서',
+      onClick: handleClickApplication,
     },
   ];
 
@@ -82,7 +94,7 @@ const Navigation = () => {
 
 export default Navigation;
 
-const PlusIcon = styled(AiOutlinePlusCircle)`
+const FoodPartyCreateIcon = styled(AiOutlinePlusCircle)`
   width: 1.6rem;
   height: 1.6rem;
   margin-top: 0.1rem;
@@ -95,7 +107,7 @@ const MapIcon = styled(BsMap)`
   padding-bottom: 0.1rem;
 `;
 
-const CommunityIcon = styled(CgCommunity)`
-  width: 2.5rem;
-  height: 2.5rem;
+const ApplicationIcon = styled(CiReceipt)`
+  width: 2rem;
+  height: 1.8rem;
 `;

@@ -1,22 +1,13 @@
-import { Badge } from '@chakra-ui/react';
+import { Badge, BadgeProps } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 type CategoryProps = {
   children: ReactNode;
-  backgroundColor?: string;
+  style?: BadgeProps;
 };
 
-const CHAKRA_BUTTON_DEFAULT_COLOR = 'gray.100';
-
-const Category = ({ children, backgroundColor }: CategoryProps) => {
-  return (
-    <Badge
-      backgroundColor={backgroundColor || CHAKRA_BUTTON_DEFAULT_COLOR}
-      borderRadius='1.5rem'
-      padding='2px 5px'>
-      {children}
-    </Badge>
-  );
+const Category = ({ children, style }: CategoryProps) => {
+  return <Badge {...style}>{children}</Badge>;
 };
 
 export default Category;

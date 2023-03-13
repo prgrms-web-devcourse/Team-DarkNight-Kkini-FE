@@ -8,10 +8,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Category from 'components/common/Category';
+import StatusBadge from 'components/common/StatusBadge';
 import { FoodParty } from 'types/foodParty';
 import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodParty';
-
-import FoodPartyDetailStatusCategory from './FoodPartyDetail/FoodPartyDetailStatusCategory';
 
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 
@@ -38,8 +37,13 @@ const FoodPartyListItem = ({
       marginBottom='1rem'>
       <Flex flexDirection='column' gap='0.5rem'>
         <Stack direction='row'>
-          <FoodPartyDetailStatusCategory status={party.crewStatus} />
-          <Category>{party.category}</Category>
+          <StatusBadge status={party.crewStatus} />
+          <Category
+            style={{
+              padding: '2px 5px',
+            }}>
+            {party.category}
+          </Category>
         </Stack>
         <Text>{party.name}</Text>
         <Flex justifyContent='space-between'>

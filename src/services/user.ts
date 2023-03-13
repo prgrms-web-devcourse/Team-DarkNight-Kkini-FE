@@ -1,16 +1,8 @@
 import { axiosAuthApi } from 'apis/axios';
+import { UserProfile } from 'types/auth';
 
-type UserProfileType = {
-  data: {
-    id: number;
-    nickname: string;
-    profileImgUrl: string;
-    introduction: string;
-    leaderCount: number;
-    crewCount: number;
-    tasteScore: number;
-    mannerScore: number;
-  };
+type UserProfileResponse = {
+  data: UserProfile;
 };
 
 type UserImageType = {
@@ -25,12 +17,12 @@ export type UserUpdateProfileType = {
 };
 
 export const fetchUser = async () => {
-  const { data } = await axiosAuthApi.get<UserProfileType>('/api/v1/user/me');
+  const { data } = await axiosAuthApi.get<UserProfileResponse>('/api/v1/user/me');
   return data.data;
 };
 
 export const fetchSpecificUser = async (userId: string | number) => {
-  const { data } = await axiosAuthApi.get<UserProfileType>(`api/v1/user/${userId}`);
+  const { data } = await axiosAuthApi.get<UserProfileResponse>(`api/v1/user/${userId}`);
   return data.data;
 };
 
@@ -41,7 +33,7 @@ export const updateUserImage = async (body: FormData) => {
 };
 
 export const updateUserProfile = async (body: UserUpdateProfileType) => {
-  const { data } = await axiosAuthApi.put<UserProfileType>('/api/v1/user/me', body);
+  const { data } = await axiosAuthApi.put<UserProfileResponse>('/api/v1/user/me', body);
 
   return data;
 };

@@ -16,6 +16,15 @@ const globalStyle = css`
     height: 100vh;
   }
 
+  // 스크롤바 없애기
+  body {
+    -ms-overflow-style: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   // 랜덤 맛집 커스텀 오버레이
   .random-restaurant-custom-overlay {
     animation: bounce 2s infinite ease-out;

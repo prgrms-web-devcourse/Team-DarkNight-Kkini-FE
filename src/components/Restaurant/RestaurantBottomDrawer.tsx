@@ -36,7 +36,14 @@ const RestaurantBottomDrawer = ({
           {categories && (
             <Stack direction='row' paddingBottom='0.5rem'>
               {categories.map((category) => (
-                <Category key={category}>{category}</Category>
+                <Category
+                  key={category}
+                  style={{
+                    borderRadius: '0.5rem',
+                    padding: '2px 5px',
+                  }}>
+                  {category}
+                </Category>
               ))}
             </Stack>
           )}
