@@ -48,3 +48,17 @@ export const getMessageListCheckedIsFirstMessageOfThatDay = (messageList: Messag
 
   return newMessageList;
 };
+
+export const getIsCurrentUser = (targetUserId: number, currentUserId: number) =>
+  targetUserId === currentUserId;
+
+export const templateTime = (hour: number, minute: number) => {
+  const minuteStartWithZero = String(minute).padStart(2, '0');
+
+  if (hour === 0) return `오전 12:${minuteStartWithZero}`;
+  if (hour === 12) return `오후 12:${minuteStartWithZero}`;
+  if (hour > 12)
+    return `오후 ${String(hour - 12).padStart(2, '0')}:${minuteStartWithZero}`;
+
+  return `오전 ${String(hour).padStart(2, '0')}:${minuteStartWithZero}`;
+};
