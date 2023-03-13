@@ -1,8 +1,15 @@
 import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import ReceivedApplication from 'components/FoodParty/Application/ReceivedApplication';
 import SentApplication from 'components/FoodParty/Application/SentApplication';
+import { useGetUser } from 'hooks/query/useUser';
 
 const Application = () => {
+  const { data, isLoading, isError } = useGetUser();
+
+  if (isLoading) return;
+  if (isError) return <GoHomeWhenErrorInvoked />;
+
   return (
     <>
       <Heading size='lg' padding='1rem'>
@@ -15,10 +22,10 @@ const Application = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <ReceivedApplication />
+            <ReceivedApplication id={data.id} />
           </TabPanel>
           <TabPanel>
-            <SentApplication />
+            <SentApplication id={data.id} />
           </TabPanel>
         </TabPanels>
       </Tabs>

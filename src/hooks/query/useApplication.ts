@@ -8,19 +8,17 @@ import {
 import { ApplicationStatusChangePayload } from 'types/application';
 import QUERY_KEYS from 'utils/constants/queryKeys';
 
-export const useReceivedApplication = () => {
+export const useReceivedApplication = (userId: number) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.APPLICATION.RECEIVED],
+    queryKey: [QUERY_KEYS.APPLICATION.RECEIVED, userId],
     queryFn: fetchReceivedApplication,
-    staleTime: 100,
   });
 };
 
-export const useSentApplication = () => {
+export const useSentApplication = (userId: number) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.APPLICATION.SENT],
+    queryKey: [QUERY_KEYS.APPLICATION.SENT, userId],
     queryFn: fetchSentApplication,
-    staleTime: 100,
   });
 };
 

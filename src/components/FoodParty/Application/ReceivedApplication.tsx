@@ -4,9 +4,10 @@ import {
   useReceivedApplication,
 } from 'hooks/query/useApplication';
 import { ApplicationStatusChangePayload } from 'types/application';
+import { UserProfile } from 'types/auth';
 
-const ReceivedApplication = () => {
-  const { data } = useReceivedApplication();
+const ReceivedApplication = ({ id }: Pick<UserProfile, 'id'>) => {
+  const { data } = useReceivedApplication(id);
   const { mutate } = useChangeApplicationStatus();
   const handleChangeApplicationStatus = ({
     applicationId,
