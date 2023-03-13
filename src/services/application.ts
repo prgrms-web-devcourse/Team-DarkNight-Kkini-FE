@@ -1,5 +1,7 @@
 import { axiosAuthApi } from 'apis/axios';
+import { isAxiosError } from 'axios';
 import { UserProfile } from 'types/auth';
+import { ERROR_CODE } from 'utils/constants/errorCode';
 
 export type ApplicationItemType = {
   id: number;
@@ -39,8 +41,16 @@ export const fetchSentApplication = async () => {
 };
 
 export const changeApplicationStatus = async (applicationId: number, status: string) => {
-  const response = await axiosAuthApi.patch(`/api/v1/proposals/${applicationId}`, {
-    proposalStatus: status,
-  });
-  return response.status === 200;
+  try {
+    const response = await axiosAuthApi.patch(`/api/v1/proposals/${applicationId}`, {
+      proposalStatus: status,
+    });
+    return response.status === 200;
+  } catch (error) {
+    if (isAxiosError<{ code: string; message: string }>(error)) {
+      if (error.response?.data.code === ERROR_CODE.FOOD_PARTY_OVER_CAPACITY) {
+        throw error.response.data.message;
+      }
+    }
+  }
 };

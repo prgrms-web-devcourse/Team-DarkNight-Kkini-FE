@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import {
   changeApplicationStatus,
   fetchReceivedApplication,
@@ -44,6 +45,15 @@ export const useChangeApplicationStatus = () => {
         isClosable: true,
       });
       queryClient.invalidateQueries([QUERY_KEYS.APPLICATION.RECEIVED]);
+    },
+    onError: (errorMessage: string) => {
+      toast({
+        title: errorMessage,
+        position: 'top',
+        status: 'error',
+        duration: 1500,
+        isClosable: true,
+      });
     },
   });
 };
