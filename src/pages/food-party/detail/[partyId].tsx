@@ -96,8 +96,19 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   };
 
   const handleClickFoodPartyDetailStatusButton = () => {
-    if (foodPartyDetailStatusButtonText === '참여할 끼니?') onOpenApplicationDrawer();
-    else onOpenCheckChangeStatusModal();
+    switch (foodPartyDetailStatusButtonText) {
+      case '모집 완료할끼니?':
+        onOpenCheckChangeStatusModal();
+        return;
+      case '식사를 완료했끼니?':
+        onOpenCheckChangeStatusModal();
+        return;
+      case '참여할 끼니?':
+        onOpenApplicationDrawer();
+        return;
+      default:
+        return;
+    }
   };
 
   return (
