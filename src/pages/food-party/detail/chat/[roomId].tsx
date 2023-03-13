@@ -156,7 +156,6 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
     isLoadingToConnectSocket ||
     isLoadingGettingFoodPartyDetail
   )
-    // To Do: 스켈레톤 작업 필요 by 승준
     return <FoodPartyDetailChatLoadingSpinner />;
   if (
     errorGettingExistingMessageList ||
