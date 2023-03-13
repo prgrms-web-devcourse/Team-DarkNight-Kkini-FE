@@ -17,6 +17,8 @@ import UserPageItem from 'components/User/UserPageItem';
 import { motion } from 'framer-motion';
 import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
+import { logout } from 'services/auth';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 
 const UserPage = () => {
   const router = useRouter();
@@ -33,7 +35,8 @@ const UserPage = () => {
   };
 
   const handleClickLogoutButton = () => {
-    /**Todo. 로그아웃 기능 구현 */
+    logout();
+    window.location.replace(ROUTING_PATHS.HOME);
   };
 
   return (
