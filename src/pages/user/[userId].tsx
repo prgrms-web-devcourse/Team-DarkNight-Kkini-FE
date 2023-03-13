@@ -11,22 +11,30 @@ import {
 } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
-import MyPageButton from 'components/User/MyPageButton';
-import MyPageCount from 'components/User/MyPageCount';
-import MyPageItem from 'components/User/MyPageItem';
+import UserPageButton from 'components/User/UserPageButton';
+import UserPageCount from 'components/User/UserPageCount';
+import UserPageItem from 'components/User/UserPageItem';
 import { motion } from 'framer-motion';
-import { useGetSpecificUser } from 'hooks/query/useUser';
+import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
 
 const MyPage = () => {
   const router = useRouter();
 
+  const { data: MyUserData } = useGetUser();
   const { userId } = router.query;
-
   const { data, isLoading, error } = useGetSpecificUser(userId as string);
 
   if (isLoading) return <div></div>;
   if (error) return <GoHomeWhenErrorInvoked />;
+
+  const handleClickEditProfileButton = () => {
+    router.push('/user/edit');
+  };
+
+  const handleClickLogoutButton = () => {
+    /**Todo. 로그아웃 기능 구현 */
+  };
 
   return (
     <motion.div
@@ -53,14 +61,14 @@ const MyPage = () => {
         <Flex h='5rem' align='center'>
           <Avatar src={data?.profileImgUrl} width='65' height='65' mr='0.5rem' />
           <Flex flex='1' justify='space-between' align='center' px='2.2rem'>
-            <MyPageCount name='방장 횟수' value={data?.leaderCount}></MyPageCount>
-            <MyPageCount name='밥모임 횟수' value={data?.crewCount}></MyPageCount>
+            <UserPageCount name='방장 횟수' value={data?.leaderCount}></UserPageCount>
+            <UserPageCount name='밥모임 횟수' value={data?.crewCount}></UserPageCount>
           </Flex>
         </Flex>
-        <MyPageItem name='닉네임'>
+        <UserPageItem name='닉네임'>
           <Box>{data?.nickname}</Box>
-        </MyPageItem>
-        <MyPageItem name='매너점수'>
+        </UserPageItem>
+        <UserPageItem name='매너점수'>
           <Slider
             aria-label='slider-ex-2'
             colorScheme={(data?.mannerScore as number) >= 36.5 ? 'cyan' : 'orange'}
@@ -84,19 +92,29 @@ const MyPage = () => {
               {data?.mannerScore} &#8451;
             </SliderMark>
           </Slider>
-        </MyPageItem>
-        <MyPageItem name='맛잘알 점수'>
+        </UserPageItem>
+        <UserPageItem name='맛잘알 점수'>
           <Box textAlign='center' w='100%' h='2rem'>
             <Text fontSize='2xl'>{data?.tasteScore} 점</Text>
           </Box>
-        </MyPageItem>
-        <MyPageItem name='한줄소개'>
+        </UserPageItem>
+        <UserPageItem name='한줄소개'>
           <Box textAlign='center' w='100%' h='2rem'>
             <Text fontSize='md'>{data?.introduction} </Text>
           </Box>
-        </MyPageItem>
-        <MyPageButton buttonText='정보 수정하기' />
-        <MyPageButton buttonText='로그아웃 하기' />
+        </UserPageItem>
+        {MyUserData?.id === parseInt(userId as string) && (
+          <>
+            <UserPageButton
+              buttonText='정보 수정하기'
+              onClick={handleClickEditProfileButton}
+            />
+            <UserPageButton
+              buttonText='로그아웃 하기'
+              onClick={handleClickLogoutButton}
+            />
+          </>
+        )}
       </Flex>
     </motion.div>
   );
