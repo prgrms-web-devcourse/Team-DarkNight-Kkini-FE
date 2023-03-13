@@ -31,6 +31,12 @@ const Navigation = () => {
     router.push(ROUTING_PATHS.HOME);
   };
 
+  const handleClickCreateFoodParty = () => {
+    if (checkLoginUser()) {
+      setFoodPartyCreateDrawerOpen(!foodPartyCreateDrawerOpen);
+    }
+  };
+
   const handleClickMyFoodParty = () => {
     if (checkLoginUser()) {
       foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
@@ -55,7 +61,7 @@ const Navigation = () => {
     {
       Icon: <FoodPartyCreateIcon />,
       label: '밥모임생성',
-      onClick: handleClickMyFoodParty,
+      onClick: handleClickCreateFoodParty,
     },
     {
       Icon: <MyFoodPartyIcon />,
