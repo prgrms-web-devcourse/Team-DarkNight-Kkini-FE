@@ -3,21 +3,21 @@ import Button from 'components/common/Button';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import ReviewBottomDrawer from 'components/FoodParty/Review/ReviewBottomDrawer';
 import { useGetFoodPartyReviewees } from 'hooks/query/useFoodParty';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-const FoodPartyReviewPage = () => {
+const FoodPartyReviewPage = ({ partyId }: { partyId: string }) => {
   const router = useRouter();
   const [selectedUserName, setSelectedUserName] = useState('');
   const [selectedUserRole, setSelectedUserRole] = useState('');
   const [selectedUserId, setsSelectedUserId] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { partyId } = router.query;
   const {
     data: myRevieweeList,
     isLoading,
     error,
     isSuccess,
-  } = useGetFoodPartyReviewees(partyId as string);
+  } = useGetFoodPartyReviewees(partyId);
 
   if (isLoading) return <div></div>;
   if (error) return <GoHomeWhenErrorInvoked />;
@@ -97,7 +97,7 @@ const FoodPartyReviewPage = () => {
                     selectedUserRole={selectedUserRole}
                     selectedUserName={selectedUserName}
                     selectedUserId={selectedUserId}
-                    partyId={partyId as string}
+                    partyId={partyId}
                   />
                 </Flex>
               )
@@ -124,3 +124,14 @@ const FoodPartyReviewPage = () => {
 };
 
 export default FoodPartyReviewPage;
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { partyId } = context.query;
+
+  return {
+    props: {
+      partyId,
+    },
+  };
+};

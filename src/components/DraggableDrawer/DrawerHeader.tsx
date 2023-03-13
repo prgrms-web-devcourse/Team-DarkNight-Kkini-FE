@@ -1,6 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
 import SearchRestaurant from 'components/SearchRestaurant';
-import { GangwonEduFont } from 'styles/fonts';
 
 const DrawerHeader = () => {
   return (
@@ -13,7 +12,7 @@ const DrawerHeader = () => {
       borderTopRightRadius={8}
       pt={4}>
       <Box w={16} h={2} borderRadius={2} bg='#d0d0d0' margin='auto'></Box>
-      <Text fontSize='lg' className={GangwonEduFont.className} pl={5}>
+      <Text fontSize='lg' pl={5}>
         밥모임 가게 검색
       </Text>
       <SearchRestaurant />

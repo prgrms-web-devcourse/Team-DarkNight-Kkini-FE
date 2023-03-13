@@ -1,9 +1,14 @@
 import Button from 'components/common/Button';
 
-const MyPageButton = ({ buttonText }: { buttonText: string }) => {
+type UUserProfileButtonProps = {
+  buttonText: string;
+  onClick: () => void;
+};
+
+const UUserProfileButton = ({ buttonText, onClick }: UUserProfileButtonProps) => {
   return (
     <Button
-      onClick={console.log}
+      onClick={onClick}
       width='100%'
       style={{
         backgroundColor: 'white',
@@ -11,10 +16,11 @@ const MyPageButton = ({ buttonText }: { buttonText: string }) => {
         borderColor: 'primary',
         color: 'primary',
         marginTop: '0.5rem',
+        padding: '0.75rem',
       }}>
       {buttonText}
     </Button>
   );
 };
 
-export default MyPageButton;
+export default UUserProfileButton;

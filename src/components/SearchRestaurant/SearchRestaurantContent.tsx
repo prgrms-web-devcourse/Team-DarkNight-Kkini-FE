@@ -2,7 +2,6 @@ import { Accordion, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import { searchRestaurantListState } from 'stores/Restaurant';
-import { GangwonEduFont } from 'styles/fonts';
 
 import RestaurantItem from './RestaurantItem';
 
@@ -61,9 +60,7 @@ const SearchRestaurantContent = () => {
             height={100}
             style={{ borderRadius: '8px' }}
           />
-          <Text fontSize='lg' className={GangwonEduFont.className}>
-            {NO_RESULT_MESSAGE}
-          </Text>
+          <Text fontSize='lg'>{NO_RESULT_MESSAGE}</Text>
         </Flex>
       )}
     </Flex>

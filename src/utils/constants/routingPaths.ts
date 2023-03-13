@@ -13,6 +13,10 @@ const ROUTING_PATHS = {
     },
     REVIEW: (partyId: string | number) => `/food-party/review/${partyId}`,
   },
+  USER: {
+    PROFILE: (userId: string | number) => `/user/${userId}`,
+    EDIT_PROFILE: '/user/edit',
+  },
 };
 
 export default ROUTING_PATHS;

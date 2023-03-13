@@ -32,14 +32,15 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <Flex
         flexDirection='column'
         id='app'
+        pos='relative'
         className={BaseFont.className}
-        overflowY='hidden'>
+        overflow='hidden'>
         <Header />
         {/* To Do: 스크롤바 스타일링 필요 by 승준 */}
-        <Box as='main' flex={1} pos='relative' overflowY='auto'>
+        <Box as='main' flex={1} pos='relative' overflowX='hidden' overflowY='auto'>
           {children}
-          <CreateCommunityDrawer />
         </Box>
+        <CreateCommunityDrawer />
         <Navigation />
       </Flex>
     </ChakraProvider>
