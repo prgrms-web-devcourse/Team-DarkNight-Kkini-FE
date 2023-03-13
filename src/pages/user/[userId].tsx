@@ -11,9 +11,9 @@ import {
 } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
-import UserPageButton from 'components/User/UserPageButton';
-import UserPageCount from 'components/User/UserPageCount';
-import UserPageItem from 'components/User/UserPageItem';
+import UserProfileButton from 'components/User/UserProfileButton';
+import UserProfileCount from 'components/User/UserProfileCount';
+import UserProfileItem from 'components/User/UserProfileItem';
 import { motion } from 'framer-motion';
 import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
@@ -65,14 +65,18 @@ const UserPage = ({ userId }: { userId: string }) => {
           <Flex h='5rem' align='center'>
             <Avatar src={data.profileImgUrl} width='65' height='65' mr='0.5rem' />
             <Flex flex='1' justify='space-between' align='center' px='2.2rem'>
-              <UserPageCount name='방장 횟수' value={data.leaderCount}></UserPageCount>
-              <UserPageCount name='밥모임 횟수' value={data.crewCount}></UserPageCount>
+              <UserProfileCount
+                name='방장 횟수'
+                value={data.leaderCount}></UserProfileCount>
+              <UserProfileCount
+                name='밥모임 횟수'
+                value={data.crewCount}></UserProfileCount>
             </Flex>
           </Flex>
-          <UserPageItem name='닉네임'>
+          <UserProfileItem name='닉네임'>
             <Box>{data.nickname}</Box>
-          </UserPageItem>
-          <UserPageItem name='매너점수'>
+          </UserProfileItem>
+          <UserProfileItem name='매너점수'>
             <Slider
               aria-label='slider-ex-2'
               colorScheme={data.mannerScore >= 36.5 ? 'cyan' : 'orange'}
@@ -96,24 +100,24 @@ const UserPage = ({ userId }: { userId: string }) => {
                 {data.mannerScore} &#8451;
               </SliderMark>
             </Slider>
-          </UserPageItem>
-          <UserPageItem name='맛잘알 점수'>
+          </UserProfileItem>
+          <UserProfileItem name='맛잘알 점수'>
             <Box textAlign='center' w='100%' h='2rem'>
               <Text fontSize='2xl'>{data.tasteScore} 점</Text>
             </Box>
-          </UserPageItem>
-          <UserPageItem name='한줄소개'>
+          </UserProfileItem>
+          <UserProfileItem name='한줄소개'>
             <Box textAlign='center' w='100%' h='2rem'>
               <Text fontSize='md'>{data.introduction} </Text>
             </Box>
-          </UserPageItem>
+          </UserProfileItem>
           {isMyProfile(MyUserData?.id, userId) && (
             <>
-              <UserPageButton
+              <UserProfileButton
                 buttonText='정보 수정하기'
                 onClick={handleClickEditProfileButton}
               />
-              <UserPageButton
+              <UserProfileButton
                 buttonText='로그아웃 하기'
                 onClick={handleClickLogoutButton}
               />

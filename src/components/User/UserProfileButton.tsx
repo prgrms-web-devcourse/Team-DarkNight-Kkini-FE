@@ -1,11 +1,11 @@
 import Button from 'components/common/Button';
 
-type UserPageButtonProps = {
+type UUserProfileButtonProps = {
   buttonText: string;
   onClick: () => void;
 };
 
-const UserPageButton = ({ buttonText, onClick }: UserPageButtonProps) => {
+const UUserProfileButton = ({ buttonText, onClick }: UUserProfileButtonProps) => {
   return (
     <Button
       onClick={onClick}
@@ -23,4 +23,4 @@ const UserPageButton = ({ buttonText, onClick }: UserPageButtonProps) => {
   );
 };
 
-export default UserPageButton;
+export default UUserProfileButton;
