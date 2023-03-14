@@ -77,7 +77,7 @@ export const kakaoMapHelpers = {
     };
     const gapOfLongitude = Number(Math.abs(centerLongitude - northLongitude).toFixed(3));
     const distance = (LONGITUDE.METER * gapOfLongitude) / LONGITUDE.DEGREE;
-    return distance;
+    return Math.floor(distance);
   },
 };
 
@@ -91,9 +91,9 @@ export const kakaoMapAddEventListener = (
 
 export const getNearbyRestaurants = (
   latitude: number,
-  longitude: number
+  longitude: number,
+  kakaoMap: kakao.maps.Map
 ): Promise<kakao.maps.services.PlacesSearchResultItem[]> => {
-  const DEFAULT_RADIUS = 300;
   const KAKAO_RESTAURANT_CATEGORY_CODE = 'FD6';
 
   const nearbyRestaurants: kakao.maps.services.PlacesSearchResultItem[] = [];
@@ -101,7 +101,7 @@ export const getNearbyRestaurants = (
   const placesSearchOptions: kakao.maps.services.PlacesSearchOptions = {
     x: longitude,
     y: latitude,
-    radius: DEFAULT_RADIUS,
+    radius: kakaoMapHelpers.getDistanceFromLongitude(kakaoMap),
   };
 
   return new Promise((resolve, reject) => {

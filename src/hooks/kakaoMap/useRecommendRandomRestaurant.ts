@@ -36,7 +36,8 @@ const useRecommendRandomRestaurant = () => {
         kakaoMapHelpers.getCenter(kakaoMap);
       const nearbyRestaurants = await getNearbyRestaurants(
         currentLatitude,
-        currentLongitude
+        currentLongitude,
+        kakaoMap
       );
       const randomIndex = Math.floor(Math.random() * nearbyRestaurants.length);
       const randomRestaurant = nearbyRestaurants[randomIndex];
