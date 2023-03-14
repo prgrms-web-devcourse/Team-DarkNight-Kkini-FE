@@ -23,8 +23,7 @@ import {
 } from 'utils/helpers/foodParty';
 
 // To Do: 404 처리 by 승준
-// partyId로 조회하는 페이지
-// 조회가 안되면 404 처리
+// 조회가 안되면 에러 코드({"code":"CR001","message":"존재하지 않는 모임입니다."}) 맵핑하여 404 처리
 const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   const router = useRouter();
   const { data: userInformation } = useGetUser();
