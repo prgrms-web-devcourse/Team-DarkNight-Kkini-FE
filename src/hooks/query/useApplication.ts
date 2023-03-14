@@ -1,6 +1,5 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import {
   changeApplicationStatus,
   fetchReceivedApplication,
