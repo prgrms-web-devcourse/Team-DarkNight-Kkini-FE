@@ -103,7 +103,6 @@ export const getNearbyRestaurants = (
     y: latitude,
     radius: kakaoMapHelpers.getDistanceFromLongitude(kakaoMap),
   };
-  console.log(kakaoMapHelpers.getDistanceFromLongitude(kakaoMap));
 
   return new Promise((resolve, reject) => {
     kakaoPlacesService.categorySearch(
