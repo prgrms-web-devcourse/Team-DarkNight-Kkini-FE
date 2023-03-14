@@ -6,7 +6,7 @@ import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomResta
 import useNearFoodParty from 'hooks/useNearFoodParty';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   foodPartyCreateDrawerOpenState,
   randomRestaurantDrawerOpenState,
@@ -27,9 +27,7 @@ import ZoomOutButton from './ZoomOutButton';
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const { kakaoMap, setKakaoMap } = useKakaoMapContext();
-  const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
-    foodPartyCreateDrawerOpenState
-  );
+  const setFoodPartyCreateDrawerOpen = useSetRecoilState(foodPartyCreateDrawerOpenState);
   const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
@@ -50,10 +48,6 @@ const KakaoMap = () => {
   const [restaurantDrawerOpen, setRestaurantDrawerOpen] = useRecoilState(
     restaurantDrawerOpenState
   );
-
-  const checkFoodPartyCreateDrawerIsOpened = () => {
-    setFoodPartyCreateDrawerOpen(false);
-  };
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.
   useEffect(() => {
@@ -100,11 +94,10 @@ const KakaoMap = () => {
       if (!kakaoMap) return;
 
       kakaoMapAddEventListener(kakaoMap, 'click', () => {
-        foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
+        setFoodPartyCreateDrawerOpen(false);
       });
 
       kakaoMapAddEventListener(kakaoMap, 'zoom_changed', () => {
-        checkFoodPartyCreateDrawerIsOpened();
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,
           level: kakaoMapHelpers.getLevel(kakaoMap),
@@ -120,7 +113,6 @@ const KakaoMap = () => {
       });
 
       kakaoMapAddEventListener(kakaoMap, 'center_changed', () => {
-        checkFoodPartyCreateDrawerIsOpened();
         const { latitude, longitude } = kakaoMapHelpers.getCenter(kakaoMap);
         setKakaoMapOptions((previousKakaoMapOptions) => ({
           ...previousKakaoMapOptions,

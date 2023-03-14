@@ -5,13 +5,16 @@ import SearchRestaurantDrawerHeader from 'components/Search/SearchRestaurantDraw
 import { useDragDrawer } from 'hooks/useDragDrawer';
 import { useWindowHeight } from 'hooks/useWindowHeight';
 import { useRecoilValue } from 'recoil';
-import { foodPartyCreateDrawerOpenState, isIniState } from 'stores/drawer';
+import {
+  foodPartyCreateDrawerInitState,
+  foodPartyCreateDrawerOpenState,
+} from 'stores/drawer';
 
 const SearchRestaurantDrawer = () => {
   const { drawer, content } = useDragDrawer();
   const { windowHeight } = useWindowHeight();
   const foodPartyCreateDrawerOpen = useRecoilValue(foodPartyCreateDrawerOpenState);
-  const isInit = useRecoilValue(isIniState);
+  const isInit = useRecoilValue(foodPartyCreateDrawerInitState);
 
   return (
     <Box
