@@ -45,5 +45,14 @@ export const useChangeApplicationStatus = () => {
       });
       queryClient.invalidateQueries([QUERY_KEYS.APPLICATION.RECEIVED]);
     },
+    onError: (errorMessage: string) => {
+      toast({
+        title: errorMessage,
+        position: 'top',
+        status: 'error',
+        duration: 1500,
+        isClosable: true,
+      });
+    },
   });
 };

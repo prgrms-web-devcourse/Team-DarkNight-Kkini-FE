@@ -1,12 +1,8 @@
 import { axiosApi, removeAccessToken, setAccessToken } from 'apis/axios';
 import { isAxiosError } from 'axios';
 import { Token } from 'types/auth';
+import { BackendErrorResponse } from 'types/error';
 import { ERROR_CODE } from 'utils/constants/errorCode';
-
-type SilentLoginError = {
-  code: string;
-  message: string;
-};
 
 export const silentLogin = async () => {
   try {
@@ -14,7 +10,7 @@ export const silentLogin = async () => {
     setAccessToken(data.accessToken);
     return data.accessToken;
   } catch (error) {
-    if (isAxiosError<SilentLoginError>(error)) {
+    if (isAxiosError<BackendErrorResponse>(error)) {
       switch (error.response?.data.code) {
         case ERROR_CODE.INVALID_REFRESH_TOKEN:
           return false;

@@ -1,3 +1,4 @@
 export const ERROR_CODE = {
   INVALID_REFRESH_TOKEN: 'A004',
+  FOOD_PARTY_OVER_CAPACITY: 'P006',
 } as const;
