@@ -1,19 +1,21 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { forwardRef } from 'react';
-import { Message } from 'types/foodParty';
+import { FoodPartyStatus, Message } from 'types/foodParty';
+import { getMessageListCheckedIsFirstMessageOfThatDay } from 'utils/helpers/chat';
 
 import MessageListItem from './MessageListitem';
 
 type MessageListProps = {
+  status: FoodPartyStatus;
   messageList: Message[];
   currentUserId: number;
 };
 
 const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
-  (
-    { messageList, currentUserId }: { messageList: Message[]; currentUserId: number },
-    ref
-  ) => {
+  ({ status, messageList, currentUserId }, ref) => {
+    const messageListCheckedIsFirstMessageOfThatDay =
+      getMessageListCheckedIsFirstMessageOfThatDay(messageList);
+
     return (
       <Flex
         ref={ref}
@@ -21,15 +23,19 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
         flex={1}
         gap='0.75rem'
         padding='1rem 1rem 5rem 1rem'
-        overflowY='auto'
-        backgroundColor='#f2f2f2'>
-        {messageList.map((message) => (
+        overflowY='auto'>
+        {messageListCheckedIsFirstMessageOfThatDay.map((message) => (
           <MessageListItem
-            key={getUniqueMessageKey(message)}
+            key={message.id}
             message={message}
             currentUserId={currentUserId}
           />
         ))}
+        {status === '식사 완료' && (
+          <Text fontSize='14px' textAlign='center' marginTop='1rem'>
+            식사가 종료되었습니다.
+          </Text>
+        )}
       </Flex>
     );
   }
@@ -38,8 +44,3 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
 MessageList.displayName = 'MessageList';
 
 export default MessageList;
-
-const getUniqueMessageKey = (message: Message) =>
-  message.createdAt.map((time) => String(time)).join('') +
-  message.content +
-  message.username;

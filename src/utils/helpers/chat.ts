@@ -1,4 +1,5 @@
 import { CompatClient } from '@stomp/stompjs';
+import { Message } from 'types/foodParty';
 
 export const sendMessage = ({
   client,
@@ -18,4 +19,46 @@ export const sendMessage = ({
   };
 
   client.send(`/app/chat.sendMessage/${roomId}`, {}, JSON.stringify(sendMessageRequest));
+};
+
+export const getMessageListCheckedIsFirstMessageOfThatDay = (messageList: Message[]) => {
+  const newMessageList: Message[] = [];
+
+  messageList.forEach((currentMessage, index) => {
+    // 첫 번째 메세지인 경우
+    if (!index) {
+      newMessageList.push({
+        ...currentMessage,
+        createdAt: [...currentMessage.createdAt],
+        isFirstMessageOfThatDay: true,
+      });
+      return;
+    }
+
+    const [, , beforeDay] = messageList[index - 1].createdAt;
+    const [, , currentDay] = currentMessage.createdAt;
+
+    newMessageList.push({
+      ...currentMessage,
+      createdAt: [...currentMessage.createdAt],
+      // day가 달라지는 시점(그 날의 첫 번째 메세지)
+      isFirstMessageOfThatDay: beforeDay !== currentDay,
+    });
+  });
+
+  return newMessageList;
+};
+
+export const getIsCurrentUser = (targetUserId: number, currentUserId: number) =>
+  targetUserId === currentUserId;
+
+export const templateTime = (hour: number, minute: number) => {
+  const minuteStartWithZero = String(minute).padStart(2, '0');
+
+  if (hour === 0) return `오전 12:${minuteStartWithZero}`;
+  if (hour === 12) return `오후 12:${minuteStartWithZero}`;
+  if (hour > 12)
+    return `오후 ${String(hour - 12).padStart(2, '0')}:${minuteStartWithZero}`;
+
+  return `오전 ${String(hour).padStart(2, '0')}:${minuteStartWithZero}`;
 };

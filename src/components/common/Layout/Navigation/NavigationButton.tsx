@@ -6,6 +6,7 @@ const NavigationButton = ({ Icon, label, onClick }: NavigationButtonProps) => {
   return (
     <Box
       onClick={onClick}
+      cursor='pointer'
       display='flex'
       flexDirection='column'
       alignItems='center'
