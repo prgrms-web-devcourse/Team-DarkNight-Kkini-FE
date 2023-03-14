@@ -10,8 +10,8 @@ import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 import { getNearbyRestaurants } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
-const DEFAULT_BADGE_IMAGE_SIZE = 72;
-const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/restaurant-badge.svg';
+const DEFAULT_BADGE_IMAGE_SIZE = 120;
+const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/golden-fork.png';
 
 const useRecommendRandomRestaurant = () => {
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
@@ -69,8 +69,6 @@ const useRecommendRandomRestaurant = () => {
               width: ${DEFAULT_BADGE_IMAGE_SIZE}px;
               height: ${DEFAULT_BADGE_IMAGE_SIZE}px;
               z-index: 11;
-              border-radius: 50%;
-              box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.25);
             "/>
             <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>
           </div>

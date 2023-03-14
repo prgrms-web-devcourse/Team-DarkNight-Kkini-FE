@@ -27,18 +27,48 @@ const globalStyle = css`
 
   // 랜덤 맛집 커스텀 오버레이
   .random-restaurant-custom-overlay {
-    animation: bounce 2s infinite ease-out;
+    animation: put-down 0.35s linear;
   }
 
-  @keyframes bounce {
+  @keyframes put-down {
     0% {
-      transform: translateY(0);
+      transform: translate(1000%, -1000%);
     }
-    50% {
-      transform: translateY(-15px);
+
+    65% {
+      transform: translate(0%, 0%);
+    }
+
+    65% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    67% {
+      transform: translate(5px, 5px) rotate(5deg);
+    }
+    70% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    75% {
+      transform: translate(-5px, 5px) rotate(-5deg);
+    }
+    80% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    85% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    87% {
+      transform: translate(5px, 5px) rotate(5deg);
+    }
+    90% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    95% {
+      transform: translate(-5px, 5px) rotate(-5deg);
     }
     100% {
-      transform: translateY(0);
+      transform: translate(0, 0) rotate(0deg);
     }
   }
 
