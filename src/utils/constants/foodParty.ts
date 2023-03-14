@@ -16,8 +16,8 @@ export const foodPartyCategory = [
   },
   {
     title: '매너 있는 자리',
-    icon: '/images/friend.svg',
-    bgColor: '#F3F2F9',
+    icon: '/images/manner.svg',
+    bgColor: 'gray.200',
   },
 ];
 
