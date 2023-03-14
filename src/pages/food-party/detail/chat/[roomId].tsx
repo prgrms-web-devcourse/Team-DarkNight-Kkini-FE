@@ -142,7 +142,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
         subscription?.unsubscribe();
       });
     };
-  }, []);
+  }, [userInformation]);
 
   // 스크롤 항상 아래로 유지하기.
   useEffect(() => {
