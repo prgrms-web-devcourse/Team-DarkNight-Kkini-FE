@@ -64,7 +64,7 @@ const UserPage = ({ userId }: { userId: string }) => {
           </Flex>
           <Flex h='5rem' align='center'>
             <Avatar src={data.profileImgUrl} size='lg' mr='0.5rem' />
-            <Flex flex='1' justify='space-between' align='center' px='2.2rem'>
+            <Flex flex='1' justify='center' align='center' px='1.25rem' gap='1.5rem'>
               <UserProfileCount
                 name='방장 횟수'
                 value={data.leaderCount}></UserProfileCount>
