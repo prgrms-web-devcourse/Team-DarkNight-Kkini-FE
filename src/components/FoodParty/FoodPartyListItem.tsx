@@ -15,12 +15,14 @@ import { templatePromiseDate, templatePromiseTime } from 'utils/helpers/foodPart
 const DEFAULT_AVATAR_GROUP_MAX_VALUE = 3;
 
 type FoodPartyListItemProps = {
+  isMyFoodParty: boolean;
   party: FoodParty;
   onClickViewButton: (partyId: number) => void;
   onClickReviewButton?: (partyId: number) => void;
 };
 
 const FoodPartyListItem = ({
+  isMyFoodParty,
   party,
   onClickViewButton,
   onClickReviewButton,
@@ -63,7 +65,7 @@ const FoodPartyListItem = ({
           ))}
         </AvatarGroup>
         <Flex alignItems='center' gap='0.5rem'>
-          {party.crewStatus === '식사 완료' && (
+          {isMyFoodParty && party.crewStatus === '식사 완료' && (
             <Button
               onClick={() => {
                 onClickReviewButton && onClickReviewButton(party.id);

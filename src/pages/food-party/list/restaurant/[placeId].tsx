@@ -66,6 +66,7 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
         <Flex flexDirection='column' padding='1rem'>
           <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
           <FoodPartyList
+            isMyFoodParty={false}
             foodPartyList={foodPartyList}
             onClickViewButton={handleClickFoodPartyItem}
             onClickCreateFoodPartyButton={handleClickCreateFoodPartyButton}

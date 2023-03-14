@@ -4,6 +4,7 @@ import { FoodParty } from 'types/foodParty';
 import FoodPartyListItem from './FoodPartyListItem';
 
 type FoodPartyListProps = {
+  isMyFoodParty: boolean;
   foodPartyList: FoodParty[];
   onClickViewButton: (partyId: number) => void;
   onClickReviewButton?: (partyId: number) => void;
@@ -11,6 +12,7 @@ type FoodPartyListProps = {
 };
 
 const FoodPartyList = ({
+  isMyFoodParty,
   foodPartyList,
   onClickViewButton,
   onClickReviewButton,
@@ -19,7 +21,6 @@ const FoodPartyList = ({
   return (
     <>
       {!foodPartyList.length ? (
-        // To Do: 스타일링 by 승준
         <Flex
           flexDirection='column'
           position='absolute'
@@ -37,6 +38,7 @@ const FoodPartyList = ({
         <Flex flexDirection='column'>
           {foodPartyList?.map((party) => (
             <FoodPartyListItem
+              isMyFoodParty={isMyFoodParty}
               key={party.id}
               party={party}
               onClickViewButton={onClickViewButton}
