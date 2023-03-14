@@ -55,21 +55,20 @@ const FoodPartyReviewPage = ({ partyId }: { partyId: string }) => {
                   w='100%'
                   h='4rem'
                   borderRadius={8}
-                  border='1px solid #888'
-                  boxShadow='0px 0px 3px #888'
+                  border='1px solid #e2e5e6'
                   p='0.25rem 1rem'
                   align='center'>
                   <Flex flex='1' h='100%' m='0' align='center' gap='1rem'>
                     <Avatar src={profileImgUrl} width='2rem' height='2rem' />
                     <Flex direction='column' flex='1'>
-                      <Text fontSize='lg' fontWeight={800}>
+                      <Text fontSize='lg' fontWeight={800} noOfLines={1}>
                         {nickname}
                       </Text>
                       <Text
                         textAlign='left'
-                        fontSize='0.75rem'
-                        fontWeight={800}
-                        color={crewMemberRole === 'LEADER' ? 'red.800' : 'green.500'}>
+                        fontSize='0.6rem'
+                        fontWeight={500}
+                        color='gray.400'>
                         {crewMemberRole}
                       </Text>
                     </Flex>
@@ -86,8 +85,8 @@ const FoodPartyReviewPage = ({ partyId }: { partyId: string }) => {
                       fontWeight: '600',
                       borderRadius: '0.5rem',
                       padding: '0.25rem 0.5rem',
-                      color: 'white',
-                      background: isReviewed ? 'blue' : 'primary',
+                      color: isReviewed ? 'green.800' : 'orange.800',
+                      backgroundColor: isReviewed ? 'green.100' : 'orange.100',
                     }}>
                     {isReviewed ? '리뷰완료' : '리뷰하러 가기'}
                   </Button>
