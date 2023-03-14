@@ -137,6 +137,23 @@ const FoodPartyCreateForm = () => {
           </FormControl>
           {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
           <Accordion allowToggle defaultIndex={[0]}>
+            <AccordionItem>
+              <Flex align='center'>
+                <Flex
+                  as='span'
+                  flex='1'
+                  h={35}
+                  fontWeight={600}
+                  pl='1rem'
+                  justify='flex-start'
+                  align='center'>
+                  가게명
+                </Flex>
+                <Text color='gray.500' pr='2rem'>
+                  {selectedRestaurant.placeName}
+                </Text>
+              </Flex>
+            </AccordionItem>
             {/** 밥모임 카테고리 */}
             <AccordionItem>
               <AccordionHeader>
