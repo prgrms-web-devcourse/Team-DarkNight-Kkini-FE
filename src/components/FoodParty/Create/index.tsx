@@ -189,12 +189,8 @@ const FoodPartyCreateForm = () => {
           </Accordion>
           <Button
             type='submit'
-            width='80%'
+            width='100%'
             style={{
-              position: 'absolute',
-              left: '2.4rem',
-              right: 0,
-              bottom: '2rem',
               backgroundColor: 'primary',
               color: 'white',
             }}>
