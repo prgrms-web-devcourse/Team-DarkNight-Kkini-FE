@@ -14,7 +14,7 @@ const UserProfile = () => {
   };
 
   return (
-    <Flex alignItems='center'>
+    <Flex alignItems='center' cursor='pointer'>
       <Flex fontWeight='600'>
         <Text color='primary'>맛에 진심인, </Text>
         <Text marginLeft='0.25rem'>{data?.nickname}</Text>

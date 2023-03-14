@@ -1,4 +1,6 @@
+import { Flex } from '@chakra-ui/react';
 import { setAccessToken } from 'apis/axios';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
@@ -18,7 +20,11 @@ const OAuthLogin = () => {
     }
   }, [router]);
 
-  return <div>로그인 중..</div>;
+  return (
+    <Flex height='100%' justifyContent='center' alignItems='center'>
+      <Image src='/images/sausage.gif' alt='' width={480} height={480} />
+    </Flex>
+  );
 };
 
 export default OAuthLogin;
