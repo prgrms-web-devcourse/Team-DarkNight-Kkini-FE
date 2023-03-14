@@ -21,7 +21,7 @@ import { searchRestaurantListState, selectedRestaurantState } from 'stores/Resta
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getCategoryArray } from 'utils/helpers/foodParty';
 
-type RestaurantItemProps = {
+type SearchRestaurantItemProps = {
   name: string;
   address: string;
   categories: string;
@@ -31,7 +31,7 @@ type RestaurantItemProps = {
   index: number;
 };
 
-const RestaurantItem = ({
+const SearchRestaurantItem = ({
   name,
   address,
   categories,
@@ -39,7 +39,7 @@ const RestaurantItem = ({
   placeUrl,
   index,
   phoneNumber,
-}: RestaurantItemProps) => {
+}: SearchRestaurantItemProps) => {
   const router = useRouter();
   const searchRestaurantList = useRecoilValue(searchRestaurantListState);
   const setSelectedRestaurantList = useSetRecoilState(selectedRestaurantState);
@@ -112,4 +112,4 @@ const RestaurantItem = ({
   );
 };
 
-export default React.memo(RestaurantItem);
+export default React.memo(SearchRestaurantItem);

@@ -2,6 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import useKakaoMapContext from 'contexts/kakaoMap';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import ERROR_MESSAGE from 'utils/constants/errorMessage';
 import { DEFAULT_MAX_LEVEL, DEFAULT_MIN_LEVEL } from 'utils/constants/kakaoMap';
@@ -11,6 +12,7 @@ const DEFAULT_TOAST_DURATION = 5000;
 
 const useOperateKakaoMap = () => {
   const setKakaoMapOptions = useSetRecoilState(kakaoMapOptionsState);
+  const setFoodPartyCreateDrawerOpen = useSetRecoilState(foodPartyCreateDrawerOpenState);
   const [moveToCurrentLocationIsLoading, setMoveToCurrentLocationIsLoading] =
     useState(false);
   const errorToast = useToast({
@@ -22,6 +24,7 @@ const useOperateKakaoMap = () => {
 
   // 현재 위치로 카카오맵을 이동
   const moveToCurrentLocation = () => {
+    setFoodPartyCreateDrawerOpen(false);
     const successCallback: PositionCallback = ({ coords: { latitude, longitude } }) => {
       if (!kakaoMap) return;
       kakaoMapHelpers.panto({
@@ -61,6 +64,7 @@ const useOperateKakaoMap = () => {
   // 카카오맵 확대
   const zoomIn = () => {
     if (!kakaoMap) return;
+    setFoodPartyCreateDrawerOpen(false);
     const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);
 
     if (currentLevel <= DEFAULT_MIN_LEVEL) return;
@@ -83,6 +87,7 @@ const useOperateKakaoMap = () => {
   // 카카오맵 축소
   const zoomOut = () => {
     if (!kakaoMap) return;
+    setFoodPartyCreateDrawerOpen(false);
     const currentLevel = kakaoMapHelpers.getLevel(kakaoMap);
 
     if (currentLevel >= DEFAULT_MAX_LEVEL) return;

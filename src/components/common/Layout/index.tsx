@@ -2,7 +2,7 @@ import { Box, ChakraProvider, Flex } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
 import Header from 'components/common/Layout/Header';
 import Navigation from 'components/common/Layout/Navigation';
-import CreateCommunityDrawer from 'components/DraggableDrawer/CreateCommunityDrawer';
+import SearchRestaurantDrawer from 'components/Search/SearchRestaurantDrawer';
 import { ReactNode, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { silentLogin } from 'services/auth';
@@ -40,7 +40,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <Box as='main' flex={1} pos='relative' overflowX='hidden' overflowY='auto'>
           {children}
         </Box>
-        <CreateCommunityDrawer />
+        <SearchRestaurantDrawer />
         <Navigation />
       </Flex>
     </ChakraProvider>

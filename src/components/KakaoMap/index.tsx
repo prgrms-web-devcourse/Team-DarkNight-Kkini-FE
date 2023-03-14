@@ -6,8 +6,9 @@ import useRecommendRandomRestaurant from 'hooks/kakaoMap/useRecommendRandomResta
 import useNearFoodParty from 'hooks/useNearFoodParty';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  foodPartyCreateDrawerOpenState,
   randomRestaurantDrawerOpenState,
   restaurantDrawerOpenState,
 } from 'stores/drawer';
@@ -26,6 +27,7 @@ import ZoomOutButton from './ZoomOutButton';
 const KakaoMap = () => {
   const kakaoMapRef = useRef<HTMLDivElement>(null);
   const { kakaoMap, setKakaoMap } = useKakaoMapContext();
+  const setFoodPartyCreateDrawerOpen = useSetRecoilState(foodPartyCreateDrawerOpenState);
   const [kakaoMapOptions, setKakaoMapOptions] = useRecoilState(kakaoMapOptionsState);
   const { moveToCurrentLocation, moveToCurrentLocationIsLoading, zoomIn, zoomOut } =
     useOperateKakaoMap();
@@ -90,6 +92,10 @@ const KakaoMap = () => {
   useEffect(() => {
     kakao.maps.load(() => {
       if (!kakaoMap) return;
+
+      kakaoMapAddEventListener(kakaoMap, 'click', () => {
+        setFoodPartyCreateDrawerOpen(false);
+      });
 
       kakaoMapAddEventListener(kakaoMap, 'zoom_changed', () => {
         setKakaoMapOptions((previousKakaoMapOptions) => ({

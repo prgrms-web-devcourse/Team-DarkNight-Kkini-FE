@@ -1,9 +1,8 @@
 import { Accordion, Flex, Text } from '@chakra-ui/react';
+import SearchRestaurantItem from 'components/Search/SearchRestaurantItem';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import { searchRestaurantListState } from 'stores/Restaurant';
-
-import RestaurantItem from './RestaurantItem';
 
 const NO_RESULT_MESSAGE = '결과가 없습니다!';
 
@@ -38,7 +37,7 @@ const SearchRestaurantContent = () => {
               },
               index
             ) => (
-              <RestaurantItem
+              <SearchRestaurantItem
                 key={placeId}
                 index={index}
                 name={placeName}

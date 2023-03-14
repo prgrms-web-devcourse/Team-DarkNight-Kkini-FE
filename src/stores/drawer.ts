@@ -19,3 +19,8 @@ export const randomRestaurantDrawerOpenState = atom<boolean>({
   key: 'randomRestaurantOpen',
   default: false,
 });
+
+export const foodPartyCreateDrawerInitState = atom<boolean>({
+  key: 'foodPartyCreateDrawerIsInit',
+  default: true,
+});
