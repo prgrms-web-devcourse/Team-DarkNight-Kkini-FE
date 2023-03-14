@@ -1,4 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
 import { searchRestaurantListState } from 'stores/Restaurant';
 import { AxiosPhotoResponseValue } from 'types/kakaoSearch';
@@ -7,10 +8,12 @@ import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
 const useSearchRestaurant = () => {
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
-  const kakaoPlaces = new kakao.maps.services.Places();
   const setRestaurantList = useSetRecoilState(searchRestaurantListState);
+  const foodPartyCreateDrawerOpen = useRecoilValue(foodPartyCreateDrawerOpenState);
 
   const searchByKeyword = async (keyword: string) => {
+    if (!foodPartyCreateDrawerOpen) return;
+    const kakaoPlaces = new kakao.maps.services.Places();
     const { lng, lat } = kakaoMapOptions.center;
 
     const options = {

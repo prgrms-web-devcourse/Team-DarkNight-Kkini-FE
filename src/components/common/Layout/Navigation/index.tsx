@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
 import { loginDrawerOpenState } from 'stores/drawer';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
+import { isIniState } from 'stores/drawer';
 import { NavigationButtonProps } from 'types/navigation';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
@@ -18,6 +19,7 @@ const Navigation = () => {
   );
   const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
   const isLogin = useRecoilValue(isLoginState);
+  const [isInit, setIsInit] = useRecoilState(isIniState);
   const router = useRouter();
 
   const checkLoginUser = () => {
@@ -33,6 +35,7 @@ const Navigation = () => {
 
   const handleClickCreateFoodParty = () => {
     if (checkLoginUser()) {
+      isInit && setIsInit(false);
       setFoodPartyCreateDrawerOpen(!foodPartyCreateDrawerOpen);
     }
   };

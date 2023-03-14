@@ -52,8 +52,7 @@ const KakaoMap = () => {
   );
 
   const checkFoodPartyCreateDrawerIsOpened = () => {
-    foodPartyCreateDrawerOpen && setFoodPartyCreateDrawerOpen(false);
-    return;
+    setFoodPartyCreateDrawerOpen(false);
   };
 
   // 카카오맵을 생성하고 생성된 맵 객체를 state로 저장, 초기 현재 위치 커스텀 오버레이 생성.

@@ -5,14 +5,15 @@ import SearchRestaurantDrawerHeader from 'components/Search/SearchRestaurantDraw
 import { useDragDrawer } from 'hooks/useDragDrawer';
 import { useWindowHeight } from 'hooks/useWindowHeight';
 import { useRecoilValue } from 'recoil';
-import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
+import { foodPartyCreateDrawerOpenState, isIniState } from 'stores/drawer';
 
 const SearchRestaurantDrawer = () => {
   const { drawer, content } = useDragDrawer();
   const { windowHeight } = useWindowHeight();
   const foodPartyCreateDrawerOpen = useRecoilValue(foodPartyCreateDrawerOpenState);
+  const isInit = useRecoilValue(isIniState);
 
-  return foodPartyCreateDrawerOpen ? (
+  return (
     <Box
       ref={drawer}
       css={css`
@@ -20,7 +21,7 @@ const SearchRestaurantDrawer = () => {
         bottom: 0;
         left: 0;
         z-index: 11;
-        display: flex;
+        display: ${isInit ? 'none' : 'flex'};
         flex-direction: column;
         width: min(100vw, 560px);
         height: ${windowHeight - 120}px;
@@ -28,14 +29,25 @@ const SearchRestaurantDrawer = () => {
         border-top: 0px 0px 10px rgba(0, 0, 0, 0.6);
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
-        transform: translateY(120px);
-        animation: 0.5s ease-in-out Open;
-        @keyframes Open {
+        transform: ${foodPartyCreateDrawerOpen
+          ? 'translateY(120px)'
+          : 'translateY(720px)'};
+        animation: 0.5s ease-in-out
+          ${foodPartyCreateDrawerOpen ? 'openModal' : 'closeModal'};
+        @keyframes openModal {
           from {
             transform: translateY(${windowHeight - 120}px);
           }
           to {
             transform: translateY(120px);
+          }
+        }
+        @keyframes closeModal {
+          from {
+            transform: translateY(120px);
+          }
+          to {
+            transform: translateY(${windowHeight - 120}px);
           }
         }
       `}>
@@ -52,8 +64,6 @@ const SearchRestaurantDrawer = () => {
         </Box>
       </Box>
     </Box>
-  ) : (
-    <></>
   );
 };
 

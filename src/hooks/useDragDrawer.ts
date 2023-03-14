@@ -20,7 +20,7 @@ export function useDragDrawer() {
   const drawer = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const MIN_Y = 120; // 바텀시트가 최대로 높이 올라갔을 때의 y 값
-  const { MAX_Y, windowHeight } = useWindowHeight(); // 바텀시트가 최소로 내려갔을 때의 y 값
+  const { MAX_Y } = useWindowHeight(); // 바텀시트가 최소로 내려갔을 때의 y 값
   const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
     foodPartyCreateDrawerOpenState
   );
@@ -90,7 +90,7 @@ export function useDragDrawer() {
           nextDrawerY = MAX_Y;
         }
 
-        drawerRef.style.setProperty('transform', `translateY(${nextDrawerY - 120}px)`);
+        setFoodPartyCreateDrawerOpen(false);
       } else {
         document.body.style.overflowY = 'hidden';
       }
@@ -103,15 +103,13 @@ export function useDragDrawer() {
 
       const currentDrawerY = drawerRef.getBoundingClientRect().y;
 
-      if (currentDrawerY <= MAX_Y) {
+      if (currentDrawerY >= MAX_Y - 120) {
         if (touchMove.movingDirection === 'down') {
-          drawerRef.style.setProperty('transform', `translateY(${windowHeight - 120}px)`);
           setFoodPartyCreateDrawerOpen(false);
-          drawerRef.style.setProperty('display', 'none');
         }
       }
 
-      if (currentDrawerY >= MIN_Y) {
+      if (currentDrawerY <= MIN_Y) {
         if (touchMove.movingDirection === 'up') {
           drawerRef.style.setProperty('transform', `translateY(120px)`);
         }

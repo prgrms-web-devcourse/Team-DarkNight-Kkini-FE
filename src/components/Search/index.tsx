@@ -1,7 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import useSearchRestaurant from 'hooks/useSearchRestaurant';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { BiX } from 'react-icons/bi';
 import { BsSearch } from 'react-icons/bs';
 
