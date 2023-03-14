@@ -10,8 +10,7 @@ import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 import { getNearbyRestaurants } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
-const DEFAULT_BADGE_IMAGE_SIZE = 120;
-const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/golden-fork.png';
+const RESTAURANT_BADGE_IMAGE_FILE_PATH = '/images/golden-fork.svg';
 
 const useRecommendRandomRestaurant = () => {
   const [recommendRandomRestaurantIsLoading, setRecommendRandomRestaurantIsLoading] =
@@ -61,16 +60,34 @@ const useRecommendRandomRestaurant = () => {
         Number(randomRestaurant.y),
         Number(randomRestaurant.x),
         `
-          <div id="random-restaurant-custom-overlay-container">
+          <div 
+            id="random-restaurant-custom-overlay-container" 
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              width: 96px;
+              height: 96px;
+            ">
             <img
             class='random-restaurant-custom-overlay'
             src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
             style="
-              width: ${DEFAULT_BADGE_IMAGE_SIZE}px;
-              height: ${DEFAULT_BADGE_IMAGE_SIZE}px;
+              width: 96px;
+              height: 96px;
               z-index: 11;
             "/>
-            <div style='background-color: white; padding: 0.5rem;'>${placeName}</div>
+            <div class='random-restaurant-custom-overlay-place-name'
+              style="                
+                font-size: 14px;
+                background-color: #FF5C00;
+                opacity: 80%;
+                border-radius: 0.25rem;
+                color: white;
+                font-weight: 700;
+                padding: 0.25rem;
+                white-space: nowrap;
+              ">${placeName}</div>
           </div>
         `
       );
