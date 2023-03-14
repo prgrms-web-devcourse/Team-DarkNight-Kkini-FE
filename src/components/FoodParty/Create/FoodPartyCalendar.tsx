@@ -28,6 +28,7 @@ const FoodPartyCalendar = ({ date, onChange }: FoodPartyCalendarProps) => {
 const CustomCalendar = styled(Calendar)`
   width: 100%;
   color: #222;
+  font-size: 0.75rem;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
   background-color: #fff;
@@ -38,7 +39,7 @@ const CustomCalendar = styled(Calendar)`
     min-width: 44px;
     margin-top: 8px;
     color: #ff7525;
-    font-size: 16px;
+    font-size: 0.75rem;
     background: none;
   }
   .react-calendar__navigation button:enabled:hover,
