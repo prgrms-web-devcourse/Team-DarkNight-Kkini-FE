@@ -22,25 +22,13 @@ const FoodPartyDetailCheckChangeStatusModal = ({
   onClose,
   onClickYes,
 }: FoodPartyDetailCheckChangeStatusModalProps) => {
-  let modalHeaderText;
-
-  switch (foodPartyDetailStatusButtonText) {
-    case '모집 완료할끼니?':
-      modalHeaderText = '모집을 완료하시겠습니까?';
-      break;
-    case '식사를 완료했끼니?':
-      modalHeaderText = '식사를 종료하시겠습니까?';
-      break;
-    default:
-      modalHeaderText = '증말로!?';
-      break;
-  }
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered motionPreset='slideInBottom'>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign='center'>{modalHeaderText}</ModalHeader>
+        <ModalHeader textAlign='center'>
+          {getModalHeaderText(foodPartyDetailStatusButtonText)}
+        </ModalHeader>
         <ModalBody>
           <Flex justifyContent='center' alignItems='center' gap='1rem'>
             <Button
@@ -59,3 +47,16 @@ const FoodPartyDetailCheckChangeStatusModal = ({
 };
 
 export default FoodPartyDetailCheckChangeStatusModal;
+
+const getModalHeaderText = (
+  foodPartyDetailStatusButtonText: FoodPartyDetailStatusButtonText
+) => {
+  switch (foodPartyDetailStatusButtonText) {
+    case '모집 완료할끼니?':
+      return '모집을 완료하시겠습니까?';
+    case '식사를 완료했끼니?':
+      return '식사를 종료하시겠습니까?';
+    default:
+      return '증말로!?';
+  }
+};
