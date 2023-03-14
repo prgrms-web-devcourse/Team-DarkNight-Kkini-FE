@@ -26,6 +26,7 @@ const MyFoodPartyList = () => {
         <Flex flexDirection='column' padding='1rem'>
           <Heading paddingBottom='1rem'>나의 밥모임 목록</Heading>
           <FoodPartyList
+            isMyFoodParty
             foodPartyList={myFoodPartyList}
             onClickViewButton={handleClickViewFoodPartyButton}
             onClickReviewButton={handleClickReviewFoodPartyButton}
