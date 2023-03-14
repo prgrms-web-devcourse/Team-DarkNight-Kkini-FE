@@ -30,6 +30,7 @@ const Header = () => {
     <Container>
       <Link href={ROUTING_PATHS.HOME}>
         <Image
+          priority
           src='/images/kkini-logo.svg'
           alt='kkini-logo'
           width='200'

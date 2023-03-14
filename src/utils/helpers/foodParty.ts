@@ -32,13 +32,19 @@ export const templatePromiseTime = (hour: number, minute: number) => {
   return `${hour}:${String(minute).padStart(2, '0')}`;
 };
 
-export const getFoodPartyDetailStatusButtonText = (
-  applied: ProposalStatus,
-  isLeader: boolean,
-  isMember: boolean,
-  isFull: boolean,
-  status: FoodPartyStatus
-): FoodPartyDetailStatusButtonText => {
+export const getFoodPartyDetailStatusButtonText = ({
+  applied,
+  isLeader,
+  isMember,
+  isFull,
+  status,
+}: {
+  applied: ProposalStatus;
+  isLeader: boolean;
+  isMember: boolean;
+  isFull: boolean;
+  status: FoodPartyStatus;
+}): FoodPartyDetailStatusButtonText => {
   // 방장인 경우
   if (isLeader) return LeaderText[status];
 

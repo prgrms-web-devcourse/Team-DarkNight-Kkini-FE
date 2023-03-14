@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Member } from 'types/foodParty';
 
 import FoodPartyMemberItem from './FoodPartyMemberItem';
@@ -25,7 +25,7 @@ const FoodPartyMemberList = ({
         </Flex>
         {onClickChatButton && <Button onClick={onClickChatButton}>채팅방</Button>}
       </Flex>
-      <Flex flexDirection='column' gap='0.5rem'>
+      <Flex flexDirection='column' gap='0.5rem' height='160px' overflowY='auto'>
         {memberList.map((member) => (
           <FoodPartyMemberItem key={member.userId} member={member} />
         ))}
