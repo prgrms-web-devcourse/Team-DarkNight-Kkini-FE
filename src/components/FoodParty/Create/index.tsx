@@ -3,6 +3,8 @@ import {
   AccordionItem,
   Box,
   Flex,
+  FormControl,
+  FormErrorMessage,
   Input,
   Text,
   Textarea,
@@ -38,7 +40,13 @@ const FoodPartyCreateForm = () => {
   const [time, setTime] = useState<Moment>(moment().hours(19).minute(0));
   const [currentTime, setCurrentTime] = useState('');
 
-  const { register, setValue, getValues, handleSubmit } = useForm<PartyFormType>();
+  const {
+    register,
+    setValue,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PartyFormType>();
   const selectedRestaurant = useRecoilValue(selectedRestaurantState);
   const { mutate } = useCreateFoodParty();
   const handleClickCategory = (value: string) => {
@@ -104,21 +112,48 @@ const FoodPartyCreateForm = () => {
           어떤 밥모임을 만들까요?
         </Text>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            type='text'
-            {...register('name', {
-              required: true,
-              minLength: 1,
-            })}
-            bgColor='transparent'
-            placeholder='제목을 입력해주세요!'
-            size='lg'
-            borderColor='transparent'
-            focusBorderColor='gray.100'
-            my='1rem'
-          />
+          <FormControl isRequired isInvalid={!!errors.name}>
+            <Input
+              type='text'
+              {...register('name', {
+                required: true,
+                minLength: {
+                  value: 2,
+                  message: '제목을 2자 이상으로 적어주세요',
+                },
+                maxLength: {
+                  value: 15,
+                  message: '제목을 15자 이하로 적어주세요',
+                },
+              })}
+              bgColor='transparent'
+              placeholder='제목을 입력해주세요!'
+              size='lg'
+              borderColor='transparent'
+              focusBorderColor='gray.100'
+              my='0.25rem'
+            />
+            <FormErrorMessage mb='0.25rem'>{errors.name?.message}</FormErrorMessage>
+          </FormControl>
           {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
           <Accordion allowToggle defaultIndex={[0]}>
+            <AccordionItem>
+              <Flex align='center'>
+                <Flex
+                  as='span'
+                  flex='1'
+                  h={35}
+                  fontWeight={600}
+                  pl='1rem'
+                  justify='flex-start'
+                  align='center'>
+                  가게명
+                </Flex>
+                <Text color='gray.500' pr='2rem'>
+                  {selectedRestaurant.placeName}
+                </Text>
+              </Flex>
+            </AccordionItem>
             {/** 밥모임 카테고리 */}
             <AccordionItem>
               <AccordionHeader>
@@ -189,12 +224,8 @@ const FoodPartyCreateForm = () => {
           </Accordion>
           <Button
             type='submit'
-            width='80%'
+            width='100%'
             style={{
-              position: 'absolute',
-              left: '2.4rem',
-              right: 0,
-              bottom: '2rem',
               backgroundColor: 'primary',
               color: 'white',
             }}>
