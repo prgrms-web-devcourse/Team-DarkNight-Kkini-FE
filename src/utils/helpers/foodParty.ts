@@ -93,7 +93,7 @@ const NotMemberText: {
   '식사 완료': '',
 };
 
-export const getUniqueRestaurant = (foodParty: NearFoodPartyItem[]) => {
+export const getOneFoodPartyPerRestaurant = (foodParty: NearFoodPartyItem[]) => {
   return foodParty.filter(
     ({ storeId }, index, array) =>
       index === array.findIndex((item) => item.storeId === storeId)

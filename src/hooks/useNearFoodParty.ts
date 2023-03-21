@@ -5,7 +5,7 @@ import { fetchRestaurantDetail } from 'services/restaurant';
 import { NearFoodPartyItem, NearFoodPartyProps } from 'types/foodParty';
 import { Restaurant } from 'types/restaurant';
 import { getElement } from 'utils/helpers/elementHandler';
-import { getUniqueRestaurant } from 'utils/helpers/foodParty';
+import { getOneFoodPartyPerRestaurant } from 'utils/helpers/foodParty';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 const FOOD_PARTY_BADGE_IMAGE_FILE_PATH = 'images/rice.png';
@@ -42,7 +42,7 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 };
 
 const useNearFoodParty = () => {
-  const { kakaoMap, setKakaoMap } = useKakaoMapContext();
+  const { kakaoMap } = useKakaoMapContext();
   const [nearFoodParty, setNearFoodParty] = useState<NearFoodPartyItem[]>([]);
   const [foodPartyOverlay, setFoodPartyOverlay] = useState<kakao.maps.CustomOverlay[]>(
     []
@@ -50,9 +50,9 @@ const useNearFoodParty = () => {
   const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
 
   const getNearFoodParty = async (props: NearFoodPartyProps) => {
-    const nearFoodParty = await fetchNearFoodPartyList({ ...props });
-    const uniqueRestaurant = getUniqueRestaurant(nearFoodParty);
-    setNearFoodParty(uniqueRestaurant);
+    const newNearFoodParty = await fetchNearFoodPartyList({ ...props });
+    const processedFoodParty = getOneFoodPartyPerRestaurant(newNearFoodParty);
+    setNearFoodParty(processedFoodParty);
   };
 
   const handleOnClickRestaurant = async (storeId: number) => {
@@ -65,7 +65,7 @@ const useNearFoodParty = () => {
 
     // 현재있는 마커 지우기
     if (foodPartyOverlay.length) {
-      foodPartyOverlay.forEach((marker) => marker.setMap(null));
+      foodPartyOverlay.forEach((overlay) => overlay.setMap(null));
     }
 
     const newFoodPartyOverlayList = nearFoodParty.map(
