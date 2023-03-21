@@ -102,6 +102,7 @@ export type NearFoodPartyItem = {
   longitude: number;
   storeId: number;
   placeName: string;
+  overlay?: kakao.maps.CustomOverlay;
 };
 
 export type NearFoodPartyProps = {

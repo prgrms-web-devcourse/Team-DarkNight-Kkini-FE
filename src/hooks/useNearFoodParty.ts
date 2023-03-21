@@ -44,15 +44,26 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 const useNearFoodParty = () => {
   const { kakaoMap } = useKakaoMapContext();
   const [nearFoodParty, setNearFoodParty] = useState<NearFoodPartyItem[]>([]);
-  const [foodPartyOverlay, setFoodPartyOverlay] = useState<kakao.maps.CustomOverlay[]>(
-    []
-  );
   const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
 
   const getNearFoodParty = async (props: NearFoodPartyProps) => {
-    const newNearFoodParty = await fetchNearFoodPartyList({ ...props });
-    const processedFoodParty = getOneFoodPartyPerRestaurant(newNearFoodParty);
-    setNearFoodParty(processedFoodParty);
+    const foodPartyResponse = await fetchNearFoodPartyList({ ...props });
+    const processedFoodParty = getOneFoodPartyPerRestaurant(foodPartyResponse);
+    const newNearFooParty = addFoodPartyOverlay(processedFoodParty);
+    setNearFoodParty(newNearFooParty);
+  };
+
+  const addFoodPartyOverlay = (foodParty: NearFoodPartyItem[]) => {
+    return foodParty.map((props) => {
+      const { latitude, longitude, placeName, storeId } = props;
+      const content = createFoodPartyOverlay({ latitude, longitude, placeName, storeId });
+      const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
+
+      return {
+        ...props,
+        overlay,
+      };
+    });
   };
 
   const handleOnClickRestaurant = async (storeId: number) => {
@@ -63,20 +74,9 @@ const useNearFoodParty = () => {
   useEffect(() => {
     if (!kakaoMap || !nearFoodParty.length) return;
 
-    // 현재있는 마커 지우기
-    if (foodPartyOverlay.length) {
-      foodPartyOverlay.forEach((overlay) => overlay.setMap(null));
-    }
-
-    const newFoodPartyOverlayList = nearFoodParty.map(
-      ({ latitude, longitude, placeName, storeId }) => {
-        const content = createFoodPartyOverlay({
-          latitude,
-          longitude,
-          placeName,
-          storeId,
-        });
-        const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
+    // overlay 지도에 렌더링 & 이벤트 걸기
+    nearFoodParty.forEach(({ overlay, storeId }) => {
+      if (overlay) {
         overlay.setMap(kakaoMap);
 
         getElement(`#food-party-overlay-container-${storeId}`)?.addEventListener(
@@ -85,21 +85,21 @@ const useNearFoodParty = () => {
             handleOnClickRestaurant(storeId);
           }
         );
-
-        return overlay;
       }
-    );
-
-    setFoodPartyOverlay(newFoodPartyOverlayList);
+    });
 
     return () => {
+      // 이전 오버레이 삭제 & 이벤트 제거
       if (nearFoodParty.length) {
-        nearFoodParty.forEach(({ storeId }) =>
+        nearFoodParty.forEach(({ storeId, overlay }) => {
           getElement(`#food-party-overlay-container-${storeId}`)?.removeEventListener(
             'click',
             () => handleOnClickRestaurant
-          )
-        );
+          );
+          if (overlay) {
+            overlay.setMap(null);
+          }
+        });
       }
     };
   }, [nearFoodParty]);
