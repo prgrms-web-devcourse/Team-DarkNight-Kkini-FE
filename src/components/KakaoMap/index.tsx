@@ -161,11 +161,6 @@ const KakaoMap = () => {
     );
     const handleClickRandomRestaurantCustomOverlay = () => {
       setRandomRestaurantDrawerOpen(true);
-      kakaoMapHelpers.panto({
-        kakaoMap,
-        latitude: randomRestaurant.customOverlay?.getPosition().getLat(),
-        longitude: randomRestaurant.customOverlay?.getPosition().getLng(),
-      });
     };
     randomRestaurantCustomOverlayElement?.addEventListener(
       'click',
