@@ -74,7 +74,7 @@ const useNearFoodParty = () => {
   useEffect(() => {
     if (!kakaoMap || !nearFoodParty.length) return;
 
-    // overlay 지도에 렌더링 & 이벤트 걸기
+    // overlay 지도에 렌더링 & 이벤트 연결
     nearFoodParty.forEach(({ overlay, storeId }) => {
       if (overlay) {
         overlay.setMap(kakaoMap);
@@ -89,7 +89,7 @@ const useNearFoodParty = () => {
     });
 
     return () => {
-      // 이전 오버레이 삭제 & 이벤트 제거
+      // 그려져있던 overlay 삭제 & 이벤트 제거
       if (nearFoodParty.length) {
         nearFoodParty.forEach(({ storeId, overlay }) => {
           getElement(`#food-party-overlay-container-${storeId}`)?.removeEventListener(
@@ -102,7 +102,7 @@ const useNearFoodParty = () => {
         });
       }
     };
-  }, [nearFoodParty]);
+  }, [nearFoodParty, kakaoMap]);
 
   return {
     nearFoodParty,
