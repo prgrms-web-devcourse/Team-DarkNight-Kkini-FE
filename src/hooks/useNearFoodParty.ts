@@ -49,8 +49,8 @@ const useNearFoodParty = () => {
   const getNearFoodParty = async (props: NearFoodPartyProps) => {
     const foodPartyResponse = await fetchNearFoodPartyList({ ...props });
     const processedFoodParty = getOneFoodPartyPerRestaurant(foodPartyResponse);
-    const newNearFooParty = addFoodPartyOverlay(processedFoodParty);
-    setNearFoodParty(newNearFooParty);
+    const newNearFoodParty = addFoodPartyOverlay(processedFoodParty);
+    setNearFoodParty(newNearFoodParty);
   };
 
   const addFoodPartyOverlay = (foodParty: NearFoodPartyItem[]) => {
