@@ -46,21 +46,21 @@ const useNearFoodParty = () => {
   const [nearFoodParty, setNearFoodParty] = useState<NearFoodPartyItem[]>([]);
   const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
 
-  const getNearFoodParty = async (props: NearFoodPartyProps) => {
-    const foodPartyResponse = await fetchNearFoodPartyList({ ...props });
+  const getNearFoodParty = async (params: NearFoodPartyProps) => {
+    const foodPartyResponse = await fetchNearFoodPartyList({ ...params });
     const processedFoodParty = getOneFoodPartyPerRestaurant(foodPartyResponse);
     const newNearFoodParty = addFoodPartyOverlay(processedFoodParty);
     setNearFoodParty(newNearFoodParty);
   };
 
   const addFoodPartyOverlay = (foodParty: NearFoodPartyItem[]) => {
-    return foodParty.map((props) => {
-      const { latitude, longitude, placeName, storeId } = props;
+    return foodParty.map((foodPartyItem) => {
+      const { latitude, longitude, placeName, storeId } = foodPartyItem;
       const content = createFoodPartyOverlay({ latitude, longitude, placeName, storeId });
       const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
 
       return {
-        ...props,
+        ...foodPartyItem,
         overlay,
       };
     });
