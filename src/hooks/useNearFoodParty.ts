@@ -66,7 +66,7 @@ const useNearFoodParty = () => {
     });
   };
 
-  const handleOnClickRestaurant = async (storeId: number) => {
+  const handleClickFoodPartyOverlay = async (storeId: number) => {
     const restaurant = await fetchRestaurantDetail(storeId);
     setClickedRestaurant(restaurant);
   };
@@ -82,7 +82,7 @@ const useNearFoodParty = () => {
         getElement(`#food-party-overlay-container-${storeId}`)?.addEventListener(
           'click',
           () => {
-            handleOnClickRestaurant(storeId);
+            handleClickFoodPartyOverlay(storeId);
           }
         );
       }
@@ -94,7 +94,7 @@ const useNearFoodParty = () => {
         nearFoodParty.forEach(({ storeId, overlay }) => {
           getElement(`#food-party-overlay-container-${storeId}`)?.removeEventListener(
             'click',
-            () => handleOnClickRestaurant
+            () => handleClickFoodPartyOverlay
           );
           if (overlay) {
             overlay.setMap(null);
