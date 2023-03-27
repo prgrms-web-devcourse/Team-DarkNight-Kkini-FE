@@ -5,7 +5,7 @@ import { fetchRestaurantDetail } from 'services/restaurant';
 import { NearFoodPartyItem, NearFoodPartyProps } from 'types/foodParty';
 import { Restaurant } from 'types/restaurant';
 import { getElement } from 'utils/helpers/elementHandler';
-import { getUniqueRestaurant } from 'utils/helpers/foodParty';
+import { getOneFoodPartyPerRestaurant } from 'utils/helpers/foodParty';
 import { kakaoMapHelpers } from 'utils/helpers/kakaoMap';
 
 const FOOD_PARTY_BADGE_IMAGE_FILE_PATH = 'images/rice.png';
@@ -42,20 +42,31 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 };
 
 const useNearFoodParty = () => {
-  const { kakaoMap, setKakaoMap } = useKakaoMapContext();
+  const { kakaoMap } = useKakaoMapContext();
   const [nearFoodParty, setNearFoodParty] = useState<NearFoodPartyItem[]>([]);
-  const [foodPartyOverlay, setFoodPartyOverlay] = useState<kakao.maps.CustomOverlay[]>(
-    []
-  );
   const [clickedRestaurant, setClickedRestaurant] = useState<Restaurant>();
 
-  const getNearFoodParty = async (props: NearFoodPartyProps) => {
-    const nearFoodParty = await fetchNearFoodPartyList({ ...props });
-    const uniqueRestaurant = getUniqueRestaurant(nearFoodParty);
-    setNearFoodParty(uniqueRestaurant);
+  const getNearFoodParty = async (params: NearFoodPartyProps) => {
+    const foodPartyResponse = await fetchNearFoodPartyList({ ...params });
+    const processedFoodParty = getOneFoodPartyPerRestaurant(foodPartyResponse);
+    const newNearFoodParty = addFoodPartyOverlay(processedFoodParty);
+    setNearFoodParty(newNearFoodParty);
   };
 
-  const handleOnClickRestaurant = async (storeId: number) => {
+  const addFoodPartyOverlay = (foodParty: NearFoodPartyItem[]) => {
+    return foodParty.map((foodPartyItem) => {
+      const { latitude, longitude, placeName, storeId } = foodPartyItem;
+      const content = createFoodPartyOverlay({ latitude, longitude, placeName, storeId });
+      const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
+
+      return {
+        ...foodPartyItem,
+        overlay,
+      };
+    });
+  };
+
+  const handleClickFoodPartyOverlay = async (storeId: number) => {
     const restaurant = await fetchRestaurantDetail(storeId);
     setClickedRestaurant(restaurant);
   };
@@ -63,46 +74,35 @@ const useNearFoodParty = () => {
   useEffect(() => {
     if (!kakaoMap || !nearFoodParty.length) return;
 
-    // 현재있는 마커 지우기
-    if (foodPartyOverlay.length) {
-      foodPartyOverlay.forEach((marker) => marker.setMap(null));
-    }
-
-    const newFoodPartyOverlayList = nearFoodParty.map(
-      ({ latitude, longitude, placeName, storeId }) => {
-        const content = createFoodPartyOverlay({
-          latitude,
-          longitude,
-          placeName,
-          storeId,
-        });
-        const overlay = kakaoMapHelpers.makeCustomOverlay(latitude, longitude, content);
+    // overlay 지도에 렌더링 & 이벤트 연결
+    nearFoodParty.forEach(({ overlay, storeId }) => {
+      if (overlay) {
         overlay.setMap(kakaoMap);
 
         getElement(`#food-party-overlay-container-${storeId}`)?.addEventListener(
           'click',
           () => {
-            handleOnClickRestaurant(storeId);
+            handleClickFoodPartyOverlay(storeId);
           }
         );
-
-        return overlay;
       }
-    );
-
-    setFoodPartyOverlay(newFoodPartyOverlayList);
+    });
 
     return () => {
+      // 그려져있던 overlay 삭제 & 이벤트 제거
       if (nearFoodParty.length) {
-        nearFoodParty.forEach(({ storeId }) =>
+        nearFoodParty.forEach(({ storeId, overlay }) => {
           getElement(`#food-party-overlay-container-${storeId}`)?.removeEventListener(
             'click',
-            () => handleOnClickRestaurant
-          )
-        );
+            () => handleClickFoodPartyOverlay
+          );
+          if (overlay) {
+            overlay.setMap(null);
+          }
+        });
       }
     };
-  }, [nearFoodParty]);
+  }, [nearFoodParty, kakaoMap]);
 
   return {
     nearFoodParty,
