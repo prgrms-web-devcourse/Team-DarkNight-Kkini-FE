@@ -28,10 +28,8 @@ const ReviewBottomDrawer = ({
 }: ReviewBottomDrawerType) => {
   const [tasteScore, setTasteScore] = useState(0);
   const [mannerScore, setMannerScore] = useState(0);
-  const { mutate: mutateLeader, isSuccess: isSuccessMutateLeader } =
-    usePostLeaderReview(partyId);
-  const { mutate: mutateMember, isSuccess: isSuccessMutateMember } =
-    usePostMemberReview(partyId);
+  const { mutate: mutateLeader } = usePostLeaderReview(partyId);
+  const { mutate: mutateMember } = usePostMemberReview(partyId);
   const handleClickReviewButton = () => {
     const leaderBody = {
       leaderId: selectedUserId,
@@ -47,9 +45,10 @@ const ReviewBottomDrawer = ({
     selectedUserRole === 'LEADER'
       ? mutateLeader({ crewId: partyId, body: leaderBody })
       : mutateMember({ crewId: partyId, body: memberBody });
+
+    onClose();
   };
 
-  if (isSuccessMutateLeader || isSuccessMutateMember) onClose();
   return (
     <BottomDrawer
       isOpen={isOpen}
