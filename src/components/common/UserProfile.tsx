@@ -1,4 +1,4 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Flex, Text, useMediaQuery } from '@chakra-ui/react';
 import { useGetUser } from 'hooks/query/useUser';
 import { useRouter } from 'next/router';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
@@ -6,6 +6,7 @@ import ROUTING_PATHS from 'utils/constants/routingPaths';
 const UserProfile = () => {
   const { data } = useGetUser();
   const router = useRouter();
+  const [isMiniScreen] = useMediaQuery('(max-width: 400px)');
 
   const handleClickUserIcon = () => {
     if (data && data.id) {
@@ -16,8 +17,10 @@ const UserProfile = () => {
   return (
     <Flex alignItems='center' cursor='pointer'>
       <Flex fontWeight='600'>
-        <Text color='primary'>맛에 진심인, </Text>
-        <Text marginLeft='0.25rem'>{data?.nickname}</Text>
+        <Text color='primary'>{isMiniScreen ? '' : '맛에 진심인, '}</Text>
+        <Text marginLeft='0.25rem' noOfLines={1}>
+          {data?.nickname}
+        </Text>
       </Flex>
       <Avatar
         src={data?.profileImgUrl}
