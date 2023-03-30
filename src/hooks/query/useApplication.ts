@@ -12,6 +12,7 @@ export const useReceivedApplication = (userId: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.APPLICATION.RECEIVED, userId],
     queryFn: fetchReceivedApplication,
+    suspense: true,
   });
 };
 
@@ -19,6 +20,7 @@ export const useSentApplication = (userId: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.APPLICATION.SENT, userId],
     queryFn: fetchSentApplication,
+    suspense: true,
   });
 };
 

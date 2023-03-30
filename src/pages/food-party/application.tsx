@@ -1,8 +1,10 @@
 import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
+import ApplicationSkeleton from 'components/FoodParty/Application/ApplicationSkeleton';
 import ReceivedApplication from 'components/FoodParty/Application/ReceivedApplication';
 import SentApplication from 'components/FoodParty/Application/SentApplication';
 import { useGetUser } from 'hooks/query/useUser';
+import { Suspense } from 'react';
 
 const Application = () => {
   const { data, isLoading, isError } = useGetUser();
@@ -22,10 +24,14 @@ const Application = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <ReceivedApplication id={data.id} />
+            <Suspense fallback={<ApplicationSkeleton />}>
+              <ReceivedApplication id={data.id} />
+            </Suspense>
           </TabPanel>
           <TabPanel>
-            <SentApplication id={data.id} />
+            <Suspense fallback={<ApplicationSkeleton />}>
+              <SentApplication id={data.id} />
+            </Suspense>
           </TabPanel>
         </TabPanels>
       </Tabs>
