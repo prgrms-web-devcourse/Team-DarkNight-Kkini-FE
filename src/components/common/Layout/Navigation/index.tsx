@@ -7,7 +7,7 @@ import { BsMap } from 'react-icons/bs';
 import { CiForkAndKnife, CiReceipt } from 'react-icons/ci';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
-import { loginDrawerOpenState } from 'stores/drawer';
+import { loginDrawerState } from 'stores/drawer';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { foodPartyCreateDrawerInitState } from 'stores/drawer';
 import { NavigationButtonProps } from 'types/navigation';
@@ -17,14 +17,14 @@ const Navigation = () => {
   const [foodPartyCreateDrawerOpen, setFoodPartyCreateDrawerOpen] = useRecoilState(
     foodPartyCreateDrawerOpenState
   );
-  const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
+  const setLoginDrawer = useSetRecoilState(loginDrawerState);
   const isLogin = useRecoilValue(isLoginState);
   const [isInit, setIsInit] = useRecoilState(foodPartyCreateDrawerInitState);
   const router = useRouter();
 
   const checkLoginUser = () => {
     if (!isLogin) {
-      setLoginDrawerOpen(true);
+      setLoginDrawer({ isOpen: true, urlAfterLogin: ROUTING_PATHS.HOME });
     }
     return isLogin;
   };
