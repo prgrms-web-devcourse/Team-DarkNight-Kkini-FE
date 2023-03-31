@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { setAccessToken } from 'apis/axios';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -13,17 +14,25 @@ const OAuthLogin = () => {
 
   useEffect(() => {
     const token = router.query.accessToken as string;
+    const urlAfterLogin = router.query.urlAfterLogin as string;
+
     if (token) {
       setAccessToken(token);
       setLoginState(true);
-      router.push(ROUTING_PATHS.HOME, undefined, { shallow: true });
+      router.push(urlAfterLogin || ROUTING_PATHS.HOME, undefined, { shallow: true });
     }
   }, [router]);
 
   return (
-    <Flex height='100%' justifyContent='center' alignItems='center'>
-      <Image src='/images/sausage.gif' alt='' width={480} height={480} />
-    </Flex>
+    <>
+      {router.query.error ? (
+        <GoHomeWhenErrorInvoked />
+      ) : (
+        <Flex height='100%' justifyContent='center' alignItems='center'>
+          <Image src='/images/sausage.gif' alt='' width={480} height={480} />
+        </Flex>
+      )}
+    </>
   );
 };
 
