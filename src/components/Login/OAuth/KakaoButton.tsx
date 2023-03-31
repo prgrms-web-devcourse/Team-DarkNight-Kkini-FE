@@ -1,11 +1,12 @@
 import { Flex, Text } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import { ImBubble } from 'react-icons/im';
+import { RedirectUrlType } from 'types/auth';
 
-const KakaoButton = () => {
+const KakaoButton = ({ urlAfterLogin }: RedirectUrlType) => {
   return (
     <a
-      href={`${process.env.NEXT_PUBLIC_API_END_POINT}/oauth2/authorization/kakao?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}`}>
+      href={`${process.env.NEXT_PUBLIC_API_END_POINT}/oauth2/authorization/kakao?redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URL}?urlAfterLogin=${urlAfterLogin}`}>
       <Button
         style={{
           color: 'black',

@@ -5,8 +5,9 @@ import Category from 'components/common/Category';
 import { BiRightArrowCircle } from 'react-icons/bi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState } from 'stores/auth';
-import { loginDrawerOpenState } from 'stores/drawer';
+import { loginDrawerState } from 'stores/drawer';
 import { Restaurant } from 'types/restaurant';
+import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getCategoryArray, getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
 type RestaurantBottomDrawerProps = {
@@ -25,7 +26,17 @@ const RestaurantBottomDrawer = ({
   const categories = getCategoryArray(restaurant.categories);
   const photoUrls = getPhotoUrlsArray(restaurant.photoUrls || '');
   const isLogin = useRecoilValue(isLoginState);
-  const setLoginDrawerOpen = useSetRecoilState(loginDrawerOpenState);
+  const setLoginDrawerOpen = useSetRecoilState(loginDrawerState);
+
+  const handleClickButtonJoinAfterLogin = () => {
+    setLoginDrawerOpen({
+      isOpen: true,
+      urlAfterLogin: ROUTING_PATHS.FOOD_PARTY.LIST.RESTAURANT(
+        restaurant.placeId,
+        restaurant.placeName
+      ),
+    });
+  };
 
   return (
     <BottomDrawer
@@ -93,7 +104,7 @@ const RestaurantBottomDrawer = ({
           )}
           {onClickJoinButton && (
             <Button
-              onClick={isLogin ? onClickJoinButton : () => setLoginDrawerOpen(true)}
+              onClick={isLogin ? onClickJoinButton : handleClickButtonJoinAfterLogin}
               width='100%'
               style={{
                 backgroundColor: 'primary',
