@@ -1,13 +1,26 @@
 import { Avatar, Box, Button, Flex, Text } from '@chakra-ui/react';
+import { UseMutateFunction } from '@tanstack/react-query';
 import { AiOutlineCrown } from 'react-icons/ai';
 import { Member } from 'types/foodParty';
 
 type FoodPartyMemberItemProps = {
-  ableToKickOut: boolean;
   member: Member;
+  ableToKickOut: boolean;
+  onClickKickOutButton: UseMutateFunction<
+    void,
+    unknown,
+    {
+      memberId: number;
+    },
+    unknown
+  >;
 };
 
-const FoodPartyMemberItem = ({ ableToKickOut, member }: FoodPartyMemberItemProps) => {
+const FoodPartyMemberItem = ({
+  member,
+  ableToKickOut,
+  onClickKickOutButton,
+}: FoodPartyMemberItemProps) => {
   return (
     <Box position='relative' padding='0.25rem 0'>
       <Flex alignItems='center' justifyContent='space-between'>
@@ -21,7 +34,15 @@ const FoodPartyMemberItem = ({ ableToKickOut, member }: FoodPartyMemberItemProps
           )}
         </Flex>
         {member.crewMemberRole !== 'LEADER' && ableToKickOut && (
-          <Button size='sm'>강퇴</Button>
+          <Button
+            size='sm'
+            onClick={() => {
+              onClickKickOutButton({
+                memberId: member.userId,
+              });
+            }}>
+            강퇴
+          </Button>
         )}
       </Flex>
     </Box>

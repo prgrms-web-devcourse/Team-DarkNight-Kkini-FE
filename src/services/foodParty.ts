@@ -171,3 +171,10 @@ export const fetchNearFoodPartyList = async ({
 
   return responses;
 };
+
+export const deleteFoodPartyMember = async (partyId: string, memberId: number) => {
+  const response = await axiosAuthApi.delete(
+    `/api/v1/crews/${partyId}/crewMembers/${memberId}`
+  );
+  console.log(response);
+};

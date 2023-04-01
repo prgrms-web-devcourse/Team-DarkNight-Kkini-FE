@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import {
   createFoodParty,
   createFoodPartyApplication,
+  deleteFoodPartyMember,
   fetchFoodPartyDetail,
   fetchFoodPartyList,
   fetchFoodPartyMessageList,
@@ -163,6 +164,22 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
 
   return useMutation({
     mutationFn: (status: FoodPartyStatus) => updateFoodPartyStatus(partyId, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
+      // To Do: 배포 전에 지우기 by 승준
+      console.error(error);
+    },
+  });
+};
+
+export const useDeleteFoodPartyMember = (partyId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ memberId }: { memberId: number }) =>
+      deleteFoodPartyMember(partyId, memberId),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
