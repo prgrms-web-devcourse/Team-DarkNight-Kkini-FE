@@ -158,7 +158,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             foodPartyDetailStatusButtonText={foodPartyDetailStatusButtonText}
             isOpen={isOpenCheckChangeStatusModal}
             onClose={onCloseCheckChangeStatusModal}
-            onClickYes={handleChangeFoodPartyDetailStatusButton}
+            onClickYesButton={handleChangeFoodPartyDetailStatusButton}
           />
         </Flex>
       ) : (

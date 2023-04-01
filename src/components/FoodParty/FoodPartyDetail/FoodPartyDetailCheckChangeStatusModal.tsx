@@ -13,14 +13,14 @@ type FoodPartyDetailCheckChangeStatusModalProps = {
   foodPartyDetailStatusButtonText: FoodPartyDetailStatusButtonText;
   isOpen: boolean;
   onClose: () => void;
-  onClickYes: () => void;
+  onClickYesButton: () => void;
 };
 
 const FoodPartyDetailCheckChangeStatusModal = ({
   foodPartyDetailStatusButtonText,
   isOpen,
   onClose,
-  onClickYes,
+  onClickYesButton,
 }: FoodPartyDetailCheckChangeStatusModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered motionPreset='slideInBottom'>
@@ -33,7 +33,7 @@ const FoodPartyDetailCheckChangeStatusModal = ({
           <Flex justifyContent='center' alignItems='center' gap='1rem'>
             <Button
               onClick={() => {
-                onClickYes();
+                onClickYesButton();
                 onClose();
               }}>
               네!
