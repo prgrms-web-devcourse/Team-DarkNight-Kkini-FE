@@ -1,8 +1,8 @@
-export const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
-
 // 조회수 측정
-export const pageview = (url: string) => {
-  window.gtag('config', GOOGLE_ANALYTICS_ID, {
+export const pageview = (url: URL) => {
+  if (typeof window === undefined) return;
+
+  window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
     page_path: url,
   });
 };
@@ -19,6 +19,8 @@ export const event = ({
   label: string;
   value: number;
 }) => {
+  if (typeof window === undefined) return;
+
   window.gtag('event', action, {
     event_category: category,
     event_label: label,
