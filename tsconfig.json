@@ -27,7 +27,7 @@
       "styles/*": ["./styles/*"]
     },
     "typeRoots": ["node_modules/@types"],
-    "types": ["kakao.maps.d.ts"]
+    "types": ["kakao.maps.d.ts", "gtag.js"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "env.d.ts"],
   "exclude": ["node_modules"]
