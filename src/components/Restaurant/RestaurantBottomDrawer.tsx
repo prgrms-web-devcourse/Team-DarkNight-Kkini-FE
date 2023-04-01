@@ -28,7 +28,7 @@ const RestaurantBottomDrawer = ({
   const isLogin = useRecoilValue(isLoginState);
   const setLoginDrawerOpen = useSetRecoilState(loginDrawerState);
 
-  const handleClickButtonJoinAfterLogin = () => {
+  const handleClickJoinButtonAfterLogin = () => {
     setLoginDrawerOpen({
       isOpen: true,
       urlAfterLogin: ROUTING_PATHS.FOOD_PARTY.LIST.RESTAURANT(
@@ -104,7 +104,7 @@ const RestaurantBottomDrawer = ({
           )}
           {onClickJoinButton && (
             <Button
-              onClick={isLogin ? onClickJoinButton : handleClickButtonJoinAfterLogin}
+              onClick={isLogin ? onClickJoinButton : handleClickJoinButtonAfterLogin}
               width='100%'
               style={{
                 backgroundColor: 'primary',
