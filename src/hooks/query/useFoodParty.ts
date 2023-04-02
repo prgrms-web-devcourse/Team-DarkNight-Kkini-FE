@@ -157,6 +157,15 @@ export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: num
         isClosable: true,
       });
     },
+    onError: () => {
+      toast({
+        title: '강퇴 당하신 것 같아요...',
+        position: 'top',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    },
   });
 };
 
