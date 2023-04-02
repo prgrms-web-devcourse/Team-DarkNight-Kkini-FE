@@ -174,7 +174,7 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
   });
 };
 
-export const useDeleteFoodPartyMember = (partyId: string) => {
+export const useUpdateFoodPartyMember = (partyId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({

@@ -10,8 +10,8 @@ import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyM
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import {
   useCreateFoodPartyApplication,
-  useDeleteFoodPartyMember,
   useGetFoodPartyDetail,
+  useUpdateFoodPartyMember,
   useUpdateFoodPartyStatus,
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
@@ -46,7 +46,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     partyId,
     leaderUserId || -1
   );
-  const { mutate: deleteFoodPartyMember } = useDeleteFoodPartyMember(partyId);
+  const { mutate: updateFoodPartyMember } = useUpdateFoodPartyMember(partyId);
   const {
     isOpen: isOpenRestaurantBottomDrawer,
     onClose: onCloseRestaurantBottomDrawer,
@@ -144,7 +144,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           <FoodPartyMemberList
             ableToKickOut={isLeader && foodPartyDetail.crewStatus === '모집 중'}
             onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
-            onClickKickOutButton={deleteFoodPartyMember}
+            onClickKickOutButton={updateFoodPartyMember}
             memberList={foodPartyDetail.members}
             capacity={foodPartyDetail.capacity}
           />
