@@ -1,19 +1,11 @@
 import { Avatar, Box, Button, Flex, Text } from '@chakra-ui/react';
-import { UseMutateFunction } from '@tanstack/react-query';
 import { AiOutlineCrown } from 'react-icons/ai';
 import { Member } from 'types/foodParty';
 
 type FoodPartyMemberItemProps = {
   member: Member;
   ableToKickOut: boolean;
-  onClickKickOutButton: UseMutateFunction<
-    void,
-    unknown,
-    {
-      memberId: number;
-    },
-    unknown
-  >;
+  onClickKickOutButton: (member: Member) => void;
 };
 
 const FoodPartyMemberItem = ({
@@ -37,9 +29,7 @@ const FoodPartyMemberItem = ({
           <Button
             size='sm'
             onClick={() => {
-              onClickKickOutButton({
-                memberId: member.userId,
-              });
+              onClickKickOutButton(member);
             }}>
             강퇴
           </Button>

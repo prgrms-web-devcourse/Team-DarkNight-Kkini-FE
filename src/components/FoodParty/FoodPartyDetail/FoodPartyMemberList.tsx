@@ -1,5 +1,4 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react';
-import { UseMutateFunction } from '@tanstack/react-query';
 import { Member } from 'types/foodParty';
 
 import FoodPartyMemberItem from './FoodPartyMemberItem';
@@ -7,14 +6,7 @@ import FoodPartyMemberItem from './FoodPartyMemberItem';
 type FoodPartyMemeberListProps = {
   ableToKickOut: boolean;
   onClickChatButton?: () => void;
-  onClickKickOutButton: UseMutateFunction<
-    void,
-    unknown,
-    {
-      memberId: number;
-    },
-    unknown
-  >;
+  onClickKickOutButton: (member: Member) => void;
   memberList: Member[];
   capacity: number;
 };

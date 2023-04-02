@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
-import { selectedRestaurantState } from 'stores/Restaurant';
+import { selectedRestaurantState } from 'stores/restaurant';
 import { PartyFormType } from 'types/foodParty';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getPhotoUrlsString } from 'utils/helpers/foodParty';

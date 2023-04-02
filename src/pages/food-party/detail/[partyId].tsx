@@ -19,6 +19,9 @@ import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { foodPartyMemberWillBeKickedOutState } from 'stores/foodParty';
+import { Member } from 'types/foodParty';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import {
   checkButtonTextIsDisabled,
@@ -49,6 +52,8 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   );
   const { mutate: updateFoodPartyMember } = useUpdateFoodPartyMember(partyId);
   const { mutate: deleteFoodPartyMember } = useDeleteFoodPartyMember(partyId);
+  const [foodPartyMemberWillBeKickedOut, setFoodPartyMemberWillBeKickedOut] =
+    useRecoilState(foodPartyMemberWillBeKickedOutState);
   const {
     isOpen: isOpenRestaurantBottomDrawer,
     onClose: onCloseRestaurantBottomDrawer,
@@ -68,6 +73,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isOpen: isOpenCheckExitModal,
     onClose: onCloseCheckExitModal,
     onOpen: onOpenCheckExitModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenCheckKickOutModal,
+    onClose: onCloseCheckKickOutModal,
+    onOpen: onOpenCheckKickOutModal,
   } = useDisclosure();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
@@ -124,6 +134,14 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     }
   };
 
+  const handleClickKickOutButton = (member: Member) => {
+    setFoodPartyMemberWillBeKickedOut({
+      nickname: member.nickname,
+      memberId: member.userId,
+    });
+    onOpenCheckKickOutModal();
+  };
+
   return (
     <>
       {isSuccess ? (
@@ -146,7 +164,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
           <FoodPartyMemberList
             ableToKickOut={isLeader && foodPartyDetail.crewStatus === '모집 중'}
             onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
-            onClickKickOutButton={updateFoodPartyMember}
+            onClickKickOutButton={handleClickKickOutButton}
             memberList={foodPartyDetail.members}
             capacity={foodPartyDetail.capacity}
           />
@@ -178,6 +196,16 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             isOpen={isOpenCheckExitModal}
             onClose={onCloseCheckExitModal}
             onClickYesButton={deleteFoodPartyMember}
+          />
+          <FoodPartyDetailModal
+            headerText={`${foodPartyMemberWillBeKickedOut.nickname}님을 강퇴하시겠습니까?`}
+            isOpen={isOpenCheckKickOutModal}
+            onClose={onCloseCheckKickOutModal}
+            onClickYesButton={() => {
+              updateFoodPartyMember({
+                memberId: foodPartyMemberWillBeKickedOut.memberId,
+              });
+            }}
           />
         </Flex>
       ) : (
