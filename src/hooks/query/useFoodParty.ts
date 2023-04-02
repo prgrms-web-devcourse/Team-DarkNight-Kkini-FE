@@ -12,6 +12,7 @@ import {
   fetchMyFoodPartyList,
   postFoodPartyLeaderReview,
   postFoodPartyMemberReview,
+  updateFoodPartyMember,
 } from 'services/foodParty';
 import {
   FoodPartyLeaderReviewBody,
@@ -168,7 +169,6 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      // To Do: 배포 전에 지우기 by 승준
       console.error(error);
     },
   });
@@ -179,12 +179,25 @@ export const useUpdateFoodPartyMember = (partyId: string) => {
 
   return useMutation({
     mutationFn: ({ memberId }: { memberId: number }) =>
-      deleteFoodPartyMember(partyId, memberId),
+      updateFoodPartyMember(partyId, memberId),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      // To Do: 배포 전에 지우기 by 승준
+      console.error(error);
+    },
+  });
+};
+
+export const useDeleteFoodPartyMember = (partyId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteFoodPartyMember(partyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
       console.error(error);
     },
   });

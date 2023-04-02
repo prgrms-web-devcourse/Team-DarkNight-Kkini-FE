@@ -10,6 +10,7 @@ import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyM
 import RestaurantBottomDrawer from 'components/Restaurant/RestaurantBottomDrawer';
 import {
   useCreateFoodPartyApplication,
+  useDeleteFoodPartyMember,
   useGetFoodPartyDetail,
   useUpdateFoodPartyMember,
   useUpdateFoodPartyStatus,
@@ -47,6 +48,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     leaderUserId || -1
   );
   const { mutate: updateFoodPartyMember } = useUpdateFoodPartyMember(partyId);
+  const { mutate: deleteFoodPartyMember } = useDeleteFoodPartyMember(partyId);
   const {
     isOpen: isOpenRestaurantBottomDrawer,
     onClose: onCloseRestaurantBottomDrawer,
@@ -171,12 +173,12 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             onClose={onCloseCheckChangeStatusModal}
             onClickYesButton={handleChangeFoodPartyDetailStatusButton}
           />
-          {/* <FoodPartyDetailModal
+          <FoodPartyDetailModal
             headerText='정말 나갈거에요..?'
             isOpen={isOpenCheckExitModal}
             onClose={onCloseCheckExitModal}
-            onClickYesButton={}
-          /> */}
+            onClickYesButton={deleteFoodPartyMember}
+          />
         </Flex>
       ) : (
         <GoHomeWhenErrorInvoked />
