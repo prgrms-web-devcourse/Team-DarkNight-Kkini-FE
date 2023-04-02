@@ -5,7 +5,7 @@ export const pageview = (url: URL) => {
   });
 };
 
-// 이벤츠 측정
+// 이벤트 측정
 export const event = ({
   action,
   category,
