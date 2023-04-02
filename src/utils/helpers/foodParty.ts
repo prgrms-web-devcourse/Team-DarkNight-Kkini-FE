@@ -80,7 +80,7 @@ const LeaderText: {
 const MemberText: {
   [key: string]: FoodPartyDetailStatusButtonText;
 } = {
-  '모집 중': '',
+  '모집 중': '나갈까요..?',
   '모집 종료': '',
   '식사 완료': '',
 };
@@ -110,4 +110,17 @@ export const getNumberArrayCreatedAt = (createdAt: string) => {
   const second = date.getSeconds();
 
   return [year, month, day, hour, minute, second];
+};
+
+export const getCheckChangeStatusModalHeaderText = (
+  foodPartyDetailStatusButtonText: FoodPartyDetailStatusButtonText
+) => {
+  switch (foodPartyDetailStatusButtonText) {
+    case '모집 완료할끼니?':
+      return '모집을 완료하시겠습니까?';
+    case '식사를 완료했끼니?':
+      return '식사를 종료하시겠습니까?';
+    default:
+      return '증말로!?';
+  }
 };

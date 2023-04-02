@@ -1,9 +1,9 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyApplicationDrawer from 'components/FoodParty/FoodPartyApplicationDrawer';
-import FoodPartyDetailCheckChangeStatusModal from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailCheckChangeStatusModal';
 import FoodPartyDetailContent from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailContent';
 import FoodPartyDetailHeader from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailHeader';
+import FoodPartyDetailModal from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailModal';
 import FoodPartyDetailSkeleton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailSkeleton';
 import FoodPartyDetailStatusButton from 'components/FoodParty/FoodPartyDetail/FoodPartyDetailStatusButton';
 import FoodPartyMemberList from 'components/FoodParty/FoodPartyDetail/FoodPartyMemberList';
@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import {
   checkButtonTextIsDisabled,
+  getCheckChangeStatusModalHeaderText,
   getFoodPartyDetailStatusButtonText,
 } from 'utils/helpers/foodParty';
 
@@ -60,6 +61,11 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     isOpen: isOpenCheckChangeStatusModal,
     onClose: onCloseCheckChangeStatusModal,
     onOpen: onOpenCheckChangeStatusModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenCheckExitModal,
+    onClose: onCloseCheckExitModal,
+    onOpen: onOpenCheckExitModal,
   } = useDisclosure();
 
   if (isLoading) return <FoodPartyDetailSkeleton />;
@@ -108,6 +114,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
       case '참여할 끼니?':
         onOpenApplicationDrawer();
         return;
+      case '나갈까요..?':
+        onOpenCheckExitModal();
+        return;
       default:
         return;
     }
@@ -154,12 +163,20 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             onClose={onCloseApplicationDrawer}
             onClickSubmitButton={createFoodPartyApplication}
           />
-          <FoodPartyDetailCheckChangeStatusModal
-            foodPartyDetailStatusButtonText={foodPartyDetailStatusButtonText}
+          <FoodPartyDetailModal
+            headerText={getCheckChangeStatusModalHeaderText(
+              foodPartyDetailStatusButtonText
+            )}
             isOpen={isOpenCheckChangeStatusModal}
             onClose={onCloseCheckChangeStatusModal}
             onClickYesButton={handleChangeFoodPartyDetailStatusButton}
           />
+          {/* <FoodPartyDetailModal
+            headerText='정말 나갈거에요..?'
+            isOpen={isOpenCheckExitModal}
+            onClose={onCloseCheckExitModal}
+            onClickYesButton={}
+          /> */}
         </Flex>
       ) : (
         <GoHomeWhenErrorInvoked />
