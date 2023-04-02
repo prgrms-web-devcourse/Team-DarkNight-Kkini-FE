@@ -9,14 +9,31 @@ import Layout from 'components/common/Layout';
 import { KakaoMapProvider } from 'contexts/kakaoMap';
 import { RandomRestaurantProvider } from 'contexts/kakaoMap/randomRestaurant';
 import type { AppProps } from 'next/app';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { RecoilRoot } from 'recoil';
+import { pageview } from 'utils/helpers/gtag';
 
 const App = ({
   Component,
   pageProps,
 }: AppProps<{ dehydratedState: DehydratedState }>) => {
   const [queryClient] = useState(() => new QueryClient());
+
+  // Google Analytics
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      pageview(url);
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <RecoilRoot>
