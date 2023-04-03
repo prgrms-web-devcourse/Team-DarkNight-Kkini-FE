@@ -12,3 +12,7 @@ export type UserProfile = {
   tasteScore: number;
   mannerScore: number;
 };
+
+export type RedirectUrlType = {
+  urlAfterLogin: string;
+};
