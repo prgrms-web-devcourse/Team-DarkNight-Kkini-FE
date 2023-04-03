@@ -28,15 +28,8 @@ const Header = () => {
 
   return (
     <Container>
-      <Link href={ROUTING_PATHS.HOME}>
-        <Image
-          priority
-          src='/images/kkini-logo.svg'
-          alt='kkini-logo'
-          width='200'
-          height='100'
-          style={{ marginLeft: '-40px' }}
-        />
+      <Link href={ROUTING_PATHS.HOME} className='logo-container'>
+        <Image priority fill src='/images/kkini-logo.svg' alt='kkini-logo' />
       </Link>
       {isCheckingRefreshToken ? (
         isLogin ? (
@@ -59,4 +52,12 @@ export const Container = styled.header`
   align-items: center;
   height: 2rem;
   margin: 0.75rem;
+
+  .logo-container {
+    position: relative;
+    width: 20%;
+    min-width: 80px;
+    max-width: 90px;
+    height: 100%;
+  }
 `;
