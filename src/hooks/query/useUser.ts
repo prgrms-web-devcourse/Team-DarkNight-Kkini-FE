@@ -34,7 +34,7 @@ export const useUpdateUserImage = () => {
   });
 };
 
-export const useUpdateUserProfile = (userId: string | number) => {
+export const useUpdateMyProfile = (userId: string | number) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const toast = useToast();
@@ -42,7 +42,7 @@ export const useUpdateUserProfile = (userId: string | number) => {
   return useMutation({
     mutationFn: (body: UserUpdateProfileType) => updateUserProfile(body),
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEYS.USER.USER_INFO, userId]);
+      queryClient.invalidateQueries([QUERY_KEYS.USER.MY_INFO]);
       router.push(ROUTING_PATHS.USER.PROFILE(userId));
       toast({
         title: '정보 수정이 완료되었습니다!',

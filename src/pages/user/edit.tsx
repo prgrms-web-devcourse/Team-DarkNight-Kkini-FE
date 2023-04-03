@@ -1,5 +1,4 @@
 import {
-  Box,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -10,12 +9,12 @@ import {
 } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import UserIconForm from 'components/User/Edit/UserIconForm';
-import { useGetUser, useUpdateUserProfile } from 'hooks/query/useUser';
+import { useGetUser, useUpdateMyProfile } from 'hooks/query/useUser';
 import { useForm } from 'react-hook-form';
 
 const EditUserProfilePage = () => {
   const { data, isSuccess } = useGetUser();
-  const { mutate } = useUpdateUserProfile(data?.id as number);
+  const { mutate } = useUpdateMyProfile(data?.id as number);
 
   const {
     register,
@@ -75,8 +74,8 @@ const EditUserProfilePage = () => {
                       message: '닉네임을 2자 이상 적어주세요',
                     },
                     maxLength: {
-                      value: 15,
-                      message: '닉네임을 15자 이하 적어주세요',
+                      value: 7,
+                      message: '닉네임을 7자 이하 적어주세요',
                     },
                   })}
                   aria-invalid={errors.nickName ? 'true' : 'false'}
