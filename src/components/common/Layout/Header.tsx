@@ -1,4 +1,4 @@
-import { Flex, Skeleton, SkeletonCircle } from '@chakra-ui/react';
+import { Flex, Skeleton, SkeletonCircle, useMediaQuery } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import LoginButton from 'components/Login/LoginButton';
 import dynamic from 'next/dynamic';
@@ -25,17 +25,16 @@ const DynamicUserProfile = dynamic(() => import('../UserProfile'), {
 const Header = () => {
   const isLogin = useRecoilValue(isLoginState);
   const isCheckingRefreshToken = useRecoilValue(isCheckingRefreshTokenState);
+  const [isMiniScreen] = useMediaQuery('(max-width: 330px)');
 
   return (
-    <Container>
-      <Link href={ROUTING_PATHS.HOME}>
+    <Container isMiniScreen={isMiniScreen}>
+      <Link href={ROUTING_PATHS.HOME} className='logo-container'>
         <Image
           priority
-          src='/images/kkini-logo.svg'
+          fill
+          src={isMiniScreen ? '/images/kkini-symbol.svg' : '/images/kkini-logo.svg'}
           alt='kkini-logo'
-          width='200'
-          height='100'
-          style={{ marginLeft: '-40px' }}
         />
       </Link>
       {isCheckingRefreshToken ? (
@@ -53,10 +52,18 @@ const Header = () => {
 
 export default Header;
 
-export const Container = styled.header`
+export const Container = styled.header<{ isMiniScreen: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 2rem;
   margin: 0.75rem;
+
+  .logo-container {
+    position: relative;
+    width: ${(props) => (props.isMiniScreen ? '10%' : '20%')};
+    min-width: 30px;
+    max-width: 90px;
+    height: 100%;
+  }
 `;

@@ -15,9 +15,13 @@ const UserProfile = () => {
 
   return (
     <Flex alignItems='center' cursor='pointer'>
-      <Flex fontWeight='600'>
-        <Text color='primary'>맛에 진심인, </Text>
-        <Text marginLeft='0.25rem'>{data?.nickname}</Text>
+      <Flex fontWeight='600' fontSize='0.875rem'>
+        <Text color='primary' noOfLines={1}>
+          맛에 진심인,
+        </Text>
+        <Text marginLeft='0.25rem' noOfLines={1}>
+          {data?.nickname}
+        </Text>
       </Flex>
       <Avatar
         src={data?.profileImgUrl}
