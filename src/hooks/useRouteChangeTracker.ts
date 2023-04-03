@@ -6,13 +6,13 @@ const useRouteChangeTracker = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
+    const handleChangeRoute = (url: URL) => {
       pageview(url);
     };
 
-    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('routeChangeComplete', handleChangeRoute);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('routeChangeComplete', handleChangeRoute);
     };
   }, [router.events]);
 };
