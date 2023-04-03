@@ -12,7 +12,7 @@ import UserIconForm from 'components/User/Edit/UserIconForm';
 import { useGetUser, useUpdateMyProfile } from 'hooks/query/useUser';
 import { useForm } from 'react-hook-form';
 
-const EditUserProfilePage = () => {
+const MyProfileEditPage = () => {
   const { data, isSuccess } = useGetUser();
   const { mutate } = useUpdateMyProfile(data?.id as number);
 
@@ -127,4 +127,4 @@ const EditUserProfilePage = () => {
   );
 };
 
-export default EditUserProfilePage;
+export default MyProfileEditPage;
