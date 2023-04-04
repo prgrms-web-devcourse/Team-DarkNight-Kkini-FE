@@ -43,6 +43,7 @@
     "@commitlint/config-conventional": "^17.4.4",
     "@stylelint/postcss-css-in-js": "^0.38.0",
     "@tanstack/eslint-plugin-query": "^4.24.7",
+    "@types/gtag.js": "^0.0.12",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/react-calendar": "^3.9.0",
     "@types/sockjs-client": "^1.5.1",
