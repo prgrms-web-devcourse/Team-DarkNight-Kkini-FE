@@ -162,7 +162,7 @@ export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: num
         title: '강퇴 당하신 것 같아요...',
         position: 'top',
         status: 'error',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       });
     },
@@ -171,6 +171,7 @@ export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: num
 
 export const useUpdateFoodPartyStatus = (partyId: string) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: (status: FoodPartyStatus) => updateFoodPartyStatus(partyId, status),
@@ -178,13 +179,20 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      console.error(error);
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };
 
 export const useUpdateFoodPartyMember = (partyId: string) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: ({ memberId }: { memberId: number }) =>
@@ -193,13 +201,20 @@ export const useUpdateFoodPartyMember = (partyId: string) => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      console.error(error);
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };
 
 export const useDeleteFoodPartyMember = (partyId: string) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: () => deleteFoodPartyMember(partyId),
@@ -207,7 +222,13 @@ export const useDeleteFoodPartyMember = (partyId: string) => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      console.error(error);
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };
