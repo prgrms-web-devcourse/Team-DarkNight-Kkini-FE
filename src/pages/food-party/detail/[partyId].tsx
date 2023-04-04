@@ -28,6 +28,7 @@ import {
   checkButtonTextIsDisabled,
   getFoodPartyDetailStatusButtonText,
 } from 'utils/helpers/foodParty';
+import { validateAbleToChat, validateAbleToKickOut } from 'utils/validations/foodParty';
 
 // To Do: 404 처리 by 승준
 // 조회가 안되면 에러 코드({"code":"CR001","message":"존재하지 않는 모임입니다."}) 맵핑하여 404 처리
@@ -83,6 +84,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   if (isLoading) return <FoodPartyDetailSkeleton />;
   if (error) return <GoHomeWhenErrorInvoked />;
 
+  // To Do: FoodPartyDetailStatusButtonText 타입을 쪼개기 위해 foodPartyDetailStatusButtonText도 쪼개야 됨. by 승준
   const foodPartyDetailStatusButtonText = getFoodPartyDetailStatusButtonText({
     applied: foodPartyDetail!.proposalStatus,
     isLeader,
@@ -95,6 +97,27 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
     foodPartyDetailStatusButtonText
   );
 
+  // 방장이 버튼을 눌러 밥모임 상태를 바꾸려 할 때 한 번 더 확인하는 모달을 뜨게 하는 핸들러
+  const handleClickFoodPartyDetailStatusButton = () => {
+    switch (foodPartyDetailStatusButtonText) {
+      case '모집 완료할끼니?':
+        onOpenCheckChangeStatusModal();
+        return;
+      case '식사를 완료했끼니?':
+        onOpenCheckChangeStatusModal();
+        return;
+      case '참여할 끼니?':
+        onOpenApplicationDrawer();
+        return;
+      case '나갈까요..?':
+        onOpenCheckExitModal();
+        return;
+      default:
+        return;
+    }
+  };
+
+  // 모달에서 '네'를 누를 경우 어떤 서비스 로직이 동작하면 되는지 결정하는 핸들러
   const handleChangeFoodPartyDetailStatusButton = () => {
     switch (foodPartyDetailStatusButtonText) {
       case '모집 완료할끼니?':
@@ -113,25 +136,6 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 
   const handleClickChatButton = () => {
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.CHAT(partyId));
-  };
-
-  const handleClickFoodPartyDetailStatusButton = () => {
-    switch (foodPartyDetailStatusButtonText) {
-      case '모집 완료할끼니?':
-        onOpenCheckChangeStatusModal();
-        return;
-      case '식사를 완료했끼니?':
-        onOpenCheckChangeStatusModal();
-        return;
-      case '참여할 끼니?':
-        onOpenApplicationDrawer();
-        return;
-      case '나갈까요..?':
-        onOpenCheckExitModal();
-        return;
-      default:
-        return;
-    }
   };
 
   const handleClickKickOutButton = (member: Member) => {
@@ -161,10 +165,13 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             content={foodPartyDetail.content}
             onClick={onOpenRestaurantBottomDrawer}
           />
-          {/* To Do: validations로 빼기. */}
           <FoodPartyMemberList
-            ableToKickOut={isLeader && foodPartyDetail.crewStatus === '모집 중'}
-            onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
+            ableToKickOut={validateAbleToKickOut(isLeader, foodPartyDetail.crewStatus)}
+            onClickChatButton={validateAbleToChat(
+              isLeader,
+              isMember,
+              handleClickChatButton
+            )}
             onClickKickOutButton={handleClickKickOutButton}
             memberList={foodPartyDetail.members}
             capacity={foodPartyDetail.capacity}
