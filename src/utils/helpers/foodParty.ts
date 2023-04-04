@@ -112,15 +112,17 @@ export const getNumberArrayCreatedAt = (createdAt: string) => {
   return [year, month, day, hour, minute, second];
 };
 
-export const getCheckChangeStatusModalHeaderText = (
-  foodPartyDetailStatusButtonText: FoodPartyDetailStatusButtonText
-) => {
-  switch (foodPartyDetailStatusButtonText) {
-    case '모집 완료할끼니?':
-      return '모집을 완료하시겠습니까?';
-    case '식사를 완료했끼니?':
-      return '식사를 종료하시겠습니까?';
-    default:
-      return '증말로!?';
-  }
+export const CHANGE_FOOD_PARTY_STATUS_MODAL_TEXT: Record<
+  FoodPartyDetailStatusButtonText,
+  string
+> = {
+  '모집 완료할끼니?': '모집을 완료하시겠습니까?',
+  '식사를 완료했끼니?': '식사를 완료하시겠습니까?',
+  '참여할 끼니?': '',
+  '모집이 완료되버렸끼니!': '',
+  '인원이 꽉 차버렸끼니!': '',
+  '수락 대기 중': '',
+  '거절 당했어요...': '',
+  '나갈까요..?': '',
+  '': '',
 };

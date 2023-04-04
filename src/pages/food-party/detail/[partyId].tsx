@@ -24,8 +24,8 @@ import { foodPartyMemberWillBeKickedOutState } from 'stores/foodParty';
 import { Member } from 'types/foodParty';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import {
+  CHANGE_FOOD_PARTY_STATUS_MODAL_TEXT,
   checkButtonTextIsDisabled,
-  getCheckChangeStatusModalHeaderText,
   getFoodPartyDetailStatusButtonText,
 } from 'utils/helpers/foodParty';
 
@@ -161,6 +161,7 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             content={foodPartyDetail.content}
             onClick={onOpenRestaurantBottomDrawer}
           />
+          {/* To Do: validations로 빼기. */}
           <FoodPartyMemberList
             ableToKickOut={isLeader && foodPartyDetail.crewStatus === '모집 중'}
             onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
@@ -184,15 +185,15 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
             onClickSubmitButton={createFoodPartyApplication}
           />
           <FoodPartyDetailModal
-            headerText={getCheckChangeStatusModalHeaderText(
-              foodPartyDetailStatusButtonText
-            )}
+            headerText={
+              CHANGE_FOOD_PARTY_STATUS_MODAL_TEXT[foodPartyDetailStatusButtonText]
+            }
             isOpen={isOpenCheckChangeStatusModal}
             onClose={onCloseCheckChangeStatusModal}
             onClickYesButton={handleChangeFoodPartyDetailStatusButton}
           />
           <FoodPartyDetailModal
-            headerText='정말 나갈거에요..?'
+            headerText='퇴장하시겠습니까?'
             isOpen={isOpenCheckExitModal}
             onClose={onCloseCheckExitModal}
             onClickYesButton={deleteFoodPartyMember}

@@ -33,9 +33,9 @@ const FoodPartyDetailModal = ({
                 onClickYesButton();
                 onClose();
               }}>
-              네!
+              네
             </Button>
-            <Button onClick={onClose}>아니요...</Button>
+            <Button onClick={onClose}>아니요</Button>
           </Flex>
         </ModalBody>
       </ModalContent>
