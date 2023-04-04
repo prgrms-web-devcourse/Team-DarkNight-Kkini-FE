@@ -1,12 +1,12 @@
 // 조회수 측정
-export const pageview = (url: URL) => {
+export const measurePageViewByGTag = (url: URL) => {
   gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
     page_path: url,
   });
 };
 
 // 이벤트 측정
-export const event = ({
+export const measureEventTriggerByGTag = ({
   action,
   category,
   label,
