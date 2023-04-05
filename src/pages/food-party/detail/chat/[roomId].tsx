@@ -174,7 +174,7 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingFoodPartyDetail ? (
         <>
           <Head>
-            <title>Chat of {foodPartyDetail.name}</title>
+            <title>Chat of {foodPartyDetail.id}</title>
           </Head>
           <Flex
             position='relative'
