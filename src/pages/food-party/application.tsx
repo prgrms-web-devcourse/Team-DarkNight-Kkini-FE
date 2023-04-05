@@ -4,6 +4,7 @@ import ApplicationSkeleton from 'components/FoodParty/Application/ApplicationSke
 import ReceivedApplication from 'components/FoodParty/Application/ReceivedApplication';
 import SentApplication from 'components/FoodParty/Application/SentApplication';
 import { useGetUser } from 'hooks/query/useUser';
+import Head from 'next/head';
 import { Suspense } from 'react';
 
 const Application = () => {
@@ -14,6 +15,9 @@ const Application = () => {
 
   return (
     <>
+      <Head>
+        <title>Application</title>
+      </Head>
       <Heading size='lg' padding='1rem'>
         신청서
       </Heading>

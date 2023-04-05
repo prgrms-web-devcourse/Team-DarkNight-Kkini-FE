@@ -15,6 +15,7 @@ import {
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import {
@@ -113,49 +114,54 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
   return (
     <>
       {isSuccess ? (
-        <Flex
-          position='relative'
-          height='100%'
-          flexDirection='column'
-          padding='1rem'
-          gap='0.5rem'>
-          <FoodPartyDetailHeader
-            status={foodPartyDetail.crewStatus}
-            category={foodPartyDetail.category}
-            foodPartyName={foodPartyDetail.name}
-          />
-          <FoodPartyDetailContent
-            promiseTime={foodPartyDetail.promiseTime}
-            content={foodPartyDetail.content}
-            onClick={onOpenRestaurantBottomDrawer}
-          />
-          <FoodPartyMemberList
-            onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
-            memberList={foodPartyDetail.members}
-            capacity={foodPartyDetail.capacity}
-          />
-          <FoodPartyDetailStatusButton
-            buttonText={foodPartyDetailStatusButtonText}
-            isDisabled={isDisabledFoodPartyDetailStatusButton}
-            onClick={handleClickFoodPartyDetailStatusButton}
-          />
-          <RestaurantBottomDrawer
-            isOpen={isOpenRestaurantBottomDrawer}
-            onClose={onCloseRestaurantBottomDrawer}
-            restaurant={foodPartyDetail.response}
-          />
-          <FoodPartyApplicationDrawer
-            isOpen={isOpenApplicationDrawer}
-            onClose={onCloseApplicationDrawer}
-            onClickSubmitButton={createFoodPartyApplication}
-          />
-          <FoodPartyDetailCheckChangeStatusModal
-            foodPartyDetailStatusButtonText={foodPartyDetailStatusButtonText}
-            isOpen={isOpenCheckChangeStatusModal}
-            onClose={onCloseCheckChangeStatusModal}
-            onClickYes={handleChangeFoodPartyDetailStatusButton}
-          />
-        </Flex>
+        <>
+          <Head>
+            <title>Food Party Detail of {foodPartyDetail.name}</title>
+          </Head>
+          <Flex
+            position='relative'
+            height='100%'
+            flexDirection='column'
+            padding='1rem'
+            gap='0.5rem'>
+            <FoodPartyDetailHeader
+              status={foodPartyDetail.crewStatus}
+              category={foodPartyDetail.category}
+              foodPartyName={foodPartyDetail.name}
+            />
+            <FoodPartyDetailContent
+              promiseTime={foodPartyDetail.promiseTime}
+              content={foodPartyDetail.content}
+              onClick={onOpenRestaurantBottomDrawer}
+            />
+            <FoodPartyMemberList
+              onClickChatButton={isLeader || isMember ? handleClickChatButton : undefined}
+              memberList={foodPartyDetail.members}
+              capacity={foodPartyDetail.capacity}
+            />
+            <FoodPartyDetailStatusButton
+              buttonText={foodPartyDetailStatusButtonText}
+              isDisabled={isDisabledFoodPartyDetailStatusButton}
+              onClick={handleClickFoodPartyDetailStatusButton}
+            />
+            <RestaurantBottomDrawer
+              isOpen={isOpenRestaurantBottomDrawer}
+              onClose={onCloseRestaurantBottomDrawer}
+              restaurant={foodPartyDetail.response}
+            />
+            <FoodPartyApplicationDrawer
+              isOpen={isOpenApplicationDrawer}
+              onClose={onCloseApplicationDrawer}
+              onClickSubmitButton={createFoodPartyApplication}
+            />
+            <FoodPartyDetailCheckChangeStatusModal
+              foodPartyDetailStatusButtonText={foodPartyDetailStatusButtonText}
+              isOpen={isOpenCheckChangeStatusModal}
+              onClose={onCloseCheckChangeStatusModal}
+              onClickYes={handleChangeFoodPartyDetailStatusButton}
+            />
+          </Flex>
+        </>
       ) : (
         <GoHomeWhenErrorInvoked />
       )}

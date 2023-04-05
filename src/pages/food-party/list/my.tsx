@@ -3,6 +3,7 @@ import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import { useGetMyFoodPartyList } from 'hooks/query/useFoodParty';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 
@@ -23,15 +24,20 @@ const MyFoodPartyList = () => {
   return (
     <>
       {isSuccess ? (
-        <Flex flexDirection='column' padding='1rem'>
-          <Heading paddingBottom='1rem'>나의 밥모임 목록</Heading>
-          <FoodPartyList
-            isMyFoodParty
-            foodPartyList={myFoodPartyList}
-            onClickViewButton={handleClickViewFoodPartyButton}
-            onClickReviewButton={handleClickReviewFoodPartyButton}
-          />
-        </Flex>
+        <>
+          <Head>
+            <title>My Food Party List</title>
+          </Head>
+          <Flex flexDirection='column' padding='1rem'>
+            <Heading paddingBottom='1rem'>나의 밥모임 목록</Heading>
+            <FoodPartyList
+              isMyFoodParty
+              foodPartyList={myFoodPartyList}
+              onClickViewButton={handleClickViewFoodPartyButton}
+              onClickReviewButton={handleClickReviewFoodPartyButton}
+            />
+          </Flex>
+        </>
       ) : (
         <GoHomeWhenErrorInvoked />
       )}
