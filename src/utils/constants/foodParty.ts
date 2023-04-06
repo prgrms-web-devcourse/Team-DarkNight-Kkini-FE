@@ -25,53 +25,53 @@ export const foodPartyLeaderReviewState = [
   {
     title: '괴식가',
     icon: '/images/leader-lowest.svg',
-    score: 1,
+    score: -2,
   },
   {
     title: '맛알못',
     icon: '/images/leader-low.svg',
-    score: 2,
+    score: -1,
   },
   {
     title: '일반인',
     icon: '/images/leader-mid.svg',
-    score: 3,
+    score: 0,
   },
   {
     title: '맛잘알',
     icon: '/images/leader-high.svg',
-    score: 4,
+    score: 1,
   },
   {
     title: '미식가',
     icon: '/images/leader-highest.svg',
-    score: 5,
+    score: 2,
   },
 ];
 export const foodPartyMemberReviewState = [
   {
     title: '최악',
     icon: '/images/member-lowest.svg',
-    score: 1,
+    score: -2,
   },
   {
     title: '별로',
     icon: '/images/member-low.svg',
-    score: 2,
+    score: -1,
   },
   {
     title: '보통',
     icon: '/images/member-mid.svg',
-    score: 3,
+    score: 0,
   },
   {
     title: '좋음',
     icon: '/images/member-high.svg',
-    score: 4,
+    score: 1,
   },
   {
     title: '최고',
     icon: '/images/member-highest.svg',
-    score: 5,
+    score: 2,
   },
 ];
