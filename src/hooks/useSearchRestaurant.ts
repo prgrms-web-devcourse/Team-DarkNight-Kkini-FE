@@ -41,8 +41,20 @@ const useSearchRestaurant = () => {
     }, []);
 
     const photos = photoList.map(({ documents }) => {
-      return documents.map(({ image_url }) => image_url);
+      const DEFAULT_IMAGE = '/images/default-restaurant.svg';
+      if (!documents.length) {
+        return Array.from({ length: 4 }, () => DEFAULT_IMAGE);
+      }
+
+      // imageArray 에 사진이 네개 다 올라가있지 않은 경우
+      const imageArray = documents.map(({ image_url }) => image_url);
+      while (imageArray.length < 4) {
+        imageArray.push(DEFAULT_IMAGE);
+      }
+      return imageArray;
     });
+
+    console.log(photos);
 
     const searchResult = keywordSearchResult.map((item, i) => {
       const {
