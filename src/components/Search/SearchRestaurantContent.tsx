@@ -17,7 +17,7 @@ const SearchRestaurantContent = () => {
       right='0'
       flexDir='column'
       bgColor='#f4f4f4'
-      height='75%'
+      height='65%'
       m='1rem'
       borderRadius='8px'
       p='0.4rem'
