@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>끼니</title>
       </Head>
       <KakaoMap />;
     </>

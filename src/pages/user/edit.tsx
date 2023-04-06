@@ -8,6 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import Button from 'components/common/Button';
+import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import UserIconForm from 'components/User/Edit/UserIconForm';
 import { useGetUser, useUpdateMyProfile } from 'hooks/query/useUser';
 import Head from 'next/head';
@@ -49,11 +50,11 @@ const MyProfileEditPage = () => {
   };
 
   return (
-    isSuccess && (
-      <>
-        <Head>
-          <title>Edit Profile</title>
-        </Head>
+    <>
+      <Head>
+        <title>프로필 수정</title>
+      </Head>
+      {isSuccess ? (
         <Flex justify='center' align='center' h='100%' bgColor='subBackground'>
           <Flex
             direction='column'
@@ -128,8 +129,10 @@ const MyProfileEditPage = () => {
             </form>
           </Flex>
         </Flex>
-      </>
-    )
+      ) : (
+        <GoHomeWhenErrorInvoked />
+      )}
+    </>
   );
 };
 

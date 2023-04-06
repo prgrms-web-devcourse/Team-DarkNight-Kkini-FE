@@ -26,6 +26,9 @@ const OAuthLogin = () => {
 
   return (
     <>
+      <Head>
+        <title>로그인</title>
+      </Head>
       {router.query.error ? (
         <GoHomeWhenErrorInvoked />
       ) : (

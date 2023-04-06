@@ -148,6 +148,9 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 
   return (
     <>
+      <Head>
+        <title>{foodPartyDetail?.name} - 밥모임 상세</title>
+      </Head>
       {isSuccess ? (
         <Flex
           position='relative'

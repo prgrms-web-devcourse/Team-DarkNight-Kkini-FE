@@ -168,6 +168,9 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
 
   return (
     <>
+      <Head>
+        <title>{foodPartyDetail?.name} - 밥모임 채팅방</title>
+      </Head>
       {!isErrorConnectingSocket &&
       isSuccessGettingExistingMessageList &&
       isSuccessGettingUserInformation &&

@@ -16,7 +16,7 @@ const Application = () => {
   return (
     <>
       <Head>
-        <title>Application</title>
+        <title>신청서 목록</title>
       </Head>
       <Heading size='lg' padding='1rem'>
         신청서

@@ -14,8 +14,8 @@ const MyFoodPartyList = () => {
   const handleClickViewFoodPartyButton = (partyId: number) => {
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(partyId));
   };
-  const handleClickReviewFoodPartyButton = (partyId: number) => {
-    router.push(ROUTING_PATHS.FOOD_PARTY.REVIEW(partyId));
+  const handleClickReviewFoodPartyButton = (partyId: number, partyName: string) => {
+    router.push(ROUTING_PATHS.FOOD_PARTY.REVIEW(partyId, partyName));
   };
 
   if (isLoading) return <FoodPartyListSkeleton foodPartyCount={2} />;
@@ -23,6 +23,9 @@ const MyFoodPartyList = () => {
 
   return (
     <>
+      <Head>
+        <title>내가 참여한 밥모임 목록</title>
+      </Head>
       {isSuccess ? (
         <>
           <Head>

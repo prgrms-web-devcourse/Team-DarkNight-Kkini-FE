@@ -41,11 +41,11 @@ const UserPage = ({ userId }: { userId: string }) => {
     window.location.replace(ROUTING_PATHS.HOME);
   };
   return (
-    isSuccess && (
-      <>
-        <Head>
-          <title>Profile</title>
-        </Head>
+    <>
+      <Head>
+        <title>나의 프로필</title>
+      </Head>
+      {isSuccess ? (
         <motion.div
           initial={{ x: 300 }}
           animate={{ x: 0 }}
@@ -130,8 +130,10 @@ const UserPage = ({ userId }: { userId: string }) => {
             )}
           </Flex>
         </motion.div>
-      </>
-    )
+      ) : (
+        <GoHomeWhenErrorInvoked />
+      )}
+    </>
   );
 };
 

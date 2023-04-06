@@ -16,6 +16,7 @@ import AccordionHeader from 'components/common/Accordion/AccordionHeader';
 import Button from 'components/common/Button';
 import { useCreateFoodParty } from 'hooks/query/useFoodParty';
 import moment, { Moment } from 'moment';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -100,140 +101,145 @@ const FoodPartyCreateForm = () => {
   }, [router, selectedRestaurant, toast]);
 
   return (
-    <Flex align='center' justify='center' backgroundColor='subBackground' h='100%'>
-      <Box
-        w='90%'
-        h='95%'
-        bgColor='white'
-        borderRadius='8px'
-        p='2rem'
-        position='relative'>
-        <Text fontSize='xl' fontWeight={600}>
-          어떤 밥모임을 만들까요?
-        </Text>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isRequired isInvalid={!!errors.name}>
-            <Input
-              type='text'
-              {...register('name', {
-                required: true,
-                minLength: {
-                  value: 2,
-                  message: '제목을 2자 이상으로 적어주세요',
-                },
-                maxLength: {
-                  value: 15,
-                  message: '제목을 15자 이하로 적어주세요',
-                },
-              })}
-              bgColor='transparent'
-              placeholder='제목을 입력해주세요!'
-              size='lg'
-              borderColor='transparent'
-              focusBorderColor='gray.100'
-              my='0.25rem'
-            />
-            <FormErrorMessage mb='0.25rem'>{errors.name?.message}</FormErrorMessage>
-          </FormControl>
-          {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
-          <Accordion allowToggle defaultIndex={[0]}>
-            <AccordionItem>
-              <Flex align='center'>
-                <Flex
-                  as='span'
-                  flex='1'
-                  h={35}
-                  fontWeight={600}
-                  pl='1rem'
-                  justify='flex-start'
-                  align='center'>
-                  가게명
-                </Flex>
-                <Text color='gray.500' pr='2rem'>
-                  {selectedRestaurant.placeName}
-                </Text>
-              </Flex>
-            </AccordionItem>
-            {/** 밥모임 카테고리 */}
-            <AccordionItem>
-              <AccordionHeader>
-                <Box as='span' flex='1' fontWeight={600} textAlign='left'>
-                  카테고리
-                </Box>
-                <Box fontSize='sm' color='gray.500' pr={1.5}>
-                  {categoryState}
-                </Box>
-              </AccordionHeader>
-              <AccordionBody>
-                <FoodPartyCategoryItem onClick={handleClickCategory} />
-              </AccordionBody>
-            </AccordionItem>
-            {/** 밥모임 인원 */}
-            <AccordionItem>
-              <FoodPartyCapacity<PartyFormType>
-                register={register}
-                registerRules={{
+    <>
+      <Head>
+        <title>{selectedRestaurant.placeName} 음식점 밥모임 생성하기</title>
+      </Head>
+      <Flex align='center' justify='center' backgroundColor='subBackground' h='100%'>
+        <Box
+          w='90%'
+          h='95%'
+          bgColor='white'
+          borderRadius='8px'
+          p='2rem'
+          position='relative'>
+          <Text fontSize='xl' fontWeight={600}>
+            어떤 밥모임을 만들까요?
+          </Text>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl isRequired isInvalid={!!errors.name}>
+              <Input
+                type='text'
+                {...register('name', {
                   required: true,
-                  minLength: 1,
-                }}
-                registerName={'capacity'}
+                  minLength: {
+                    value: 2,
+                    message: '제목을 2자 이상으로 적어주세요',
+                  },
+                  maxLength: {
+                    value: 15,
+                    message: '제목을 15자 이하로 적어주세요',
+                  },
+                })}
+                bgColor='transparent'
+                placeholder='제목을 입력해주세요!'
+                size='lg'
+                borderColor='transparent'
+                focusBorderColor='gray.100'
+                my='0.25rem'
               />
-            </AccordionItem>
-            {/** 밥모임 날짜 */}
-            <AccordionItem>
-              <AccordionHeader>
-                <Box as='span' flex='1' fontWeight={600} textAlign='left'>
-                  날짜
-                </Box>
-                <Box fontSize='sm' color='gray.500' pr={1.5}>
-                  {currentDate}
-                </Box>
-              </AccordionHeader>
-              <AccordionBody>
-                <FoodPartyCalendar date={date} onChange={handleClickDate} />
-              </AccordionBody>
-            </AccordionItem>
-            {/** 밥모임 시간 */}
-            <AccordionItem>
-              <AccordionHeader>
-                <Box as='span' flex='1' fontWeight={600} textAlign='left'>
-                  시간
-                </Box>
-                <Box fontSize='sm' color='gray.500' pr={1.5}>
-                  {currentTime}
-                </Box>
-              </AccordionHeader>
-              <AccordionBody>
-                <FoodPartyTimePicker value={time} onChange={handleClickTime} />
-              </AccordionBody>
-            </AccordionItem>
-            {/** 밥모임 설명  */}
-            <AccordionItem>
-              <AccordionHeader>
-                <Box as='span' flex='1' fontWeight={600} textAlign='left'>
-                  밥모임 설명
-                </Box>
-              </AccordionHeader>
-              <AccordionBody>
-                <Textarea
-                  {...register('content', {
-                    required: false,
-                  })}></Textarea>
-              </AccordionBody>
-            </AccordionItem>
-          </Accordion>
-          <Button
-            type='submit'
-            width='100%'
-            style={{
-              backgroundColor: 'primary',
-              color: 'white',
-            }}>
-            다음
-          </Button>
-        </Form>
-      </Box>
-    </Flex>
+              <FormErrorMessage mb='0.25rem'>{errors.name?.message}</FormErrorMessage>
+            </FormControl>
+            {/** Todo: 제목을 입력하면 Accordion이 보이게 변경하려고 함 */}
+            <Accordion allowToggle defaultIndex={[0]}>
+              <AccordionItem>
+                <Flex align='center'>
+                  <Flex
+                    as='span'
+                    flex='1'
+                    h={35}
+                    fontWeight={600}
+                    pl='1rem'
+                    justify='flex-start'
+                    align='center'>
+                    가게명
+                  </Flex>
+                  <Text color='gray.500' pr='2rem'>
+                    {selectedRestaurant.placeName}
+                  </Text>
+                </Flex>
+              </AccordionItem>
+              {/** 밥모임 카테고리 */}
+              <AccordionItem>
+                <AccordionHeader>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
+                    카테고리
+                  </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {categoryState}
+                  </Box>
+                </AccordionHeader>
+                <AccordionBody>
+                  <FoodPartyCategoryItem onClick={handleClickCategory} />
+                </AccordionBody>
+              </AccordionItem>
+              {/** 밥모임 인원 */}
+              <AccordionItem>
+                <FoodPartyCapacity<PartyFormType>
+                  register={register}
+                  registerRules={{
+                    required: true,
+                    minLength: 1,
+                  }}
+                  registerName={'capacity'}
+                />
+              </AccordionItem>
+              {/** 밥모임 날짜 */}
+              <AccordionItem>
+                <AccordionHeader>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
+                    날짜
+                  </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {currentDate}
+                  </Box>
+                </AccordionHeader>
+                <AccordionBody>
+                  <FoodPartyCalendar date={date} onChange={handleClickDate} />
+                </AccordionBody>
+              </AccordionItem>
+              {/** 밥모임 시간 */}
+              <AccordionItem>
+                <AccordionHeader>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
+                    시간
+                  </Box>
+                  <Box fontSize='sm' color='gray.500' pr={1.5}>
+                    {currentTime}
+                  </Box>
+                </AccordionHeader>
+                <AccordionBody>
+                  <FoodPartyTimePicker value={time} onChange={handleClickTime} />
+                </AccordionBody>
+              </AccordionItem>
+              {/** 밥모임 설명  */}
+              <AccordionItem>
+                <AccordionHeader>
+                  <Box as='span' flex='1' fontWeight={600} textAlign='left'>
+                    밥모임 설명
+                  </Box>
+                </AccordionHeader>
+                <AccordionBody>
+                  <Textarea
+                    {...register('content', {
+                      required: false,
+                    })}></Textarea>
+                </AccordionBody>
+              </AccordionItem>
+            </Accordion>
+            <Button
+              type='submit'
+              width='100%'
+              style={{
+                backgroundColor: 'primary',
+                color: 'white',
+              }}>
+              다음
+            </Button>
+          </Form>
+        </Box>
+      </Flex>
+    </>
   );
 };
 
