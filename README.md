@@ -21,7 +21,7 @@
 
 [발표 영상 보러 가기](https://www.youtube.com/watch?v=H1anj9zAULA)
 
-[![Alt text for your video](https://img.youtube.com/vi/H1anj9zAULA/0.jpg)](https://www.youtube.com/watch?v=H1anj9zAULA)
+[![발표 영상 썸네일](https://img.youtube.com/vi/H1anj9zAULA/0.jpg)](https://www.youtube.com/watch?v=H1anj9zAULA)
 
 <br />
 <br />
