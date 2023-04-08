@@ -4,7 +4,6 @@ import FoodPartyList from 'components/FoodParty/FoodPartyList';
 import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
@@ -12,23 +11,18 @@ import { selectedRestaurantState } from 'stores/restaurant';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
-type SearchedFoodPartyListQuery = {
-  placeId: string;
-  name: string;
-};
-
-type SearchedFoodPartyListProps = SearchedFoodPartyListQuery;
-
-const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) => {
+const SearchedFoodPartyList = () => {
+  const router = useRouter();
+  const { placeId, restaurantName } = router.query;
   const {
     data: foodPartyList,
     isLoading,
     error,
     isSuccess,
-  } = useGetSearchedFoodPartyList(placeId);
+  } = useGetSearchedFoodPartyList(placeId as string);
   const { randomRestaurant } = useRandomRestaurantContext();
   const setSelectedRestaurant = useSetRecoilState(selectedRestaurantState);
-  const router = useRouter();
+
   const handleClickFoodPartyItem = (partyId: number) => {
     router.push(ROUTING_PATHS.FOOD_PARTY.DETAIL.INFORMATION(partyId));
   };
@@ -64,15 +58,12 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
   return (
     <>
       <Head>
-        <title>{name} 음식점의 밥모임 목록</title>
+        <title>{restaurantName} 음식점의 밥모임 목록</title>
       </Head>
       {isSuccess ? (
         <>
-          <Head>
-            <title>Food Party List of {name}</title>
-          </Head>
           <Flex flexDirection='column' padding='1rem'>
-            <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
+            <Heading paddingBottom='1rem'>{restaurantName}의 밥모임</Heading>
             <FoodPartyList
               isMyFoodParty={false}
               foodPartyList={foodPartyList}
@@ -89,15 +80,3 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
 };
 
 export default SearchedFoodPartyList;
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { placeId, name } = context.query;
-
-  return {
-    props: {
-      placeId,
-      name,
-    },
-  };
-};

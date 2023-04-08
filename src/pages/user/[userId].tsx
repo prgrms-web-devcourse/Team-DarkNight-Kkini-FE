@@ -16,15 +16,15 @@ import UserProfileCount from 'components/User/UserProfileCount';
 import UserProfileItem from 'components/User/UserProfileItem';
 import { motion } from 'framer-motion';
 import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { logout } from 'services/auth';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { isMyProfile } from 'utils/validations/user';
 
-const UserPage = ({ userId }: { userId: string }) => {
+const UserPage = () => {
   const router = useRouter();
+  const userId = router.query.userId as string;
 
   const { data: MyUserData } = useGetUser();
   const { data, isLoading, error, isSuccess } = useGetSpecificUser(userId);
@@ -138,14 +138,3 @@ const UserPage = ({ userId }: { userId: string }) => {
 };
 
 export default UserPage;
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId } = context.query;
-
-  return {
-    props: {
-      userId,
-    },
-  };
-};

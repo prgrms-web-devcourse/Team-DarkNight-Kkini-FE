@@ -5,7 +5,7 @@ const Create = () => {
   return (
     <>
       <Head>
-        <title>Create Food Party</title>
+        <title>밥모임 생성</title>
       </Head>
       <FoodPartyCreateForm />;
     </>
