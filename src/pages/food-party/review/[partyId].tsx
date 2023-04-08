@@ -9,7 +9,8 @@ import { useState } from 'react';
 
 const FoodPartyReviewPage = () => {
   const router = useRouter();
-  const { partyId, partyName } = router.query;
+  const partyId = router.query.partyId as string;
+  const partyName = router.query.partyName as string;
   const [selectedUserName, setSelectedUserName] = useState('');
   const [selectedUserRole, setSelectedUserRole] = useState('');
   const [selectedUserId, setsSelectedUserId] = useState(0);
@@ -19,7 +20,7 @@ const FoodPartyReviewPage = () => {
     isLoading,
     error,
     isSuccess,
-  } = useGetFoodPartyReviewees(partyId as string);
+  } = useGetFoodPartyReviewees(partyId);
 
   if (isLoading) return <div></div>;
   if (error) return <GoHomeWhenErrorInvoked />;
@@ -102,7 +103,7 @@ const FoodPartyReviewPage = () => {
                       selectedUserRole={selectedUserRole}
                       selectedUserName={selectedUserName}
                       selectedUserId={selectedUserId}
-                      partyId={partyId as string}
+                      partyId={partyId}
                     />
                   </Flex>
                 )

@@ -13,13 +13,14 @@ import { getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
 const SearchedFoodPartyList = () => {
   const router = useRouter();
-  const { placeId, restaurantName } = router.query;
+  const placeId = router.query.placeId as string;
+  const restaurantName = router.query.restaurantName as string;
   const {
     data: foodPartyList,
     isLoading,
     error,
     isSuccess,
-  } = useGetSearchedFoodPartyList(placeId as string);
+  } = useGetSearchedFoodPartyList(placeId);
   const { randomRestaurant } = useRandomRestaurantContext();
   const setSelectedRestaurant = useSetRecoilState(selectedRestaurantState);
 
