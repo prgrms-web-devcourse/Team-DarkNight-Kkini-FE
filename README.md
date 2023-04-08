@@ -20,6 +20,8 @@
 
 [Kkini 서비스 바로가기](https://kkini.vercel.app/)
 
+[발표 영상 보러 가기](https://www.youtube.com/watch?v=H1anj9zAULA&t=904s)
+
 <br />
 <br />
 <br />
