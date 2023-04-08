@@ -11,6 +11,7 @@ import {
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Message, ReceivedMessage } from 'types/foodParty';
@@ -171,21 +172,26 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingExistingMessageList &&
       isSuccessGettingUserInformation &&
       isSuccessGettingFoodPartyDetail ? (
-        <Flex
-          position='relative'
-          flexDirection='column'
-          height='100%'
-          backgroundColor='#f2f2f2'>
-          <MessageList
-            status={foodPartyDetail.crewStatus}
-            ref={messageListRef}
-            messageList={messageList}
-            currentUserId={userInformation.id}
-          />
-          {foodPartyDetail.crewStatus !== '식사 완료' && (
-            <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
-          )}
-        </Flex>
+        <>
+          <Head>
+            <title>Chat of {foodPartyDetail.id}</title>
+          </Head>
+          <Flex
+            position='relative'
+            flexDirection='column'
+            height='100%'
+            backgroundColor='#f2f2f2'>
+            <MessageList
+              status={foodPartyDetail.crewStatus}
+              ref={messageListRef}
+              messageList={messageList}
+              currentUserId={userInformation.id}
+            />
+            {foodPartyDetail.crewStatus !== '식사 완료' && (
+              <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
+            )}
+          </Flex>
+        </>
       ) : (
         <GoHomeWhenErrorInvoked
           errorText={isErrorConnectingSocket ? '채팅 연결에 실패했습니다.' : ''}

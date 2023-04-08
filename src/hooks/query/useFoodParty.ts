@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import {
   createFoodParty,
   createFoodPartyApplication,
+  deleteFoodPartyMember,
   fetchFoodPartyDetail,
   fetchFoodPartyList,
   fetchFoodPartyMessageList,
@@ -11,6 +12,7 @@ import {
   fetchMyFoodPartyList,
   postFoodPartyLeaderReview,
   postFoodPartyMemberReview,
+  updateFoodPartyMember,
 } from 'services/foodParty';
 import {
   FoodPartyLeaderReviewBody,
@@ -155,11 +157,21 @@ export const useCreateFoodPartyApplication = (partyId: string, leaderUserId: num
         isClosable: true,
       });
     },
+    onError: () => {
+      toast({
+        title: '강퇴 당하신 것 같아요...',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
   });
 };
 
 export const useUpdateFoodPartyStatus = (partyId: string) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: (status: FoodPartyStatus) => updateFoodPartyStatus(partyId, status),
@@ -167,8 +179,56 @@ export const useUpdateFoodPartyStatus = (partyId: string) => {
       queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
     },
     onError: (error: unknown) => {
-      // To Do: 배포 전에 지우기 by 승준
-      console.error(error);
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
+export const useUpdateFoodPartyMember = (partyId: string) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: ({ memberId }: { memberId: number }) =>
+      updateFoodPartyMember(partyId, memberId),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
+export const useDeleteFoodPartyMember = (partyId: string) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: () => deleteFoodPartyMember(partyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.FOOD_PARTY.FOOD_PARTY_DETAIL, partyId]);
+    },
+    onError: (error: unknown) => {
+      toast({
+        title: '예기치 못한 에러가 발생했습니다.',
+        position: 'top',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };

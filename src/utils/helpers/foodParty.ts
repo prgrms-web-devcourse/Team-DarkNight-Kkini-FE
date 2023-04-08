@@ -80,7 +80,7 @@ const LeaderText: {
 const MemberText: {
   [key: string]: FoodPartyDetailStatusButtonText;
 } = {
-  '모집 중': '',
+  '모집 중': '나갈까요..?',
   '모집 종료': '',
   '식사 완료': '',
 };
@@ -110,4 +110,19 @@ export const getNumberArrayCreatedAt = (createdAt: string) => {
   const second = date.getSeconds();
 
   return [year, month, day, hour, minute, second];
+};
+
+export const CHANGE_FOOD_PARTY_STATUS_MODAL_TEXT: Record<
+  FoodPartyDetailStatusButtonText,
+  string
+> = {
+  '모집 완료할끼니?': '모집을 완료하시겠습니까?',
+  '식사를 완료했끼니?': '식사를 완료하시겠습니까?',
+  '참여할 끼니?': '',
+  '모집이 완료되버렸끼니!': '',
+  '인원이 꽉 차버렸끼니!': '',
+  '수락 대기 중': '',
+  '거절 당했어요...': '',
+  '나갈까요..?': '',
+  '': '',
 };

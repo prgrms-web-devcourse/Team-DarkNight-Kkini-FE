@@ -81,7 +81,7 @@ const ApplicationDrawer = ({
                         onClick={() =>
                           handleClickApplicationChangeStatus(id, false, onClose)
                         }>
-                        죄송합니다
+                        거절
                       </Button>
                       <Button
                         flex='1'
@@ -89,7 +89,7 @@ const ApplicationDrawer = ({
                         onClick={() =>
                           handleClickApplicationChangeStatus(id, true, onClose)
                         }>
-                        좋아요
+                        승인
                       </Button>
                     </>
                   ) : (

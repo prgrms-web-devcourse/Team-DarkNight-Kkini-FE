@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
 import { kakaoMapOptionsState } from 'stores/kakaoMap';
-import { searchRestaurantListState } from 'stores/Restaurant';
+import { searchRestaurantListState } from 'stores/restaurant';
 import { AxiosPhotoResponseValue } from 'types/kakaoSearch';
 import { keywordSearch } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';

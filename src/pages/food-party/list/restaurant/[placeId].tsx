@@ -5,9 +5,10 @@ import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
-import { selectedRestaurantState } from 'stores/Restaurant';
+import { selectedRestaurantState } from 'stores/restaurant';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
@@ -63,15 +64,20 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
   return (
     <>
       {isSuccess ? (
-        <Flex flexDirection='column' padding='1rem'>
-          <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
-          <FoodPartyList
-            isMyFoodParty={false}
-            foodPartyList={foodPartyList}
-            onClickViewButton={handleClickFoodPartyItem}
-            onClickCreateFoodPartyButton={handleClickCreateFoodPartyButton}
-          />
-        </Flex>
+        <>
+          <Head>
+            <title>Food Party List of {name}</title>
+          </Head>
+          <Flex flexDirection='column' padding='1rem'>
+            <Heading paddingBottom='1rem'>{name}의 밥모임</Heading>
+            <FoodPartyList
+              isMyFoodParty={false}
+              foodPartyList={foodPartyList}
+              onClickViewButton={handleClickFoodPartyItem}
+              onClickCreateFoodPartyButton={handleClickCreateFoodPartyButton}
+            />
+          </Flex>
+        </>
       ) : (
         <GoHomeWhenErrorInvoked />
       )}

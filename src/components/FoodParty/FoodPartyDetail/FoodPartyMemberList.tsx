@@ -3,15 +3,21 @@ import { Member } from 'types/foodParty';
 
 import FoodPartyMemberItem from './FoodPartyMemberItem';
 
-const FoodPartyMemberList = ({
-  onClickChatButton,
-  memberList,
-  capacity,
-}: {
+type FoodPartyMemeberListProps = {
+  ableToKickOut: boolean;
   onClickChatButton?: () => void;
+  onClickKickOutButton: (member: Member) => void;
   memberList: Member[];
   capacity: number;
-}) => {
+};
+
+const FoodPartyMemberList = ({
+  ableToKickOut,
+  onClickChatButton,
+  onClickKickOutButton,
+  memberList,
+  capacity,
+}: FoodPartyMemeberListProps) => {
   return (
     <Flex flexDirection='column'>
       <Flex justifyContent='space-between' alignItems='center'>
@@ -27,7 +33,12 @@ const FoodPartyMemberList = ({
       </Flex>
       <Flex flexDirection='column' gap='0.5rem' height='160px' overflowY='auto'>
         {memberList.map((member) => (
-          <FoodPartyMemberItem key={member.userId} member={member} />
+          <FoodPartyMemberItem
+            key={member.userId}
+            member={member}
+            ableToKickOut={ableToKickOut}
+            onClickKickOutButton={onClickKickOutButton}
+          />
         ))}
       </Flex>
     </Flex>

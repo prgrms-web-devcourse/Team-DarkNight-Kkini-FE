@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { foodPartyCreateDrawerOpenState } from 'stores/drawer';
-import { searchRestaurantListState, selectedRestaurantState } from 'stores/Restaurant';
+import { searchRestaurantListState, selectedRestaurantState } from 'stores/restaurant';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { getCategoryArray } from 'utils/helpers/foodParty';
 

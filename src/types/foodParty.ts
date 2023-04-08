@@ -17,6 +17,7 @@ export type FoodPartyDetailStatusButtonText =
   | '인원이 꽉 차버렸끼니!'
   | '수락 대기 중'
   | '거절 당했어요...'
+  | '나갈까요..?'
   | '';
 
 export type Member = {

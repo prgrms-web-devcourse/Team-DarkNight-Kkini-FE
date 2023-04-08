@@ -2,7 +2,7 @@ import { Accordion, Flex, Text } from '@chakra-ui/react';
 import SearchRestaurantItem from 'components/Search/SearchRestaurantItem';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
-import { searchRestaurantListState } from 'stores/Restaurant';
+import { searchRestaurantListState } from 'stores/restaurant';
 
 const NO_RESULT_MESSAGE = '결과가 없습니다!';
 
