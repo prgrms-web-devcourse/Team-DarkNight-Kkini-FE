@@ -9,7 +9,6 @@
 
 <br />
 
-
 ### 기획 배경 및 기대 효과
 
 <strong>Kkini</strong>는 현재 위치에 기반하여 주변의 음식점을 랜덤으로 추천해줍니다. 또한, 혼자서는 두려운 음식점을 방문할 수 있도록 밥모임 모집 서비스를 제공합니다.
@@ -20,7 +19,9 @@
 
 [Kkini 서비스 바로가기](https://kkini.vercel.app/)
 
-[발표 영상 보러 가기](https://www.youtube.com/watch?v=H1anj9zAULA&t=904s)
+[발표 영상 보러 가기](https://www.youtube.com/watch?v=H1anj9zAULA)
+
+[![Alt text for your video](https://img.youtube.com/vi/H1anj9zAULA/0.jpg)](https://www.youtube.com/watch?v=H1anj9zAULA)
 
 <br />
 <br />
