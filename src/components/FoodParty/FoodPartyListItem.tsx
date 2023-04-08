@@ -18,7 +18,7 @@ type FoodPartyListItemProps = {
   isMyFoodParty: boolean;
   party: FoodParty;
   onClickViewButton: (partyId: number) => void;
-  onClickReviewButton?: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number, partyName: string) => void;
 };
 
 const FoodPartyListItem = ({
@@ -68,7 +68,7 @@ const FoodPartyListItem = ({
           {isMyFoodParty && party.crewStatus === '식사 완료' && (
             <Button
               onClick={() => {
-                onClickReviewButton && onClickReviewButton(party.id);
+                onClickReviewButton && onClickReviewButton(party.id, party.name);
               }}
               fontWeight='semibold'
               fontSize='14px'>

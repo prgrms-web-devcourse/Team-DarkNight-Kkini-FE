@@ -7,7 +7,7 @@ type FoodPartyListProps = {
   isMyFoodParty: boolean;
   foodPartyList: FoodParty[];
   onClickViewButton: (partyId: number) => void;
-  onClickReviewButton?: (partyId: number) => void;
+  onClickReviewButton?: (partyId: number, partyName: string) => void;
   onClickCreateFoodPartyButton?: () => void;
 };
 

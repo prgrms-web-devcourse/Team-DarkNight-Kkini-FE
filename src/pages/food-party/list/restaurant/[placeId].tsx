@@ -63,6 +63,9 @@ const SearchedFoodPartyList = ({ placeId, name }: SearchedFoodPartyListProps) =>
 
   return (
     <>
+      <Head>
+        <title>{name} 음식점의 밥모임 목록</title>
+      </Head>
       {isSuccess ? (
         <>
           <Head>

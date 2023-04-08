@@ -11,7 +11,8 @@ const ROUTING_PATHS = {
       INFORMATION: (partyId: string | number) => `/food-party/detail/${partyId}`,
       CHAT: (roomId: string | number) => `/food-party/detail/chat/${roomId}`,
     },
-    REVIEW: (partyId: string | number) => `/food-party/review/${partyId}`,
+    REVIEW: (partyId: string | number, partyName: string) =>
+      `/food-party/review/${partyId}?partyName=${partyName}`,
   },
   USER: {
     PROFILE: (userId: string | number) => `/user/${userId}`,
