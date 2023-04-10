@@ -6,6 +6,8 @@ import { AxiosPhotoResponseValue } from 'types/kakaoSearch';
 import { keywordSearch } from 'utils/helpers/kakaoMap';
 import { getKeywordPhotos } from 'utils/helpers/kakaoSearch';
 
+const DEFAULT_IMAGE = '/images/default-restaurant.svg';
+
 const useSearchRestaurant = () => {
   const kakaoMapOptions = useRecoilValue(kakaoMapOptionsState);
   const setRestaurantList = useSetRecoilState(searchRestaurantListState);
@@ -41,10 +43,14 @@ const useSearchRestaurant = () => {
     }, []);
 
     const photos = photoList.map(({ documents }) => {
-      return documents.map(({ image_url }) => image_url);
+      const imageArray = documents.map(({ image_url }) => image_url);
+      while (imageArray.length < 4) {
+        imageArray.push(DEFAULT_IMAGE);
+      }
+      return imageArray;
     });
 
-    const searchResult = keywordSearchResult.map((item, i) => {
+    const searchResult = keywordSearchResult.map((item, index) => {
       const {
         id: placeId,
         place_name: placeName,
@@ -61,7 +67,7 @@ const useSearchRestaurant = () => {
         placeName,
         categories,
         roadAddressName,
-        photoUrls: photos[i],
+        photoUrls: photos[index],
         kakaoPlaceUrl,
         phoneNumber,
         longitude: parseFloat(x),

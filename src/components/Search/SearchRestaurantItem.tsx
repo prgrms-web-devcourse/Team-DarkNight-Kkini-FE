@@ -86,9 +86,9 @@ const SearchRestaurantItem = ({
             {phoneNumber}
           </Text>
           <Flex overflowX='auto' gap='1rem' py='0.5rem'>
-            {photos?.map((photoUrl) => (
+            {photos?.map((photoUrl, index) => (
               <Image
-                key={photoUrl}
+                key={photoUrl + index.toString()}
                 referrerPolicy='no-referrer'
                 boxSize='100px'
                 borderRadius={8}
