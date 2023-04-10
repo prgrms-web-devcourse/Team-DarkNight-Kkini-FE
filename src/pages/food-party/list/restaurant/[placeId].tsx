@@ -13,8 +13,10 @@ import { getPhotoUrlsArray } from 'utils/helpers/foodParty';
 
 const SearchedFoodPartyList = () => {
   const router = useRouter();
-  const placeId = router.query.placeId as string;
-  const restaurantName = router.query.restaurantName as string;
+  const { placeId, restaurantName } = router.query as {
+    placeId: string;
+    restaurantName: string;
+  };
   const {
     data: foodPartyList,
     isLoading,

@@ -9,8 +9,10 @@ import { useState } from 'react';
 
 const FoodPartyReviewPage = () => {
   const router = useRouter();
-  const partyId = router.query.partyId as string;
-  const partyName = router.query.partyName as string;
+  const { partyId, partyName } = router.query as {
+    partyId: string;
+    partyName: string;
+  };
   const [selectedUserName, setSelectedUserName] = useState('');
   const [selectedUserRole, setSelectedUserRole] = useState('');
   const [selectedUserId, setsSelectedUserId] = useState(0);
