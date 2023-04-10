@@ -10,15 +10,17 @@ import {
   useGetFoodPartyMessageList,
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Message, ReceivedMessage } from 'types/foodParty';
 import { sendMessage } from 'utils/helpers/chat';
 import { getNumberArrayCreatedAt } from 'utils/helpers/foodParty';
 
-const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
+const FoodPartyDetailChat = () => {
+  const router = useRouter();
+  const roomId = router.query.roomId as string;
   const client = useRef<CompatClient>();
   const messageListRef = useRef<HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLInputElement>(null);
@@ -175,26 +177,21 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
       isSuccessGettingExistingMessageList &&
       isSuccessGettingUserInformation &&
       isSuccessGettingFoodPartyDetail ? (
-        <>
-          <Head>
-            <title>Chat of {foodPartyDetail.id}</title>
-          </Head>
-          <Flex
-            position='relative'
-            flexDirection='column'
-            height='100%'
-            backgroundColor='#f2f2f2'>
-            <MessageList
-              status={foodPartyDetail.crewStatus}
-              ref={messageListRef}
-              messageList={messageList}
-              currentUserId={userInformation.id}
-            />
-            {foodPartyDetail.crewStatus !== '식사 완료' && (
-              <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
-            )}
-          </Flex>
-        </>
+        <Flex
+          position='relative'
+          flexDirection='column'
+          height='100%'
+          backgroundColor='#f2f2f2'>
+          <MessageList
+            status={foodPartyDetail.crewStatus}
+            ref={messageListRef}
+            messageList={messageList}
+            currentUserId={userInformation.id}
+          />
+          {foodPartyDetail.crewStatus !== '식사 완료' && (
+            <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />
+          )}
+        </Flex>
       ) : (
         <GoHomeWhenErrorInvoked
           errorText={isErrorConnectingSocket ? '채팅 연결에 실패했습니다.' : ''}
@@ -205,14 +202,3 @@ const FoodPartyDetailChat = ({ roomId }: { roomId: string }) => {
 };
 
 export default FoodPartyDetailChat;
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { roomId } = context.query;
-
-  return {
-    props: {
-      roomId,
-    },
-  };
-};

@@ -7,7 +7,7 @@ const Custom404 = () => {
   return (
     <>
       <Head>
-        <title>Not Found</title>
+        <title>404 Not Found 페이지</title>
       </Head>
       <Box width='100%' height='100%' backgroundColor='subBackground'>
         <GoHomeWhenErrorInvoked errorText='존재하지 않는 페이지에요..!'>

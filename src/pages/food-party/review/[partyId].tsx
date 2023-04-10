@@ -3,19 +3,16 @@ import Button from 'components/common/Button';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
 import ReviewBottomDrawer from 'components/FoodParty/Review/ReviewBottomDrawer';
 import { useGetFoodPartyReviewees } from 'hooks/query/useFoodParty';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const FoodPartyReviewPage = ({
-  partyId,
-  partyName,
-}: {
-  partyId: string;
-  partyName: string;
-}) => {
+const FoodPartyReviewPage = () => {
   const router = useRouter();
+  const { partyId, partyName } = router.query as {
+    partyId: string;
+    partyName: string;
+  };
   const [selectedUserName, setSelectedUserName] = useState('');
   const [selectedUserRole, setSelectedUserRole] = useState('');
   const [selectedUserId, setsSelectedUserId] = useState(0);
@@ -136,15 +133,3 @@ const FoodPartyReviewPage = ({
 };
 
 export default FoodPartyReviewPage;
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { partyId, partyName } = context.query;
-
-  return {
-    props: {
-      partyId,
-      partyName,
-    },
-  };
-};

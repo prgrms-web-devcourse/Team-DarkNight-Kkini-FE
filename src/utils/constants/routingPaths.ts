@@ -5,7 +5,7 @@ const ROUTING_PATHS = {
     LIST: {
       MY: '/food-party/list/my',
       RESTAURANT: (placeId: string | number, placeName: string) =>
-        `/food-party/list/restaurant/${placeId}?name=${placeName}`,
+        `/food-party/list/restaurant/${placeId}?restaurantName=${placeName}`,
     },
     DETAIL: {
       INFORMATION: (partyId: string | number) => `/food-party/detail/${partyId}`,

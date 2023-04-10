@@ -16,7 +16,6 @@ import {
   useUpdateFoodPartyStatus,
 } from 'hooks/query/useFoodParty';
 import { useGetUser } from 'hooks/query/useUser';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -32,8 +31,9 @@ import { validateAbleToChat, validateAbleToKickOut } from 'utils/validations/foo
 
 // To Do: 404 처리 by 승준
 // 조회가 안되면 에러 코드({"code":"CR001","message":"존재하지 않는 모임입니다."}) 맵핑하여 404 처리
-const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
+const FoodPartyDetail = () => {
   const router = useRouter();
+  const partyId = router.query.partyId as string;
   const { data: userInformation } = useGetUser();
   // To Do: 실시간 업데이트를 위한 refetch 필요 by 승준
   const {
@@ -227,14 +227,3 @@ const FoodPartyDetail = ({ partyId }: { partyId: string }) => {
 };
 
 export default FoodPartyDetail;
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { partyId } = context.query;
-
-  return {
-    props: {
-      partyId,
-    },
-  };
-};
