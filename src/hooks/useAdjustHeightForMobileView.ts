@@ -1,17 +1,10 @@
 import { useEffect } from 'react';
 import debounce from 'utils/helpers/debounce';
 
-const DEFAULT_DEBOUNCE_DELAY_TIME = 150;
-
 const useAdjustHeightForMobileView = () => {
   useEffect(() => {
     // 처음에 한 번 높이를 맞춰줌.
     adjustHeight();
-
-    const adjustHeightFunctionDebounced = debounce(
-      adjustHeight,
-      DEFAULT_DEBOUNCE_DELAY_TIME
-    );
 
     // 브라우저 화면의 크기가 변할 경우 adjustHeight 실행.
     window.addEventListener('resize', adjustHeightFunctionDebounced);
@@ -31,3 +24,7 @@ const adjustHeight = () => {
     `${heightExcludingAddressBar}px`
   );
 };
+
+const DEFAULT_DEBOUNCE_DELAY_TIME = 150;
+
+const adjustHeightFunctionDebounced = debounce(adjustHeight, DEFAULT_DEBOUNCE_DELAY_TIME);
