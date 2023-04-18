@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
 
 const globalStyle = css`
+  :root {
+    --height-excluding-address-bar: 100vh;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -13,7 +17,7 @@ const globalStyle = css`
   #app {
     max-width: 560px;
     width: 100%;
-    height: 100vh;
+    height: var(--height-excluding-address-bar);
   }
 
   // 스크롤바 없애기
