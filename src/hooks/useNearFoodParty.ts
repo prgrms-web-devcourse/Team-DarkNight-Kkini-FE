@@ -24,8 +24,9 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 				alt=${placeName}의밥모임
 				style="
 					width: 40px; 
-					height: 40px; 
+					height: 40px;
 				"
+				class="not-drag"
 			/>
 			<div 
 				style="

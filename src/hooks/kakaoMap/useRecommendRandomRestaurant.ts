@@ -70,7 +70,7 @@ const useRecommendRandomRestaurant = () => {
               height: 96px;
             ">
             <img
-            class='random-restaurant-custom-overlay'
+            class='random-restaurant-custom-overlay not-drag'
             src=${RESTAURANT_BADGE_IMAGE_FILE_PATH}
             style="
               width: 96px;
