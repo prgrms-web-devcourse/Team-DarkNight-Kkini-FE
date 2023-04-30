@@ -126,15 +126,6 @@ const globalStyle = css`
       opacity: 0;
     }
   }
-
-  // 드래그 막기
-  .not-drag {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-  }
 `;
 
 export default globalStyle;
