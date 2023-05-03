@@ -2,8 +2,8 @@ import { Flex, Heading } from '@chakra-ui/react';
 import CustomSuspense from 'components/common/CustomSuspense';
 import ErrorBoundary from 'components/common/ErrorBoundary';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
-import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
-import MyFoodPartyList from 'components/FoodParty/MyFoodPartyList';
+import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyList/FoodPartyListSkeleton';
+import MyFoodPartyList from 'components/FoodParty/FoodPartyList/MyFoodPartyList';
 import Head from 'next/head';
 
 const MyFoodPartyListPage = () => {

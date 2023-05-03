@@ -1,7 +1,7 @@
 import { Flex, Heading } from '@chakra-ui/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
-import FoodPartyList from 'components/FoodParty/FoodPartyList';
-import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyListSkeleton';
+import FoodPartyList from 'components/FoodParty/FoodPartyList/FoodPartyList';
+import FoodPartyListSkeleton from 'components/FoodParty/FoodPartyList/FoodPartyListSkeleton';
 import useRandomRestaurantContext from 'contexts/kakaoMap/randomRestaurant';
 import { useGetSearchedFoodPartyList } from 'hooks/query/useFoodParty';
 import Head from 'next/head';
