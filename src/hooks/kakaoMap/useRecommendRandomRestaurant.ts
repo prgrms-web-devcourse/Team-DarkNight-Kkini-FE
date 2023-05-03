@@ -76,7 +76,9 @@ const useRecommendRandomRestaurant = () => {
               width: 96px;
               height: 96px;
               z-index: 11;
-            "/>
+            "
+						draggable="false"
+						/>
             <div class='random-restaurant-custom-overlay-place-name'
               style="                
                 font-size: 14px;

@@ -22,9 +22,10 @@ const createFoodPartyOverlay = ({ placeName, storeId }: NearFoodPartyItem) => {
 			<img 
 				src=${FOOD_PARTY_BADGE_IMAGE_FILE_PATH}
 				alt=${placeName}의밥모임
+				draggable="false"
 				style="
 					width: 40px; 
-					height: 40px; 
+					height: 40px;
 				"
 			/>
 			<div 
