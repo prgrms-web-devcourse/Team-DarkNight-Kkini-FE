@@ -69,7 +69,11 @@ const ApplicationDrawer = ({
             {onClickChangeApplicationStatus && (
               <>
                 <Flex alignItems='center' gap='0.5rem' padding='0.8rem 0'>
-                  <Avatar src={user.profileImgUrl} size='sm' />
+                  <Avatar
+                    src={user.profileImgUrl}
+                    size='sm'
+                    name={`${user.nickname} 아바타 사진`}
+                  />
                   <Text fontSize='sm'>{user.nickname}</Text>
                   <Badge colorScheme='orange'>매너온도 {user.mannerScore}</Badge>
                 </Flex>

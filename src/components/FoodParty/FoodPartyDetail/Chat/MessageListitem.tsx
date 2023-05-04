@@ -40,7 +40,12 @@ const MessageListItem = ({
         <Flex flexDirection='column' maxWidth='80%'>
           {!isCurrentUser && (
             <Flex alignItems='center' gap='0.5rem'>
-              <Avatar src={message.profileImgUrl} size='xs' marginBottom='-0.5rem' />
+              <Avatar
+                src={message.profileImgUrl}
+                size='xs'
+                marginBottom='-0.5rem'
+                name={`${message.username} 아바타 사진`}
+              />
               <Text fontSize='12px'>{message.username}</Text>
             </Flex>
           )}

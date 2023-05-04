@@ -28,6 +28,7 @@ const UserProfile = () => {
         size='sm'
         marginLeft='0.7rem'
         onClick={handleClickUserIcon}
+        name={data ? `${data.nickname} 아바타 사진` : ''}
       />
     </Flex>
   );
