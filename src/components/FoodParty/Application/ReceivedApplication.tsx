@@ -8,6 +8,7 @@ import { UserProfile } from 'types/auth';
 
 const ReceivedApplication = ({ id }: Pick<UserProfile, 'id'>) => {
   const { data } = useReceivedApplication(id);
+
   const { mutate } = useChangeApplicationStatus();
   const handleChangeApplicationStatus = ({
     applicationId,
@@ -19,7 +20,7 @@ const ReceivedApplication = ({ id }: Pick<UserProfile, 'id'>) => {
 
   return (
     <div>
-      {data?.map((application) => (
+      {data?.content.map((application) => (
         <ApplicationItem
           key={application.id}
           application={application}
