@@ -149,7 +149,7 @@ const FoodPartyDetail = () => {
   return (
     <>
       <Head>
-        <title>{foodPartyDetail?.name} - 밥모임 상세</title>
+        <title>{foodPartyDetail?.crewName} - 밥모임 상세</title>
       </Head>
       {isSuccess ? (
         <Flex
@@ -161,7 +161,7 @@ const FoodPartyDetail = () => {
           <FoodPartyDetailHeader
             status={foodPartyDetail.crewStatus}
             category={foodPartyDetail.category}
-            foodPartyName={foodPartyDetail.name}
+            foodPartyName={foodPartyDetail.crewName}
           />
           <FoodPartyDetailContent
             promiseTime={foodPartyDetail.promiseTime}

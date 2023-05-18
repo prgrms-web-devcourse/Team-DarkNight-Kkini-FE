@@ -171,7 +171,7 @@ const FoodPartyDetailChat = () => {
   return (
     <>
       <Head>
-        <title>{foodPartyDetail?.name} - 밥모임 채팅방</title>
+        <title>{foodPartyDetail?.crewName} - 밥모임 채팅방</title>
       </Head>
       {!isErrorConnectingSocket &&
       isSuccessGettingExistingMessageList &&

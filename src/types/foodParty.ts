@@ -50,7 +50,7 @@ export type ReceivedMessage = {
 
 export type FoodParty = {
   id: number;
-  name: string;
+  crewName: string;
   currentMember: number;
   capacity: number;
   promiseTime: number[];

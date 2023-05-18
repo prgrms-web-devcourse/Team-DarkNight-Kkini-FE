@@ -47,7 +47,7 @@ const FoodPartyListItem = ({
             {party.category}
           </Category>
         </Stack>
-        <Text>{party.name}</Text>
+        <Text>{party.crewName}</Text>
         <Flex justifyContent='space-between'>
           <Text>
             {templatePromiseDate(year, month, day)} {templatePromiseTime(hour, minute)}
@@ -68,7 +68,7 @@ const FoodPartyListItem = ({
           {isMyFoodParty && party.crewStatus === '식사 완료' && (
             <Button
               onClick={() => {
-                onClickReviewButton && onClickReviewButton(party.id, party.name);
+                onClickReviewButton && onClickReviewButton(party.id, party.crewName);
               }}
               fontWeight='semibold'
               fontSize='14px'>
