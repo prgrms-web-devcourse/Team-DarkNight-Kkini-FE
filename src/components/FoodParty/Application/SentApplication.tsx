@@ -7,7 +7,7 @@ const SentApplication = ({ id }: Pick<UserProfile, 'id'>) => {
 
   return (
     <div>
-      {data?.map((application) => (
+      {data?.content.map((application) => (
         <ApplicationItem key={application.id} application={application} />
       ))}
     </div>

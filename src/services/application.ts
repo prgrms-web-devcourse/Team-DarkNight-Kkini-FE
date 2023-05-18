@@ -19,26 +19,32 @@ export type ApplicationStatus = '대기 중' | '승인' | '거절' | '미신청'
 
 type ApplicationResponse = {
   data: {
-    responses: ApplicationItemType[];
+    responses: {
+      content: ApplicationItemType[];
+    };
   };
 };
 
 export const fetchReceivedApplication = async () => {
   const {
     data: {
-      data: { responses },
+      data: { responses: content },
     },
-  } = await axiosAuthApi.get<ApplicationResponse>('/api/v1/proposals/leader');
-  return responses;
+  } = await axiosAuthApi.get<ApplicationResponse>(
+    '/api/v1/proposals/leader?page=0&size=20'
+  );
+  return content;
 };
 
 export const fetchSentApplication = async () => {
   const {
     data: {
-      data: { responses },
+      data: { responses: content },
     },
-  } = await axiosAuthApi.get<ApplicationResponse>('/api/v1/proposals/member');
-  return responses;
+  } = await axiosAuthApi.get<ApplicationResponse>(
+    '/api/v1/proposals/member?page=0&size=20'
+  );
+  return content;
 };
 
 export const changeApplicationStatus = async (applicationId: number, status: string) => {
