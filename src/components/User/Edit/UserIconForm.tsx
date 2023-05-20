@@ -60,7 +60,7 @@ const UserIconForm = ({
             pointerEvents='none'
             pos='relative'
             border='2px solid gray'
-            name='유저 사진'
+            name='사용자 사진'
           />
           <Flex
             pos='absolute'
