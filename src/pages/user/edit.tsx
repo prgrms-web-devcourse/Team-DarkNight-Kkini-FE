@@ -66,7 +66,11 @@ const MyProfileEditPage = () => {
             <Heading fontSize='2xl'>프로필 수정</Heading>
             <form>
               <VStack h='3rem' spacing='1rem'>
-                <UserIconForm imgSrc={data.profileImgUrl} setValue={setProfileImage} />
+                <UserIconForm
+                  nickname={data.nickname}
+                  imgSrc={data.profileImgUrl}
+                  setValue={setProfileImage}
+                />
                 <FormControl isRequired isInvalid={!!errors.nickName}>
                   <FormLabel htmlFor='nickname'>닉네임</FormLabel>
                   <Input

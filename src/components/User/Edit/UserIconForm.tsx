@@ -4,9 +4,11 @@ import { ChangeEvent, memo, useEffect, useRef, useState } from 'react';
 import { MdOutlineAddAPhoto } from 'react-icons/md';
 
 const UserIconForm = ({
+  nickname,
   imgSrc,
   setValue,
 }: {
+  nickname: string;
   imgSrc: string;
   setValue: (url: string) => void;
 }) => {
@@ -60,7 +62,7 @@ const UserIconForm = ({
             pointerEvents='none'
             pos='relative'
             border='2px solid gray'
-            name='사용자 사진'
+            name={`${nickname} 사진`}
           />
           <Flex
             pos='absolute'
