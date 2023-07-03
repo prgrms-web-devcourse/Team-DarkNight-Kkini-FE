@@ -1,4 +1,4 @@
-import { axiosApi, removeAccessToken, setAccessToken } from 'apis/axios';
+import { axiosApi, axiosAuthApi, removeAccessToken, setAccessToken } from 'apis/axios';
 import { isAxiosError } from 'axios';
 import { Token } from 'types/auth';
 import { BackendErrorResponse } from 'types/error';
@@ -28,6 +28,14 @@ export const logout = async () => {
       removeAccessToken();
       return true;
     }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const dropOut = async () => {
+  try {
+    await axiosAuthApi.delete('/api/v1/user/me');
   } catch (error) {
     return false;
   }

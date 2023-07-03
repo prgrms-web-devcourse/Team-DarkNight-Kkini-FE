@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { dropOut } from 'services/auth';
 import {
   fetchSpecificUser,
   fetchUser,
@@ -28,6 +29,7 @@ export const useGetSpecificUser = (userId: string | number) => {
     queryFn: () => fetchSpecificUser(userId),
   });
 };
+
 export const useUpdateUserImage = () => {
   return useMutation({
     mutationFn: (body: FormData) => updateUserImage(body),
@@ -52,6 +54,24 @@ export const useUpdateMyProfile = (userId: string | number) => {
         duration: 2000,
         isClosable: true,
       });
+    },
+  });
+};
+
+export const useDropOut = () => {
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: () => dropOut(),
+    onSuccess: () => {
+      toast({
+        title: '회원 탈퇴되었습니다',
+        position: 'top',
+        status: 'success',
+        duration: 1500,
+        isClosable: true,
+      });
+      window.location.replace(ROUTING_PATHS.HOME);
     },
   });
 };

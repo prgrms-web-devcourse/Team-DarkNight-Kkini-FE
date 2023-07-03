@@ -11,13 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import GoHomeWhenErrorInvoked from 'components/common/GoHomeWhenErrorInvoked';
+import DropOutDrawer from 'components/User/DropOutDrawer';
 import UserProfileButton from 'components/User/UserProfileButton';
 import UserProfileCount from 'components/User/UserProfileCount';
 import UserProfileItem from 'components/User/UserProfileItem';
 import { motion } from 'framer-motion';
-import { useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
+import { useDropOut, useGetSpecificUser, useGetUser } from 'hooks/query/useUser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { logout } from 'services/auth';
 import ROUTING_PATHS from 'utils/constants/routingPaths';
 import { isMyProfile } from 'utils/validations/user';
@@ -25,9 +27,11 @@ import { isMyProfile } from 'utils/validations/user';
 const UserPage = () => {
   const router = useRouter();
   const userId = router.query.userId as string;
+  const [isOpenDropOutDrawer, setIsOpenDropOutDrawer] = useState(false);
 
   const { data: MyUserData } = useGetUser();
   const { data, isLoading, error, isSuccess } = useGetSpecificUser(userId);
+  const { mutate } = useDropOut();
 
   if (isLoading) return <div></div>;
   if (error) return <GoHomeWhenErrorInvoked />;
@@ -40,6 +44,11 @@ const UserPage = () => {
     logout();
     window.location.replace(ROUTING_PATHS.HOME);
   };
+
+  const handleClickServiceDropOutButton = () => {
+    mutate();
+  };
+
   return (
     <>
       <Head>
@@ -61,7 +70,7 @@ const UserPage = () => {
             direction='column'
             bgColor='white'
             w='90%'
-            h='95%'
+            h='96%'
             borderRadius={8}
             p='1rem 1.5rem'>
             <Flex w='100%' py='0.5rem'>
@@ -125,6 +134,20 @@ const UserPage = () => {
                 <UserProfileButton
                   buttonText='로그아웃 하기'
                   onClick={handleClickLogoutButton}
+                />
+                <Text
+                  onClick={() => setIsOpenDropOutDrawer(true)}
+                  as='u'
+                  fontSize='sm'
+                  textAlign='center'
+                  cursor='pointer'
+                  p='12px'>
+                  끼니 서비스 탈퇴하기
+                </Text>
+                <DropOutDrawer
+                  isOpen={isOpenDropOutDrawer}
+                  onClose={() => setIsOpenDropOutDrawer(false)}
+                  onClickDropOut={handleClickServiceDropOutButton}
                 />
               </>
             )}
