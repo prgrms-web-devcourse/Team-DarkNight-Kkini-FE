@@ -22,6 +22,7 @@ const DropOutDrawer = ({ isOpen, onClickDropOut, onClose }: DropOutDrawerProps) 
             onClick={onClose}
             width='25'
             height='25'
+            style={{ cursor: 'pointer' }}
           />
         </Flex>
       }
