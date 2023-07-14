@@ -77,7 +77,12 @@ const UserPage = () => {
               <Heading fontSize='2xl'>프로필</Heading>
             </Flex>
             <Flex h='5rem' align='center'>
-              <Avatar src={data.profileImgUrl} size='lg' mr='0.5rem' />
+              <Avatar
+                src={data.profileImgUrl}
+                size='lg'
+                mr='0.5rem'
+                name={`${data.nickname} 아바타 사진`}
+              />
               <Flex flex='1' justify='center' align='center' px='1.25rem' gap='1.5rem'>
                 <UserProfileCount
                   name='방장 횟수'

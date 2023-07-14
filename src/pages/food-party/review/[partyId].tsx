@@ -68,7 +68,12 @@ const FoodPartyReviewPage = () => {
                     p='0.25rem 1rem'
                     align='center'>
                     <Flex flex='1' h='100%' m='0' align='center' gap='1rem'>
-                      <Avatar src={profileImgUrl} width='2rem' height='2rem' />
+                      <Avatar
+                        src={profileImgUrl}
+                        width='2rem'
+                        height='2rem'
+                        name={`${nickname} 아바타 사진`}
+                      />
                       <Flex direction='column' flex='1'>
                         <Text fontSize='lg' fontWeight={800} noOfLines={1}>
                           {nickname}
