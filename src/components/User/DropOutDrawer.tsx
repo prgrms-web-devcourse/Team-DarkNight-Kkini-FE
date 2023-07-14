@@ -31,7 +31,6 @@ const DropOutDrawer = ({ isOpen, onClickDropOut, onClose }: DropOutDrawerProps) 
           <Box margin='0.5rem 0' lineHeight='1.8' fontSize='1.1rem'>
             끼니 서비스에서 회원 정보를 탈퇴합니다.
           </Box>
-
           <Flex alignItems='center' padding='0.5rem 0' gap='0.8rem'>
             <Button flex='1' onClick={onClickDropOut}>
               탈퇴

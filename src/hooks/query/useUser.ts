@@ -73,5 +73,14 @@ export const useDropOut = () => {
       });
       window.location.replace(ROUTING_PATHS.HOME);
     },
+    onError: () => {
+      toast({
+        title: '회원 탈퇴에 실패했습니다. 다시 시도해주세요.',
+        position: 'top',
+        status: 'error',
+        duration: 1500,
+        isClosable: true,
+      });
+    },
   });
 };
