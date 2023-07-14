@@ -1,5 +1,5 @@
 import { CompatClient } from '@stomp/stompjs';
-import { Message } from 'types/foodParty';
+import { Member, Message } from 'types/foodParty';
 
 export const sendMessage = ({
   client,
@@ -61,4 +61,8 @@ export const templateTime = (hour: number, minute: number) => {
     return `오후 ${String(hour - 12).padStart(2, '0')}:${minuteStartWithZero}`;
 
   return `오전 ${String(hour).padStart(2, '0')}:${minuteStartWithZero}`;
+};
+
+export const getSpecificUser = (memberList: Member[], userId: number) => {
+  return memberList.filter((member) => member.userId === userId)[0];
 };
