@@ -1,5 +1,5 @@
 import { CompatClient } from '@stomp/stompjs';
-import { Message } from 'types/foodParty';
+import { Member, Message } from 'types/foodParty';
 
 export const sendMessage = ({
   client,
@@ -61,4 +61,15 @@ export const templateTime = (hour: number, minute: number) => {
     return `오후 ${String(hour - 12).padStart(2, '0')}:${minuteStartWithZero}`;
 
   return `오전 ${String(hour).padStart(2, '0')}:${minuteStartWithZero}`;
+};
+
+export const getSpecificUser = (memberList: Member[], userId: number) => {
+  const foundUser = memberList.find((member) => member.userId === userId);
+  if (!foundUser) {
+    return {
+      nickname: '퇴장한 사용자',
+      profileImgUrl: '', // chakra avatar에서 사용하기때문에 url 없으면 기본 이미지가 적용됨
+    };
+  }
+  return foundUser;
 };

@@ -187,6 +187,7 @@ const FoodPartyDetailChat = () => {
             ref={messageListRef}
             messageList={messageList}
             currentUserId={userInformation.id}
+            memberList={foodPartyDetail.members}
           />
           {foodPartyDetail.crewStatus !== '식사 완료' && (
             <MessageInput ref={messageInputRef} onSendMessage={handleSendMessage} />

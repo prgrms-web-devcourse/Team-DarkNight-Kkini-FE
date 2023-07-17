@@ -30,8 +30,6 @@ export type Member = {
 export type Message = {
   id: number;
   userId: number;
-  username: string;
-  profileImgUrl: string;
   type: MessageType;
   createdAt: number[];
   content: string;
@@ -41,8 +39,6 @@ export type Message = {
 export type ReceivedMessage = {
   id: number;
   userId: number;
-  username: string;
-  profileImgUrl: string;
   type: MessageType;
   createdAt: string;
   content: string;

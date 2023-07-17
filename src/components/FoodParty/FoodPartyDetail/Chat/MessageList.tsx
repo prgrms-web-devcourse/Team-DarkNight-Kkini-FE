@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { forwardRef } from 'react';
-import { FoodPartyStatus, Message } from 'types/foodParty';
+import { FoodPartyStatus, Member, Message } from 'types/foodParty';
 import { getMessageListCheckedIsFirstMessageOfThatDay } from 'utils/helpers/chat';
 
 import MessageListItem from './MessageListitem';
@@ -9,10 +9,11 @@ type MessageListProps = {
   status: FoodPartyStatus;
   messageList: Message[];
   currentUserId: number;
+  memberList: Member[];
 };
 
 const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
-  ({ status, messageList, currentUserId }, ref) => {
+  ({ status, messageList, currentUserId, memberList }, ref) => {
     const messageListCheckedIsFirstMessageOfThatDay =
       getMessageListCheckedIsFirstMessageOfThatDay(messageList);
 
@@ -29,6 +30,7 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
             key={message.id}
             message={message}
             currentUserId={currentUserId}
+            memberList={memberList}
           />
         ))}
         {status === '식사 완료' && (

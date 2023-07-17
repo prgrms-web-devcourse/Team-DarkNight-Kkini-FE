@@ -1,17 +1,20 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
-import { Message } from 'types/foodParty';
-import { getIsCurrentUser, templateTime } from 'utils/helpers/chat';
+import { Member, Message } from 'types/foodParty';
+import { getIsCurrentUser, getSpecificUser, templateTime } from 'utils/helpers/chat';
 import { templatePromiseDate } from 'utils/helpers/foodParty';
 
 const MessageListItem = ({
   message,
   currentUserId,
+  memberList,
 }: {
   message: Message;
   currentUserId: number;
+  memberList: Member[];
 }) => {
   const isCurrentUser = getIsCurrentUser(message.userId, currentUserId);
   const [year, month, day, hour, minute] = message.createdAt;
+  const messageSender = getSpecificUser(memberList, message.userId);
 
   return (
     <>
@@ -40,8 +43,12 @@ const MessageListItem = ({
         <Flex flexDirection='column' maxWidth='80%'>
           {!isCurrentUser && (
             <Flex alignItems='center' gap='0.5rem'>
-              <Avatar src={message.profileImgUrl} size='xs' marginBottom='-0.5rem' />
-              <Text fontSize='12px'>{message.username}</Text>
+              <Avatar
+                src={messageSender.profileImgUrl}
+                size='xs'
+                marginBottom='-0.5rem'
+              />
+              <Text fontSize='12px'>{messageSender.nickname}</Text>
             </Flex>
           )}
 
