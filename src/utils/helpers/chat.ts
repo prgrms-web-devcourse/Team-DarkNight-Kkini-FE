@@ -64,12 +64,12 @@ export const templateTime = (hour: number, minute: number) => {
 };
 
 export const getSpecificUser = (memberList: Member[], userId: number) => {
-  const userData = memberList.filter((member) => member.userId === userId);
-  if (!userData[0]) {
+  const foundUser = memberList.find((member) => member.userId === userId);
+  if (!foundUser) {
     return {
       nickname: '퇴장한 사용자',
       profileImgUrl: '', // chakra avatar에서 사용하기때문에 url 없으면 기본 이미지가 적용됨
     };
   }
-  return userData[0];
+  return foundUser;
 };
