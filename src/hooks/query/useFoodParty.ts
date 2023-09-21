@@ -28,6 +28,7 @@ export const useGetMyFoodPartyList = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.FOOD_PARTY.MY_FOOD_PARTY_LIST],
     queryFn: () => fetchMyFoodPartyList(),
+    suspense: true,
   });
 };
 
